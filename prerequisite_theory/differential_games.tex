@@ -1,0 +1,21 @@
+\section{Differential Games}
+\subsection{Introduction}
+\subsubsection{Key Concepts}
+\begin{enumerate}
+    \item \textit{Game Theory} - area of mathematics concerned with the interaction of \textit{strategies} adopted by \textit{players} in order to maximize their \textit{payoff}. At the end of the day, a game is a system of optimization problems for which there is some interaction on the optimization target.
+    \item \textit{Strategy} - an entity $x_i \in \mathcal{X}_i$ which represents one option, or control, that a player is allowed to choose, and which will be an input for the payoff function. Players want to choose their strategy in order to maximize their own payoff, while taking into account that the other players are doing the same thing.
+    \item \textit{Player} - one player is equivalent to one dimension of the system of optimization problems.
+    \item \textit{Payoff} - the optimization target of each player. The payoff for every player depends on the strategy chosen by every player.
+    \item \textit{Equilibria:} Nash Equilibrium, Stackelberg Equilibrium, Pareto Optimality.
+        
+        In general players cannot get the maximum payoff together. Different concepts of equilibrium are introduced in order to propose solutions to different kinds of games, which might differ by choice structure or cooperation possibility. Let`s consider the 2-dimensional case of two players, with sets of strategies denoted by $A,B$ and payoff functions $J_i: A\times B \mapsto \mathbb{R}$ for $i$ in $\{A,B\}$
+    \begin{itemize}
+        \item \textit{Nash Equilibrium}: This is a solution concept for a non-cooperative game. It is a situation in which no player can increase his payoff by changing his strategy if the other players do not change theirs. In math terms, if $(a^*,b^*)$ is a Nash Equilibrium, $\forall a \in A, b\in B$, we have $J_A(a,b^*) \leq J_A(a^*,b^*)$ and $J_B(a^*,b) \leq J_B(a^*,b^*)$. 
+        \item \textit{Stackelberg Equilibrium}: Solution for a game with asymmetry of information. Let $R^B(a)$ be the set of best possible replies of Player $B$ if Player $A$ has announced the strategy $a$, that is, $R^B(a) = \{b^' \in B : J_B(a,b) \leq J_B(a,b^'), \forall b \in B\}$. Then, a pair of strategies $(a^*,b^*) \in A\times B$ is a \textit{Stackelberg Equilibrium} if $b^* \in R^B(a^*)$ and $J_A(a,b)\leq J_A(a^*, b^*),\ \forall(a,b), b\in R^B(a), a \in A$
+    \end{itemize}
+    
+    \item \textit{Information and Knowledge}
+    \item \textit{completely cooperative and zero-sum}
+    \item \textit{Information structure}: \textbf{Open loop} and \textbf{feedback} (or \textbf{markovian}) strategies
+    \item \textit{Target and Game set}
+\end{enumerate}

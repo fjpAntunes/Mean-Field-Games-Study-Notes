@@ -1,0 +1,242 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amscd}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\input{style.tex}
+
+\newcommand{\bx}[0]{{\bf x}}
+\newcommand{\bv}[0]{{\bf v}}
+
+
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+
+\input{book_summaries/CBM_Diogo_Gomes_equations.tex}
+
+
+\title{Economic Models and Mean-Field Games Theory - Summary}
+\author{Felipe Antunes}
+\date{August 2022}
+
+\begin{document}
+
+\maketitle
+\section{Introduction}
+Mathematical methods allow for testable models in modern economic theory. It enables authors to formulate and solve models in a unified language.
+
+Mean-field games - Methods and techniques to study differential games with a large population of rational players. Typically formulated in terms of partial differential equations, namely a transport or Fokker-Plank equation for the distribution coupled with a Hamilton-Jacobi equation.
+
+Applications in economics, sustainable development.
+
+The importance with regards to economic theory stems from the fact that it allows a systematic formalization ogf rational expectations theory and heterogeneous agent models.
+
+Existence and regularity of solutions is an important research area.
+
+
+\section{Deterministic Models}
+
+\subsection{First-order mean-field games}
+
+\subsubsection{Deterministic optimal control problems}\label{deterministic_optimal_control}
+
+Single agent whose state is denoted by $x_t \in \RR^d$, for $t_0 \leq t\leq T$, where $T > 0$ is arbitrarily fixed. The case $T< \infty$ is referred to as the finite horizon optimal control problem.
+
+$$\dot x_t = f(v_t,x_t),$$
+
+where $f: \RR^m \times \RR^d \mapsto \RR^d$ is a given function and $v_t \in \RR^m$ is a control. Let $\mathcal{W} \coloneqq \left\{ v : [t_0, T] \mapsto W, v \in X \right\}$, where $X$ is a suitable function space.
+
+Agent's preferences are expressed through a utility functional $J(u_t, x_t; t)$. For $t \in [t_0,T)$ this functional is given by 
+
+$$
+J(u,x,t) = \int_t^T u(v_s, x_s) ds + \Psi(x_T),
+$$
+where $u : \RR^m\times \RR^d \mapsto \RR$ is the instantaneous utility (or running cost) and $\Psi : \RR^d \mapsto \RR$ is the terminal payoff.
+
+In the case $T = \infty$, we introduce a discount rate $\beta > 0$ and consider
+$$
+J_\beta (u,x;t) = \int_t^\infty e^{-\beta (s - t) u(v_s, x_s)} ds 
+$$
+
+The focus of this section will be a variant of the last problem, namely:
+
+$$
+J_\alpha (u,x;t) = \int_t^\infty e^{-\alpha (s - t) u(v_s, x_s)} ds + e^{-\alpha (T -t)} \Psi(x_T) 
+$$
+
+The single agent seeks to maximize $J_\alpha$ over all possible controls.
+We define the value function $v(x,t)$ as
+
+$$
+V(x,t) = \sup_{v\in \mathcal{W}} J_\alpha (v, x ; t).
+$$
+This function is the maximum possible payoff for the agent at state $x$ in time $t$.
+
+Assumptions on $f$ (for the problem to be addressed rigorously):
+$$f \in C(\RR^m \times \RR^d, \RR^d),\, |f(v, x_1) - f(v, x_2)| \leq C_\theta |x_1 - x_2|, x_1, x_2 \in \RR^d, v\in \RR^m, |v| \leq \theta$$
+
+If the Value function is of class $C^1(\RR^d \times [t_0,T])$, it solves  a nonlinear partial differential equation known as the Hamilton-Jacobi equation:
+$$V_t(x,t) - \alpha V(x,t) + H(x,D_x V(x,t)) = 0,$$
+where the Hamiltonian H is defined as 
+$$H(x,p) = \sup_{v\in W} [p \cdot f(v,x) + u(v,x)],$$
+that is, the Legendre transform of the running cost $u$.
+The optimal control $v_t^*$ is given by 
+$$ H_p (x^*, D_x V(x^*,t)) = f(v^*, x^*)$$
+
+\subsubsection{Dynamic Programming Principle}
+
+\begin{proposition}[Dynamic programming principle]
+    Let $r \in (t_0, T)$ be fixed and assume that $V$ is a value function. Then we have
+    $$
+    V(x,t) = \sup_{v\in \mathcal{W}} \left( \int_r^T e^{-\alpha (s-r)} u(v_s,x_s) ds + e^{-\alpha (r - t) V(x_r,r)} \right).
+    $$
+\end{proposition}
+
+\begin{proof}
+    To do
+\end{proof}
+
+\subsubsection{Verification Theorem for Hamilton-Jacobi}
+\begin{proposition}[Verification Theorem]
+    Let $U \in C^1(\RR^d \times [t_0, T])$ be a solution to 
+    $$
+    U_t(x,t) - \alpha U(x,t) + H(x, U_x(x,t)) = 0\, \text{(HJ)}
+    $$
+    where 
+    $$
+    H(x,p) = \sup_{v \in W} [p \cdot f(v,x) + u(v,x)],
+    $$
+    with terminal condition $U(x,T) = \psi(x)$. Then
+    $$U(x,t) \geq V(x,t), \forall (x,t) \in \RR^d \times [t_0,T].$$
+    Moreover, if there exists a control $v^*$ such that
+    $$
+    H(x^*_t, U_x (x^*_t, t)) = U_x(x^*_t, t)\cdot f(v^*_t, x^*_t) + u(v^*_t, x^*_t),
+    $$
+    That is, $v^*$ gives an equality in the Hamiltonian, then $v^*$ is an optimal control for the control system and $U(x,t) = V(x,t)$.
+\end{proposition}
+
+\begin{proof}
+    To do
+\end{proof}
+
+\subsubsection{Pontryagin Maximum Principle}
+
+The PMP gives a necessary condition for an optimal control in terms of an adjoint variable $q: \RR \mapsto \RR^d$. The adjoint variable satisfies:
+\begin{equation}\label{pmp:adjoint_eq}
+    \frac{d}{ds} \left( e^{-\alpha(s-t)} {\dot q}_j(s) \right) = -e^{-\alpha (s - t)} \sum_{i = 1}^d \frac{\partial}{\partial x_j} f_i (v^*_s, x^*_s) q_i(s) - e^{-\alpha (s - t)} \frac{\partial}{\partial x_j} u(v^*_s, x^*_s),
+\end{equation}
+
+with $q(T) = \nabla \psi(x^*_T)$.
+
+\begin{proposition}[Pontryagin Maximum Principle]
+    Let $v^*$ be an optimal control for the optimal control problem and assume that $q$ is a solution for the terminal value problem \eqref{pmp:adjoint_eq}. Then,
+    \begin{equation}\label{pmp:transversality_condition}
+    q(s) \cdot f(v^*_s, x^*_s) + u(v^*_s, x^*_s) = H(x^*_s, q(s)).
+    \end{equation}
+\end{proposition}
+
+\begin{proof}
+    To do.
+\end{proof}
+
+Condition \eqref{pmp:transversality_condition} is called a \textit{tranversality condition}.
+
+\subsection{Transport Equation}\label{transport_eq}
+Consider a population that is governed at the single agent level by
+\begin{equation}\label{transport_eq:ode}
+\begin{cases}
+    \dot x_t = b(x_t,t), \quad t > t_0,\\
+    x_{t_0} = x.
+\end{cases}
+\end{equation}
+where $b$ is a Lipschitz vector field. The vector field induces a flow that trasports the population's density along time (pushforward). The evolution of the density is described be the \textit{transport equation}, a first order pde:  
+
+\begin{equation}\label{transport_eq:pde}
+\rho_t + \Delta(b(x,t) \rho) = 0.
+\end{equation}
+
+\begin{proposition}[Properties of solutions]    
+Let $\rho$ be a solution of \eqref{transport_eq:pde} with initial condition $\rho(x,t_0) = \rho_0(x)$, for some probability density $\rho_0 \in \mathcal{C}_c^\infty (\RR^d).$ Then we have:
+\begin{itemize}
+    \item Positivity of solutions: $\rho(x,t) \geq 0$ for all $t> t_0$,
+    \item Mass conservation: $\int_{\RR^d} \rho(x,t) dx = \int_{\RR^d} \rho_0(x) dx = 1$ for all $t > 0$.
+\end{itemize}
+\end{proposition}
+
+\begin{proof}
+    To do.
+\end{proof}
+
+Define the flow in $\RR^d$ given by $b$ by $\Phi_t$. This flow maps $x\in \RR^d$ to the solution of \eqref{transport_eq:ode} at the instant $t > t_0$, with initial condition $x$.
+
+We can use the operator $\Phi_t$ to define a family of measures $\theta(x,t)$ over $\RR^d$ from an initial measure $\theta_0$ by 
+\begin{equation}\label{transport_eq:family_of_measures}
+\int_{\RR^d} \phi(x) \theta(x,t) dx = \int_{\RR^d} \phi(\Phi_t(x)) \theta_0 dx    
+\end{equation}
+
+This measure satisfies the transport PDE in the distribution sense. 
+\begin{proposition}[Solutions in the distribution sense]
+Let $\theta$ be the measure defined in \eqref{transport_eq:family_of_measures}. Assume that the vector field $b$ is Lipschitz continuous and denote by $\Phi_t$ the flow corresponding to \eqref{transport_eq:ode}. Then
+\begin{equation}\label{transport_eq:pde_for_measures}
+    \begin{cases}
+        \theta_t(x,t) + \Delta(b(x,t) \theta(x,t)) = 0, \quad (x,t) \in \RR^d \times [t_0,\infty),\\
+        \theta(x,t_0) = \theta_0(x), \quad x\in \RR^d.
+    \end{cases}
+\end{equation}
+in the distributional sense.
+\end{proposition}
+
+\begin{proof}
+    To do.
+\end{proof}
+
+\begin{proposition}[Dirac delta solution]\label{transport_eq:prop:dirac_delta_solution}
+Assume that \eqref{transport_eq:ode} holds and suppose that $b$ is Lipschitz continuous. Then, $\delta_{\Phi_t(x)}$ solves \eqref{transport_eq:pde_for_measures} in the distributional sense.
+\end{proposition}
+
+\begin{proof}
+    To do.
+\end{proof}
+
+\begin{remark} The converse of \eqref{transport_eq:prop:dirac_delta_solution} also holds.
+\end{remark}
+
+\subsection{Reduced Mean-field games}\label{reduced_mfg}
+Among the main motivations for studying MFG are the connections with the theory of $N$-player differential games. A solution of the MFG formalizes the limit case of Nash equilibrium when $N \to \infty$ for $N$-person differential games.
+
+Some reduced mean-field games models can be rigorously derived as the limit of equations characterizing an $N$-player differential game. This subsection presents a heuristic derivation.
+
+Consider first the single-agent optimal control problem. Suppose that the state of an agent at time $t$ is characterized by the vector $\bx_t \in \RR^d$. In addition, assume that the following differential equation describes the state $\bx_t$:
+\ReducedMfgStateEvolution{x}{v}
+where $\bv_t$ is a control and $x\in\RR^d$ is a given initial condition. This agent seeks to maximize the functional:
+\ReducedMfgPayoffFunctional{x}{v}{u}{u_T}{g[\rho]}
+where $u$ is a Lagrangian, $u_T$ is a terminal payoff and $g[\rho]$ is a term to be made precise later. 
+
+Define
+\ReducedMfgHamiltonian{x}{p}{v}{u}
+We know from Section \eqref{deterministic_optimal_control} that under some regularity assumptions, the value function $V$ associated with the optimal control problem \eqref{deterministic_optimal_control:optimal_control_problem} 
+solves the Hamilton-Jacobi equation in $\RR^d \times [t_0,T)$:
+\ReducedMfgStateHamiltonJacobiTerminalValueProblem{V}{g[\rho]}{u_T}
+Moreover, the optimal control $\bv^*$ is given in feedback form by
+$$\bv^* = H_p(\bx, D_x V(\bx, t)).$$
+The state of a rational agent will evolve according to \eqref{reduced_mfg:state_evolution} with the control $\bv$ equal to the feedback optimal control $\bv^*$.
+
+Consider then a population of rational and indistinguishable agents. The distribution of agents is given by a probability measure $\rho$. This population of agents is subjected to the same optimal control problem. Therefore, the state of each individual is driven by
+\ReducedMfgFeedbackStateEvolution{x}{s}{V}
+
+The function $g$ encodes the dependence of the agent's cost functional on the density of the entire population. This implies that the optimization problem faced by the agents depends on the evolution of $\rho$. Conversely, the evolution of $\rho$ depends on a vector field determined by $V$, which is derived from the control problem of the agents.\footnote{Chicken and the egg problem.}
+
+From Section \eqref{transport_eq}, we know that if $\bx$ satisfies \eqref{reduced_mfg:feedback_state_evolution}, then the evolution of the density $\rho$ in time satisfies a transport equation in $\RR^d \times (t_0, T]$:
+\ReducedMfgDensityTransportInitialValueProblem{V}{\rho}
+
+The mean-field game system associated with this problem is the system of PDE's:
+\ReducedMfgMeanFieldGameSystem{V}{\rho}{u}{g[\rho]}
+coupled with the boundary conditions
+\ReducedMfgMeanFieldGameBoundaryConditions{V}{\rho}{u}{g[\rho]}
+
+\section{Some Simple Economic Models}
+
+\end{document}
