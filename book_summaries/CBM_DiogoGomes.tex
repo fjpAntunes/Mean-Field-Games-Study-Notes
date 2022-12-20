@@ -238,5 +238,264 @@ coupled with the boundary conditions
 \ReducedMfgMeanFieldGameBoundaryConditions{V}{\rho}{u}{g[\rho]}
 
 \section{Some Simple Economic Models}
+Simplified model that depict the key techniques
+\begin{itemize}
+    \item Solow model for capital accumulation - Not strictly MFG - no interaction between agents.
+    \item Planned Economy Solow model - Example of Mean Field control.
+    \item Deterministic Aiyagari-Bewley-Hugget model - wages and capital accumulation.
+\end{itemize}
+
+\subsection{Economic Models}
+\subsubsection[]{Agents and their states}
+
+\begin{itemize}
+    \item Microeconomic agents - Small participants in the econoy. Individually, cannot influence the economic
+    outcomes - consumers, works, small firms.
+    \item Macroeconomic agents - Agents able to impact directly the economy - central banks, large firms, governments.
+    \item Microeconomic variables - Microeconomic agents characterized by individual state variables,
+    such as wealth, capital, wages. Probability measure $\rho$ describes the distribution of agents
+    in the economic state space. Heterogeneity is the hallmark of heterogeneous agent models - captured by $\rho$.
+    \item macroeconomic variables - a global quantity of the economic system. Exogenous variables such as 
+    taxes, external demands for goods, or variables determined by equilibrium conditions such as relative prices.
+\end{itemize}
+
+\subsection[]{Dynamics and controls}
+
+\begin{itemize}
+    \item Controls (actions, strategies) - quantities that agents are allowed to choose the value for. 
+    Either micro or macro - for the respective category of agent.
+    \item Constitutive relations - Relations between various quantities in the economy. Model dependent.
+    \item Dynamics - Laws describing the evolution of the agents' state. Can be deterministic or stochastic
+     (diffusions, jump processes). 
+\end{itemize}
+
+\subsection{Preferences}
+
+Assumption of rationality - agents choose controls in order to maximize some functional. The functional 
+encondes the preferences of the agents with respect to the variables of the model.
+For example, microeconomic agents prefer to consume more than less, central banks aim to control prices
+while promoting growth and capital accumulation.
+
+For microeconomic agents, preferences are formalized through an instantaneous utility function.
+Properties such as monotonicity and concavity encode qualitative properties of the model -
+ie concavity models diminishing increase in satisfaction for increments in consumption.
+For macroeconomic agents, an instantaneous welfare function is chosen.
+
+Choices are made in a particular time span - intertemporal counterparts of the utility and welfare
+functions.
+
+\subsection{Equilibrium conditions}
+
+Equilibrium conditions are constraints relating the many quantities involved in the model. 
+They formalize the intuitive notions behind economic processes to be modelled.
+
+For example, in a closed economy, the total investment must equal the total production of capital goods.
+
+\subsection{Solow Model with Heterogeneous Agents}
+
+Heterogeneous agent capital cacumulation model - Illustrates two distinct economies:
+A free market economy where the price level is determined by a price clearing condition,
+and a centrally planned economy in which a central planner sets the share of production consumed
+by each agent.
+
+The basic elements of the model are:
+
+\begin{itemize}
+    \item Microeconomic agents: Agents are characterized by their levels of capital $k_t \geq 0$. The 
+    distribution of agents in the state space is given by $\rho = \rho(k,t)$.
+    \item Constitutive relations: The model has a resource constraint entailed by a production function
+    $f = f(k)$. The production function gives the output $f(k)$ of an a agent with capital $k$ and 
+    encodes the technology of the economy.
+
+    We assume that $f'(k) > 0$, for $k >0 $, and 
+    $$
+    \lim_{k \to 0} f'(k) = +\infty,\quad \text{and} \quad \lim_{k\to \infty} f'(k) = 0.
+    $$
+    The limits formalize the notion of marginal productivity of capital.
+
+    Production of agent with capital $k_t$ is divided between an amount $c_t$ of consumption and $i_t$ of 
+    investment. This is equivalent to the following resource constraing:
+    $$
+    f(k_t) = c_t + i_t,
+    $$ 
+    where $c_t, i_t \geq 0$.
+    \item  Dynamics: capital accumulation - accumulation is governed by the following ode:
+    $$
+    \dot k_t = i_t - \delta k_t,
+    $$
+    where $0 < \delta < 1$ is the capital depreciation rate of the economy, and $i_t$ is the investment.
+\end{itemize}
+
+We'll solve this model in two settings: a free market economy where agents choose their consumption level
+in order to maximize some functional $J = J(c,k,t)$, and a planned economy in which consumption is chosen
+by a central planner that maximizes a welfare function of the economy's consumption level.
+
+\subsubsection{Free-market economy}
+
+Agents are free to allocate their production $f(k_t)$ between consumption and investment, subject to 
+$$ f(k_t) = c_t + i_t. $$
+
+\begin{itemize}
+    \item Microeconomic controls (or actions) - Agents control their level of consumtption $c_t$.
+    The agents select the control by maximizing the utility functional (see next item), subject to the 
+    constraints $c_t \geq 0, i_t \geq 0$. We conclude that $0\leq c_t \leq f(k_t)$.
+    \item Agent's preferences - We model agents' preferences by a utility function $u = u(c,k)$, with descreasing
+    marginal increments i.e. the map $(c,k) \mmapsto u(c,k)$ is increasing and concave. The rational 
+    behaviour of agents is modelled by assuming that agents' maximize 
+    their aggregate discounted utility over time:
+    $$
+    J(c_t, k_t, t) = \int_t^\infty e^{-\alpha (s - t)} u(c_s, k_s) ds.
+    $$
+
+    This implies that agents choose their consumption level by solving the following optimal control
+    problem:
+    \begin{equation}
+        \begin{cases}
+            max_{c_{(\cdot)} \in \mathcal{C}} J(c_t, k_t, t),\\
+            \text{s.t.} \, \dot k_t = i_t - \delta k_t.
+        \end{cases}
+    \end{equation}
+
+    If the value function $V(k,t) = \sup_{c_t} J(c_t, k_t, t)$ is regular enough, it solves the HJ equation:
+    $$
+    V_t - \alpha V + H(k,V_k) = 0,
+    $$
+    where $H(k, q_k)$ is given by:
+    $$
+    H(k, q_k ) = \sup_{0 \leq c \leq f(k)} ((f(k) - c - \delta k) q_k + u(c,k))
+    $$
+    and the optimal control $c^*$, if it exists, is given in feedback form by
+    $$
+    H_q(k,q) = f(k) - c^* - \delta k.
+    $$
+\end{itemize}
+
+The density of agents in the state space evolves according to a transport equation. 
+{\bf The assumption of rationality implies that every agent acts according to the optimal control.}
+The evolution of density $\rho$ is given by 
+$$
+\rho_t(k,t) + (H_q(k,V_k) \rho(k,t))_k = 0
+$$
+
+Finally, the Solow growth model for a free-market economy can be written as:
+
+\begin{equation}
+    \begin{cases}
+        V_t - \alpha V + H(k,V_k) = 0,\\
+        \rho_t(k,t) + (H_q (k,V_k) \rho(k,t))_k = 0.
+    \end{cases}
+\end{equation}
+
+\subsubsection{Planned Economy}
+This time, suppose that agents have a production function $f(k)$ but they are not allowed to allocate
+freely between consumption and investment.
+\begin{itemize}
+    \item Constitutive relations: A planner controls the fraction $\lambda_t$ of the production
+    that can be invested or consumed:  $i_t = \lambda_t f(k_t)$, $c_t = (1 - \lambda_t) f(k_t)$.
+    \item Macroeconomic controls: The central planner controls the rate $\lambda_t \in [0,1]$ - the same
+    for all players.
+    \item Transport of the agents' density: 
+    $$
+    \rho_t (k,t) + ( (\lambda_t - \delta) f(k) \rho(k,t) )_k = 0.
+    $$
+    \item Macroeconomic variables: aggregate production $F_t = \int f(k) \rho(k,t)$.
+    \item Macroeconomic preferences: Central planner maximizes a welfare function that measures consumption.
+    the planner has an instantaneous welfare function $U$ and a positive discount factor $\alpha$:
+    $$
+    \int_t^{+\infty} e^{-\alpha (s-t)} U( (1-\lambda_s)F_s )ds.
+    $$
+    
+    \item The welfare functional together with the tranport equation pose a mean-field control problem.
+    In this sense, $\rho$ is a state variable with controled dynamics given by the transport equation.
+    We seek to maximize the welfare functional that depends on $\rho$ through the aggregate production.
+\end{itemize}
+
+\subsubsection{Aiyagari-Bewley-Hugget model}
+
+The model describes an economy where agents are heterogeneous in wealth and wage. The interest rate
+is the single macroeconomic variable, and it is determined by a zero net supply condition.
+
+\begin{itemize}
+    \item Microeconomic agents: At each instant $t \geq t_0$, agents in the economy are characterized by
+    their income and wealth levels: $z_t$ and $a_t$.
+    
+    The agents' are distributed in the state space according to a probability density $\rho = \rho(a,z,t)$.
+
+    \item Macroeconomic variables: The interest rate of the economy is denoted by $r_t$. This is the 
+    rate at which agents can borrow or lend wealth (no financial intermediaries).
+
+    \item Constitutive relations: We assume the evolution of the wage of each agent follows a mean-reverting
+    dynamic $\dot z = - (z_t - \bar z)$, where $\bar z$ represents a reference wage level. To simplify
+    the presentation, set $\bar z \equiv 1$. This choice for constitutive relation is rather arbitrary.
+
+    \item Microeconomic actions: agents are assumed to choose their consumption levels $c_t$ for 
+    $t_0 \leq t \leq T$.
+
+    \item Microeconomic dynamic: the state variables are governed by a system of odes:
+    \begin{equation}
+        \begin{cases}
+            \dot a_t = z_t - c_t + r_t a_t, \\
+            \dot z_t = - (z_t - 1).
+        \end{cases}
+    \end{equation}
+
+    \item Microeconomic preferences: We assume that agents are rational i.e. they maximize a set of
+    preferences over the variables of the model aggregated over time.
+     We assume these preferences to be modeled by an
+    instantaneous utility function $u = u(c_t,a_t, z_t, r_t)$. 
+    The discounted aggregated future utility $J$ is given by:
+    $$
+    J(c,a,z; t) = \int_t^\infty e^{- \alpha (s - t)} u(c_s, a_s, z_s, r_s) ds.
+    $$
+    The value function is given by
+    $$
+    V(a,z,t) = \sup_{c_t} J(c_t, a_t, z_t; t).
+    $$
+    If $V$ is regular enough, it is the solution to the following HJ equation:
+    $$
+    V_t - \alpha V + H(a,z,r,V_a,V_z,t) = 0,
+    $$
+    where the Hamiltonian $H$ is given by
+    $$
+    H(a,z,r, q_a, q_z) = \sup_{c} (q_a \dot a + q_z \dot z + u).
+    $$
+    The optimal control $c^*_t$ (optimal consumption level) is given in feedback form by:
+    \begin{equation}
+        \begin{cases}
+            H_{q_a}(a,z,r,q_a,q_z) = z_t - c_t^* + r_t a_t,\\
+            H_{q_z} (a,z,r,q_a,q_z) = -(z_t - 1).
+        \end{cases}
+    \end{equation}
+    
+    \item Equilibrium conditions: We assume that agents in the economy can borrow and lend at the current
+    interest rate $r_t$. To close the model, we must assume that each dollar borrowed by an agent was
+    saved by another one. This condition is formalized by the {\it zero net supply condition}:
+    $$
+    \int a \rho(a,z,t) da dz = 0;
+    $$
+    This condition implies that $r_t$ depends on $\rho$ ($r_t$ is implict in $a$) -> the interest rate encodes
+    the dependence of $V$ on the density of the population.
+
+    \item Transport of the agents' density: The density $\rho(a,z,t)$ evolves according to
+    the transport equation:
+    $$
+    \rho_t (a,z,t) + (H_{q_a} \rho)_a + (H_{q_z} \rho)_z = 0.
+    $$
+    Using the formula for the optimal control in feedback form (i.e. assuming agents behave rationally):
+    $$
+    \rho_t(a,z,t) + (( z - c^* + ra) \rho)_a - ( (z - 1) \rho )_z = 0.
+    $$
+    We can finally write the deterministic Aiyagari-Bewley-Hugget model as the following mean-field game
+    system:
+    \begin{equation}
+        \begin{cases}
+            V_t - \alpha V + H(a,z,r,V_a,V_z) = 0,\\
+            \rho_t (a,z,t) + (( z - c^* + ra) \rho)_a - ((z-1) \rho)_z = 0.
+        \end{cases}
+    \end{equation}
+    together with initial condtions for the density $\rho$.
+
+    \item Analysis of the equilibrium condition: 
+\end{itemize}
 
 \end{document}
