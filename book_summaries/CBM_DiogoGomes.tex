@@ -496,6 +496,91 @@ is the single macroeconomic variable, and it is determined by a zero net supply 
     together with initial condtions for the density $\rho$.
 
     \item Analysis of the equilibrium condition: 
+        Sketch calculations to understand what he is doing.
+\end{itemize}
+
+\section{Economic Growth and MFG - Deterministic Models}
+
+    Some models of economic growth with heterogeneous agents:
+    \begin{itemize}
+        \item Wealth and capital accumulation, capital dependent production function. 
+        Model is a MFG where the coupling is determined by an economic equilibrium condition.
+        \item Central bank controlling interest rate. The problem becomes an optimal control
+        of a mean-field game (principal agent problem).
+        \item Trade imbalances and international trade. The model becomes an infinite
+        dimensional game between two agents, whose dynamics is given by two mean-field games
+        (a game between two principal agents).
+        \item Price impacts in regulated markets. This is a mean-field game that depends
+        on a price-impact function (i.e. import duties). 
+    \end{itemize}
+   
+\subsection{A growth model with heterogeneous agents}
+    A simple wealth and capital accumulation problem, with capital-dependent production.
+
+\begin{itemize}
+    \item Microeconomic Agents: agent has amount $a_t$ of consumer goods and $k_t$
+    units of capital at time $t$. Consumer goods are used as the numerary of the economy
+    in the walrasian sense.
+
+    Both the consumer goods $a_t$ and the capital $k_t$ have natural constraints. 
+    Borrowing constraints correspond to the inequality $a_t \geq a_0$, for some $a_0 \leq 0$.
+    Capital is assumed to be non-negative $k_t \geq 0$. These constraints will be implemented
+    as soft constraints through a utility function.
+
+    The microeconomic distribution function $\rho(a,k,t)$ determines the distribution
+    of agents in the state space. We suppose that $\rho \geq 0$ is normalized, so that
+    $$
+    \int_{\mathbb{R}^2} \rho(a,k,t) da\, dk = 1,\quad \forall t\geq 0.
+    $$
+    \item Macroeconomic variables: The only macroeconomic variable is the relative price
+    of capital $p_t$. We refer to 
+    $$
+    W_t = \int (a_t + p_t\, k_t) d\rho(a,k,t)
+    $$
+    as the total wealth of the economy.
+    \item Constitutive relations: two constitutive relations:
+    First, a production function $F(k,p)$ that gives the total value (measured in consumer goods) 
+    of consumer $\Theta(k,p)$ and capital goods $\Xi(k,p)$ produced by an agent with capital $k$
+    at a price level $p$. In particular, $$ F(k,p) = \Theta(k,p) + p\Xi(k,p) $$.
+    The functions $\Thete$ and $\Xi$ capture the fact that agents can change their production
+    from consumer to capital goods and vice-versa.
+    Second, depreciation of capital is governed by a function $g(k,p)$.
+
+    \item Microeconomic actions (controls): 
+    Agents control their consumption and investment level $c_t$ and $i_t$ at time $t$.
+
+    \item Microeconomic dynamics:
+    The stock of consumer goods evolves by $$\dot a_t = - c_t - p_t i_t + F(k_t, p_t).$$
+    The stock of capital evolves according to $$\dot k_t = g(k_t,p_t) + i_t.$$ 
+
+    \item Microeconomic preferences: agents have preferences about
+    their consumption, investment, stocks of consumer and capital goods, and the price level
+    of the economy.
+    Preferences are represented by an instantaneous utility function
+    $u = u(c_t,i_t,a_t,k_t,p_t)$, and agents try to maximize the intertemporal counterpart
+    to $u$ (assumption of rationality):
+    $$
+    V(a,k,t) = \sup_{c_t,i_t} \int_t^\infty e^{-\alpha(s-t)} u(c_s,i_s,a_s,k_s,p_s) ds
+    $$
+    \item Optimal control problem: 
+    Each agent faces an optimal control problem. $V(a,k,t)$ is its value function. 
+    If $V$ is regular enough, it solves the following HJB equation:
+    $$
+    V_t(a,k,t) - \alpha V(a,k,t) + H(a,k,p,V_a,V_k) = 0,
+    $$ 
+    where $H$ is given by 
+    $$
+    H(a,k,p,V_a,V_k) = \sup_{c,i}\left( V_a {\dot a }+ V_k {\dot k} + u \right). $$
+    Moreover, the optimal controls $c_t^*, i_t^*$ are given in feedback form Bewley
+    $$
+    \begin{cases}
+        H_{q_a} (a_t, k_t, p_t, V_a, V_k) = - c_t^* - p_t i^*_t + F(k_t,p_t),\\
+        H_{q_k} (a_t, k_t, p_t, V_a, V_k) = g(k_t, p_t) + i_t^*
+    \end{cases}
+    $$
+    \item Transport of the agents' population:
+    \item Equilibrium conditions:
+    \item A mean-field game model: 
 \end{itemize}
 
 \end{document}
