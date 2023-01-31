@@ -579,8 +579,163 @@ is the single macroeconomic variable, and it is determined by a zero net supply 
     \end{cases}
     $$
     \item Transport of the agents' population:
-    \item Equilibrium conditions:
-    \item A mean-field game model: 
+    As the agents' evolution is given by differential equations, the evolution in time of the
+    population density is given by a transport equation. Let $\rho(a,k,t)$ be the density of the agents.
+
+    The assumption that agents optimize their preferences is central to the optimal control problem
+    - however, note that the controls (consumption and investment) affect the evolution of the agents.
+
+    Rationality implies that individuals consume the optimal consumption $c^*$ and invest the optimal
+    investment $i^*$. Therefore, the evolution of the population is driven by $(\dot a, \dot k)$ evaluated
+    at these values. Therefore, we have the following transport equation for $\rho$:
+    $$
+    \rho_t + ( (- c^* - p_i i^* + F(k)) \rho )_a + ( (g(k,p_t) + i^*) \rho )_k = 0
+    $$
+    Using the feedback form for the controls, we can write the previous equation as
+    $$
+    \rho_t + (H_{q_a} \rho)_a + (H_{q_k} \rho)_k = 0
+    $$
+    \item Equilibrium conditions: The HJ and transport equations are coupled by a market-clearing condition.
+    This condition requires that the aggregate production of capital goods match the aggregate investment,
+    and is given by
+    $$
+    \int i d\rho(a,k,t) = \int \Xi(k,p) d\rho(a,k,t)
+    $$
+    This equilibrium condition determines the price level $p_t$.
+
+    \item A mean-field game model: The mean-field game formulation of the growth model is given by
+    the coupling of the $HJ$ equation with the transport equation, along with the equilibrium condition.
+    $$
+    \begin{cases}
+        V_t(a,k,t) - \alpha V(a,k,t) + H(a,k,p,V_a,V_k) = 0,\\
+        \rho_t + (H_{q_a} \rho)_a + (H_{q_k} \rho)_k = 0.
+    \end{cases}
+    $$
+    An initial condition is given for $\rho$.
 \end{itemize}
+
+\subsection{A growth model with a macroeconomic agent}
+
+Building upon the previous section, we introduce a growth model with a central bank acting as 
+a macroeconomic agent, controling the interest rate of the economy. Its goal is to balance
+price stability with economic growth.
+
+\begin{itemize}
+    \item Microeconomic agents: As in the previous section, characterized by
+    consumer good stock $a_t$ and capital $k_t$.
+    \item Macroeconomic agent: The single macroeconomic agent is a central bank.
+    Its state is determined by a quantity $A_t$, that represents its assets, and
+    the distribution of microeconomic agents $\rho(a,k,t)$.
+    \item Macroeconomic variables: As before, the price level $p_t$ of the economy is a macroeconomic
+    variable. The economy has an interest rate $r_t$, which is set by the central bank. Therefore, it 
+    is a control variable for this macroeconomic agent.
+    \item Constitutive relations: The same as the previous section: production and depreciation functions.
+    \item Microeconomic actions (controls): The same as the previous section: consumption and investment levels.
+    \item Microeconomic Dynamics:
+    The stock of consumer goods is driven by 
+    $$
+    \dot a_t = r_t a_t - c_t - p_t i_t + F(k_t, p_t).
+    $$
+    Note that this equation depends explicitly on the interest rate of the economy, $r_t$.
+    The stock of capital varies according to
+    $$
+    \dot k_t = g(k_t, p_t) + i_t.
+    $$
+    Note that introducting a central bank in the economy does not influence directly
+    the dynamics of capital accumulation, for the interest rate is not included in the capital ODE.
+    However, because it affects the decision of consumption and investment, the impact of $r_t$ on
+    the capital accumulation is ecoded in the equilibrium condition of the model.
+    \item Macroeconomic actions (controls): The central bank intervenes in the economy by setting
+    its interest rate $r_t$.
+    \item Microeconomic preferences: We assume the instantaneous utility function of the microeconomic
+    agents also depend on the interest rate: $u = u(c_t, i_t, a_t, k_t, p_t, r_t)$. It amounts to 
+    $$
+    V(a,k,t) = \sup_{c_t,i_t} \int^\infty_t e^{-\alpha(s-t)} u(c_s, i_s, a_s, k_s, p_s, r_s) ds
+    $$ 
+    \item Equilibrium condition: the same as last section.
+    \item Optimal control problem: The microeconomic agents' optimal control problem is described by 
+    $$
+    V_t(a,k,t) - \alpha V(a,k,t) + H(a,k,p,r,V_a,V_k) = 0,
+    $$
+    where H is given by $H(a,k,p,r,V_a,V_k) = \sup_{c,i} \left( V_a {\dot a} + V_k {\dot k} + u \right)$
+    The optimal contols in feedback form are given by
+    $$
+    \begin{cases}
+        H_{q_a} (a_t, k_t, p_t, r_t, V_a, V_k) = r^*_t a_t - c^*_t - p_t i^*_t + F(k_t,p_t),\\
+        H_{q_k} (a_t, k_t, p_t, r_t, V_a, V_k) = g(k_t, p_t) + i^*_t,
+    \end{cases}
+    $$
+    Note that the microeconomic controls are distinct from those in the previous section. Moreover,
+    a macroeconomic policy, when it exists, depends on the microeconomic optimal controls and conversely.
+    \item Transport of the agents' population:
+    Again, the dynamics of the agents' yield a transport equation of the density $\rho(a,k,t)$:
+    $$
+    \rho_t + (()r^* a_t - c^* - p_t i^* + F(k,p_t)\rho)_a + ( (g(k,p_t) + i^*)\rho )_k = 0
+    $$
+    This transport equation coupled with the optimization problem leads to the following mean-field game system:
+    $$
+    \begin{cases}
+        V_t(a,k,t) - \alpha V(a,k,t) + H(a,k,p_t,r_t,V_a,V_k) = 0,\\
+        \rho_t + (H_{q_a} \rho)_a + (H_{q_k} \rho)_k = 0.
+    \end{cases}
+    $$
+    \item Macroeconomic dynamics: 
+    The ammount of consumer goods $a_t$ that is neither consumed nor invested earns an interest rate $r_t$
+    set by the central bank. Therefore, the position of the central bank $A_t$ is governed by
+    $$
+    \dot A_t = -r_t \int a \rho(a,k,t) da\, dk
+    $$
+
+    \item Macroeconomic welfare:
+    The macroeconomic agent wants to control two quantities of the model: the price level of the economy
+    $p_t$ and the total wealth of the system 
+    $$
+    W_t = \int a \rho(a,k,t) + p_t \int k \rho(a,k,t)
+    $$
+    The central bank maximizes the welfare function of the economy given by $U = U(A_t, W_t, p_t)$.
+    The optmization problem faced by the central bank is formulated in terms of the intertemporal counterpart
+    of $U$:
+    $$
+    \sup_{r_t} \int^\infty_t e^{-\beta (s-t)} U(A_s,W_s,p_s) ds.
+    $$
+    When it exists, the optimal control $r^*_t$ will be referred to as the macroeconomic policy.
+    The function $U$ can be taken to be general enough to accomodate various formulations,
+    i.e. keeping the price level, sustaining economic growth.
+    \item Macroeconomic policy: 
+    The macroeconomic policy is determined by the control problem given by the intertemporal counterpart
+    of $U$, where the control $r_t$ affects the macroeconomic state $(A,\rho)$ through the dynamic of 
+    the macroeconomic agent and the MFG. Therefore, the optimization problem of the macroeconomic agent can 
+    be regarded as the control of an ODE and a system of PDEs.
+\end{itemize}
+
+\subsection{Economic growth in the presence of trade imbalances}
+
+    Model of the economy with trade imbalances - this means the market clearing condition fails to hold.
+    Trade imbalances can come from various forces - we'll study the case of a closed economy and
+    the case of international trade.
+
+\subsubsection{Single economy with trade imbalance and regulated prices}
+
+    We say that a trade imbalance happens in the economical system if the price level is not determined
+    by the market clearing condition. In a single economy, this can have multiple causes. 
+    For example, price level $p_t$ may be subjected to distortions - i.e. regulated prices - or
+    follow a dynamic prescribed a priori.
+
+    In this subsection, we'll assume the price is regulated by a central planner (or any other 
+    external entity to the economy).
+
+\begin{itemize}
+    \item Equilibrium condition:
+    \item Microeconomic state variables:
+    \item Microeconomic preferences:
+    \item Optimal control problem:
+    \item Transport of the agents' density:
+    \item Macroeconomic preferences:
+    \item Macroeconomic policies:
+\end{itemize}
+
+\subsubsection{Two countries economy with a trade imbalance}
+
+
 
 \end{document}
