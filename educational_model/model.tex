@@ -32,12 +32,12 @@
     \begin{equation}
         v(a,e,t) = \sup_{\alpha_t, \beta_t} \int_t^\infty e^{- \gamma (s - t)} \left( - \alpha_s^2 - \beta_s^2 + u(a)) \right) ds
     \end{equation}
-    where $u(a)$ is some concave utility function, for example $u(a) = log(a)$.
+    where $u(a)$ is some concave utility function, for example $u(a) = \log(a)$.
 
     If $V$ is regular enough, $V$ satisfies 
-    $$
-    V_t - \gamma V + H(a,e,V_a, V_e) = 0,
-    $$
+    \[
+        V_t - \gamma V + H(a,e,V_a, V_e) = 0,
+    \]
     where $H$ is given by
     $H(a,e,q_a, q_e) = \sup_{\alpha, \beta} \left( q_a {\dot a} + q_e {\dot e}  - \alpha^2 - \beta^2 + u(a) \right)$.
     Controls $\alpha, \beta$ are given in feedback form by 
@@ -49,7 +49,7 @@
     \end{equation}
     \item Time evolution of population density: The population density $\rho$ evolves according to the transport equation:
     \begin{equation}
-        \rho_t + (H_{q_a} \rho)_a + (H_{q_e} \rho)_e = 0.
+        \rho_t + ( H_{q_a} \rho )_a + (H_{q_e} \rho)_e = 0.
     \end{equation}   
 \end{itemize}
 

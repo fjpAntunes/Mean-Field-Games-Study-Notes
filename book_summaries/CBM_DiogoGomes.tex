@@ -725,16 +725,73 @@ price stability with economic growth.
     external entity to the economy).
 
 \begin{itemize}
-    \item Equilibrium condition:
-    \item Microeconomic state variables:
-    \item Microeconomic preferences:
-    \item Optimal control problem:
-    \item Transport of the agents' density:
-    \item Macroeconomic preferences:
-    \item Macroeconomic policies:
+    \item Equilibrium condition: Trade imbalances quantify the difference between the
+    total investment in the economy and the production of capital goods. 
+    Given an extrinsic price level $p_t$, we can quantify the trade imbalance by 
+    $$
+    E_t = \int i d\rho (a,k,t) - \int \Xi(k,p) d\rho (a,k,t).
+    $$
+    The case $E_t > 0$ represents an excess of demand of capital goods, whereas
+    $E_t < 0$ stands for an excess in supply. Therefore, for $E_t \neq 0,$ the
+    market does not clear.
+    \item Microeconomic state variables: Stock of consumer goods and capital accumulation 
+    evolve as before.
+    \item Microeconomic preferences: Agents in the economy have preferences over
+    the trade imbalance $E_t$. These are encoded by the instantaneous utility function
+    $u = u(c_t, i_t,a_t, k_t, p_t, r_t, E_t).$ Hence, the intertemporal counterpart of $u$ becomes
+    $$
+    V(a,k,t) = \sup_{c_i, i_t} \int_t^\infty e^{-\alpha (s-t)} u(c_s, ..., E_s) ds.
+    $$
+    \item Optimal control problem: As before.
+    \item Transport of the agents' density: As before.
+    \item Macroeconomic preferences: The preferences of the central bank are
+    also affected by the trade imbalance. The welfare function becomes 
+    $U = U(A_t,W_t,p_t,E_t)$, where $W_t$ is the total wealth
+    $$
+    W_t = \int a \rho(a,k,t) + p_t \int k \rho (a,k,t)
+    $$
+    And the optimal control problem of the macroeconomic agent is formulated in
+    terms of the intertemporal counterpart of $U$
+    $$
+    \max_{r_t} \int^\infty_t e^{-\beta (s - t)} U(A_s, W_s, p_s, E_s) ds.
+    $$
+    \item Macroeconomic policies: The macroeconomic policy is determined by the
+    control problem above, where the control $r_t$ affects the 
+    macroeconomic state $(A,\rho)$ through the dynamic composed of the macroeconomic
+    dynamics defined in the last section and the MFG. Therefore, the control problem
+    of the macroeconomic agent can be regarded as the control of an ODE and a system
+    of PDEs.
 \end{itemize}
 
 \subsubsection{Two countries economy with a trade imbalance}
+
+Now, trade imbalance is introduced thorugh an export and import flow.
+There are two countrie in the economy, namely country 1 and country 2.
+The economy of the country $i$, with $i = 1,2$ is defined as in the previous
+subsection, with the additional restriction that 
+$$
+E_t^1 + E_t^2 = 0,
+$$
+for every $t \geq 0$.
+Given the interest rates of the countries, the economy is completely characterized
+by two MFGs.
+
+The price level may be identical, or may be regulated. Also, the production
+functions $F^1$ and $F^2$ can be different, reflecting the existence of distinct
+technologies in those countries. 
+
+Each country's economy has an associated MFG system. Each of the central
+banks controls an interest rate $r_t^i$ and seeks to maximize
+$$
+\sup_{r_t^i} \int^\infty_t e^{-\beta (s - t)} U(A_s^i, W_s^i, p_s^i, E_s^i) ds,
+$$
+where the state of the system is described by their MFGs together with their
+assets dynamics
+$\dot A^i_t = - r_t^i \int a^i \rho(aî, k^i, t) da\, dk.$
+
+Therefore, this formulation can be regarded as non-cooperative game for two 
+macroeconomic agents. Their states evolve through the asset dynamics and are restricted
+by the MFGs. Note that the MFG of both countries are coupler through $E_t^1 + E_t^2 = 0$.
 
 
 
