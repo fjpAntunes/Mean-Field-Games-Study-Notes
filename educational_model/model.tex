@@ -12,25 +12,38 @@
 \maketitle
 
 \begin{itemize}
-    \item Microeconomic Variables: Agents hold an ammount of consumer goods $a_t:\mathbb{R} \mapsto [0,\infty)$ and have an educational level $e_t: \mathbb{R} \mapsto [0,1]$. 
-    Agents are distributed on the state space according to probability density $\rho$, $\int \rho(a_t, e_t, t) da\, de = 1$.
-    \item Microeconomic Dynamics: The agents' time evolution on the state space is governed by the system of ODEs:
+    \item Microeconomic Variables: Agents hold an ammount of consumer goods
+     $A_t:\mathbb{R} \mapsto [0,\infty)$ 
+     and have an educational level 
+     $E_t: \mathbb{R} \mapsto [0,\infty]$. 
+    Agents are distributed on the state space according to probability density
+     $\rho$.
+    \item Microeconomic Dynamics: The agents' time evolution on the state space 
+    is governed by the system of ODEs:
     \begin{equation}
         \begin{cases}
-            \dot a_t = w(\rho, e_t)\alpha - c \\
-            \dot e_t = g(e_t)\beta \\
-            \alpha, \beta \in [0,1], \alpha + \beta \leq 1
+            d A_t^i = \left( w(\rho, E^i_t)\alpha_t^i - c  \right) + \sigma^{A,i}_t dB^i_t\\
+            d E_t = \beta^i_t dt + \sigma^{E,i}_t d W_t^i \\
+            \alpha^i_t, \beta^i_t \in [0,1], \alpha_i^t + \beta_i^t \leq 1 \forall i, t
         \end{cases}
     \end{equation}
 
-    Agents control $\alpha$ and $\beta$, which represent the effort invested into working or raising their educational level, respectively. $w(\cdot, \cdot)$ is the wage function,
-    a macroeconomic variable. The function $g(e)$ is an educational growth function, which captures an increase in the difficulty of raising educational capital. We set  
-    $g(e) = e(1-e)$.
-    \item Macroeconomic Variables: The wage function is a macroeconomic variable, which represents the increase in production gained with an increase in educational level.
-    We set $w(\rho, e_t) = (e_t - m_{e_t}) + w_0$, where $w_0 \in \mathbb{R}$ and $m_{e_t} = \mathbb{E}_\rho [e_t]$.
-    \item value function: Agents optimize discounted future utility of consumer goods $u(a)$ versus discounted future effort:
+    Agents control $\alpha$ and $\beta$, which represent the effort invested 
+    into working or raising their educational level, respectively. 
+    $w(\cdot, \cdot)$ is the wage function,
+    a macroeconomic variable.
+
+    \item Macroeconomic Variables: The wage function is a macroeconomic variable, 
+    which represents the increase in production gained with an increase in 
+    educational level.
+    We set 
+    $w(\rho, E^i_t) = \text{sigmoid}(E^i_t - m_{e_t})$ 
+    where
+    $m_{e_t} = \mathbb{E}_\rho [E_t].$
+    \item value function: Agents optimize discounted future utility
+     of consumer goods $u(a)$ versus discounted future effort:
     \begin{equation}
-        v(a,e,t) = \sup_{\alpha_t, \beta_t} \int_t^\infty e^{- \gamma (s - t)} \left( - \alpha_s^2 - \beta_s^2 + u(a)) \right) ds
+        v(a,e,t) = \sup_{\alpha^i_t, \beta^i_t} \int_t^\infty e^{- \gamma (s - t)} \left( - (\alpha_s^i)^2 - (\beta_s^i)^2 + u(A_s^i) \right) ds
     \end{equation}
     where $u(a)$ is some concave utility function, for example $u(a) = \log(a)$.
 
