@@ -4,3 +4,7 @@
 *.fdb_latexmk
 *.log
 *.aux
+*.bbl
+*.bcf
+*.blg
+*.xml
