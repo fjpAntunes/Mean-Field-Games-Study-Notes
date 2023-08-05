@@ -87,6 +87,9 @@ In economic models following the Theory of General Economic Equilibrium, interac
 
 
 \subsection{Analytical point of view}
+
+\input{analyticalPointOfView/equations.tex}
+\input{analyticalPointOfView/style.tex}
 To Do
 \begin{itemize}
     \item Cardaliaguet, Diogo Gomes
@@ -104,9 +107,7 @@ Some reduced mean-field games models can be rigorously derived as the limit of e
 Consider first the single-agent optimal control problem. Suppose that the state of an agent at time $t$ is characterized by the vector $\bx_t \in \RR^d$. In addition, assume that the following differential equation describes the state $\bx_t$:
 \ReducedMfgStateEvolution{x}{\alpha}
 
-$$
-\alpha
-$$
+
 where $\bv_t$ is a control and $x\in\RR^d$ is a given initial condition. This agent seeks to maximize the functional:
 \ReducedMfgPayoffFunctional{x}{v}{u}{u_T}{g[\rho]}
 where $u$ is a Lagrangian, $u_T$ is a terminal payoff and $g[\rho]$ is a term to be made precise later. 
