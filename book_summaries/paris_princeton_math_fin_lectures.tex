@@ -4,8 +4,12 @@ MFG is a branch of game theory -> Set of concepts, mathematical tools, theorems,
 Applied in economy, sociology, engineering, architecture or urban planning.
 
 "Toy models" -> game theoretical models are not supposed to be taken literally, or applied directly to real life situation. In some sense, they're more like fables. Take Prisoner's dilemma, for instance: shows an archetype of strategic interactions that can be recognized in many different situations.
+
 Introducing MFG through toy models is a didatic way of presenting the concepts and mathematics of the theory.
-\subsection{All the roads lead to mean field games}
+
+\subsection{Three roads for Mean Field Games Theory}
+
+Conceptually, there are three approaches to mean field games theory - from physics, from game theory and from economic theory.
 
 \subsubsection{First road: from physics to mean field games}
 In particle physics, situations with large number of particles are handled using mean field theory. Instead of modelling all the inter-particle interactions, one introduces a "mean field" which serve as mediator for the interactions. Each particle both contributes to and is influenced by the mean field.
@@ -15,4 +19,13 @@ In order to use this approximation, the inter-particle interactions must be suff
 Mean field game theory adapts this methodology to situations in which agents interact in strategic situations. The challenge is to take into account not only the ability of agents to make decisions, but also the interaction between strategies: each player's strategy tries to take into account the other player's strategy.
 \textbf{This changes the nature of the mean field: it is not an statistic on the domain of particle states anymore, but rather a statistic on the domain of strategies and information.}
 
-This route sheds more light into the methodology, i
+Although the term "mean-field" is borrowed from Physics, mean field game theory does not restrain itself to applying physical models to economy. Instead, as a branch of game theory, mean field games models aim to \textit{explain} rational behaviour through the structure of the agent's interactions and payoffs. \cite{PPLecturesOnMathFinance}
+
+\subsubsection{Second Road: From Game Theory to Mean Field Games}
+
+In game theory, $N$-player games quickly become intractable as $N$ gets large. Mean Field Games provide a way to approximate the limiting case as $N \to \infty$ for a class of $N$-player game which respect a form of anonymity: direct interactions between players are comparatively small, and players can be interchanged without changing the interaction. This is the case when interactions are mediated through some average of the player's state, for instance.
+The mean field approach consists in approximating the $N$ players by a continuum of players distributed through the state space. Each agent formulates his optimal response given the distribution of players, and conversely this optimal response implies an evolution through time for the player's distribution.
+\textit{In layman's terms, each player formulates his strategy against the crowd, and the crowd evolves according to each player's strategy.}
+
+\subsubsection{Third Road: From Economics to Mean Field Games}
+In economic models following the Theory of General Economic Equilibrium, interactions are mediated by prices. Direct interactions of agents are excluded from these economic models. However, systemic economic effects such as externalities, public goods, etc give rise to interactions which are not mediated by price. Both price formation and systemic effects can be modelled by a mean field type model. This way, MFG theory lends itself as a tool of economic analysis.

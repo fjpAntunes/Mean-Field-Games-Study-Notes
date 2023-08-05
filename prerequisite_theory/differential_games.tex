@@ -1,21 +1,36 @@
-\section{Differential Games}
-\subsection{Introduction}
 \subsubsection{Key Concepts}
 \begin{enumerate}
     \item \textit{Game Theory} - area of mathematics concerned with the interaction of \textit{strategies} adopted by \textit{players} in order to maximize their \textit{payoff}. At the end of the day, a game is a system of optimization problems for which there is some interaction on the optimization target.
     \item \textit{Strategy} - an entity $x_i \in \mathcal{X}_i$ which represents one option, or control, that a player is allowed to choose, and which will be an input for the payoff function. Players want to choose their strategy in order to maximize their own payoff, while taking into account that the other players are doing the same thing.
+    \item \textit{Pure vs Randomized (or mixed) Strategies}: A randomized strategy for player $i$ is a probability measure $\mu_i$ on the set of strategies $X_i$. A pure strategy is a randomized strategy with all of its mass concentrated on a single $x_i \in \mathcal{X}_i$%.  https://en.wikipedia.org/wiki/Strategy_(game_theory)#Mixed_strategy
     \item \textit{Player} - one player is equivalent to one dimension of the system of optimization problems.
-    \item \textit{Payoff} - the optimization target of each player. The payoff for every player depends on the strategy chosen by every player.
-    \item \textit{Equilibria:} Nash Equilibrium, Stackelberg Equilibrium, Pareto Optimality.
+    \item \textit{Payoff} - the optimization target of each player. The payoff for every player depends on the strategy chosen by every player. In the case of randomized strategies, the payoff is the expected value of the payoff function under the joint probability measure of the straties of all players.
+    \item \textit{Solution concepts:} Nash Equilibrium, Stackelberg Equilibrium, Pareto Optimality.
         
         In general players cannot get the maximum payoff together. Different concepts of equilibrium are introduced in order to propose solutions to different kinds of games, which might differ by choice structure or cooperation possibility. Let`s consider the 2-dimensional case of two players, with sets of strategies denoted by $A,B$ and payoff functions $J_i: A\times B \mapsto \mathbb{R}$ for $i$ in $\{A,B\}$
     \begin{itemize}
-        \item \textit{Nash Equilibrium}: This is a solution concept for a non-cooperative game. It is a situation in which no player can increase his payoff by changing his strategy if the other players do not change theirs. In math terms, if $(a^*,b^*)$ is a Nash Equilibrium, $\forall a \in A, b\in B$, we have $J_A(a,b^*) \leq J_A(a^*,b^*)$ and $J_B(a^*,b) \leq J_B(a^*,b^*)$. 
-        \item \textit{Stackelberg Equilibrium}: Solution for a game with asymmetry of information. Let $R^B(a)$ be the set of best possible replies of Player $B$ if Player $A$ has announced the strategy $a$, that is, $R^B(a) = \{b^' \in B : J_B(a,b) \leq J_B(a,b^'), \forall b \in B\}$. Then, a pair of strategies $(a^*,b^*) \in A\times B$ is a \textit{Stackelberg Equilibrium} if $b^* \in R^B(a^*)$ and $J_A(a,b)\leq J_A(a^*, b^*),\ \forall(a,b), b\in R^B(a), a \in A$
+        \item \textit{Pareto Optimality}: A pair of strategies $(a^*, b^*)$ is said to be \textbf{Pareto optimal} if there is no other pair $(a,b) \in A \times B$ such that
+        $$
+        J_A (a,b) > J_A(A^*, b^*) \text{ and } J_B(a,b) \geq J_B(a^*, b^*),
+        $$
+        or
+        $$
+        J_B(a,b) > J_B(a^*, b^*) \text{ and } J_A(a,b) \geq J_A(a^*,b^*).
+        $$
+        This means that is not possible to striclty increase the payoff of one player without strictly decreasing the payoff of the other.
+        \item \textit{Nash Equilibrium}: A pair of strategies $(a^*,b^*)$ is said to be a \textbf{Nash Equilibrium} if $\forall a \in A, b\in B$, we have $J_A(a,b^*) \leq J_A(a^*,b^*)$ and $J_B(a^*,b) \leq J_B(a^*,b^*)$.
+        This is a solution concept for a non-cooperative game. It is a situation in which no player can increase his payoff by changing his strategy if the other players do not change theirs. 
+        \item \textit{Stackelberg Equilibrium}: Solution for a game with asymmetry of information. Let $R^B(a)$ be the set of best possible replies of Player $B$ if Player $A$ has announced the strategy $a$, that is, 
+        $$R^B(a) = \{b' \in B : J_B(a,b) \leq J_B(a,b'), \forall b \in B\}.$$
+        Then, a pair of strategies $(a^*,b^*) \in A\times B$ is a \textbf{Stackelberg Equilibrium} if 
+        $$b^* \in R^B(a^*) \text{ and } J_A(a,b)\leq J_A(a^*, b^*),\ \forall(a,b), b\in R^B(a), a \in A.$$
     \end{itemize}
     
-    \item \textit{Information and Knowledge}
     \item \textit{completely cooperative and zero-sum}
-    \item \textit{Information structure}: \textbf{Open loop} and \textbf{feedback} (or \textbf{markovian}) strategies
+    \item \textit{Information structure}: 
+
+    % Define a differential game as setting for the strategies
+    The information available for the players determine the possible strategies to be taken. This means that different game situations might arise for different information structures. Two particular information structures of notice are the \textbf{open loop} case and the \textbf{feedback case}. 
+    \textbf{Open loop strategies} are strategies that depend only on time $t \in [0,T]$, which arise in situations where the state of the system cannot be known. Thus, the set $X_i$ of strategies available for the $i$-th player wiil consist of all measurable functions $t \mapsto u_i(t)$ from $[0,T]$ into $U_i$. \textbf{Feedback} (or \textbf{Markovian}) strategies arise when each player $i$ can observe the state of the system, but does not know the strategy of other players. In this case, the strategy for player $i$ can depend on both the time and the state, that is, the set of available strategies for player $i$ is the set of measurable functions $(t,x) \mapsto u_i(t,x)$ from $[0,T] \times \mathbb{R}^n$ into $U_i$ 
     \item \textit{Target and Game set}
 \end{enumerate}

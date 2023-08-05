@@ -22,8 +22,8 @@
     is governed by the system of ODEs:
     \begin{equation}
         \begin{cases}
-            d A_t^i = \left( w(\rho, E^i_t)\alpha_t^i - c  \right) + \sigma^{A,i}_t dB^i_t\\
-            d E_t = \beta^i_t dt + \sigma^{E,i}_t d W_t^i \\
+            d A_t^i = \left( w(\rho, E^i_t)\alpha_t^i - c  \right)dt + \sigma^{A} dB^i_t\\
+            d E_t = \beta^i_t dt + \sigma^{E} d W_t^i \\
             \alpha^i_t, \beta^i_t \in [0,1], \alpha_i^t + \beta_i^t \leq 1 \forall i, t
         \end{cases}
     \end{equation}
@@ -52,7 +52,13 @@
         V_t - \gamma V + H(a,e,V_a, V_e) = 0,
     \]
     where $H$ is given by
-    $H(a,e,q_a, q_e) = \sup_{\alpha, \beta} \left( q_a {\dot a} + q_e {\dot e}  - \alpha^2 - \beta^2 + u(a) \right)$.
+    $$
+    H(a,e,q_a, q_e) = 
+    \sup_{\alpha, \beta} 
+    \left( q_a \left( w(\rho, a)\alpha - c  \right) +
+    q_e \beta 
+    - \alpha^2 - \beta^2 + u(a) \right).
+    $$
     Controls $\alpha, \beta$ are given in feedback form by 
     \begin{equation}
         \begin{cases}

@@ -1,0 +1,536 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\input{style.tex}
+
+\title{Qualificação}
+\author{Felipe Antunes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+
+\section{Introduction}
+
+Mean field games is a branch of game theory, which is a set of concepts, mathematical tools, theorems, simulations methods and algorithms intended to model situations where agents make decisions strategically. Mean field game theory focus specifically a game with an infinite number of identical (symmetric) players. The infinite number of players are represented by their probability distribution over the state (or action) space.
+
+Analysis of MFG focus on the interaction between a representative player sampled from the distribution, and the distribution itself. In essence, the representative player formulates his best response to the crowd. However, as every player is equal, the best response of the representative player determines the evolution of the crowd.
+
+
+Applications focus mostly on Nash equilibria or social optimum, respectively mean field game and mean field control.
+Mean field games concern the "competitive" setting, where each player decides his actions by means of solving  his own optimization problem. Mean field control, on the other hand, describe the "cooperative" setting, where the player's actions are derived from an optimization problem on the player's distribution as a whole. 
+
+As an illustrative example, consider crowd motion: a crowd in a music festival could be modelled as a mean field game, with each individual attempting to optimize his position considering the loudness and the crowd's density. However, a military parade could be modelled as a mean field control, with each individual given orders to follow by a commander who wants to optimize the troop's distribution. 
+
+In both cases, the optimality conditions give rise to coupled equations with a forward-backward structure: the forward equation describe the evolution of the distribution of players, while the backward equation describes the optimization problem for the representative player. The problem can be formulated in an analytical approach or in a probabilistic approach. 
+In the analytical formulation, we have a system composed of a Fokker-Plank PDE with initial condition and a Hamilton-Jacobi-Bellman PDE with terminal condition \cite{lasry2007mean}.
+As for the probabilistic formulation, we have a system of Forward-Backward SDE with McKean-Vlasov interactions \cite{carmona2013mean}. 
+
+\if{
+Some fields of application for MFG are 
+\begin{itemize}
+    \item economics: financial engineering [citations] and macroeconomic models [citations],
+    \item population dynamics [citations], crowd motion [] and epidemiology [citations]
+    \item engineering: energy production and management [citations], security and communication [citations], autonomous vehicles [citations].
+\end{itemize}
+}\fi
+
+%"Toy models" -> game theoretical models are not supposed to be taken literally, or applied directly to real life situation. In some sense, they're more like fables. Take Prisoner's dilemma, for instance: shows an archetype of strategic interactions that can be recognized in many different situations.
+
+%Introducing MFG through toy models is a didatic way of presenting the concepts and mathematics of the theory.
+
+\section{Theoretical Review - Mean Field Games Theory}
+
+\subsection{Theoretical Review outline}
+
+Mean field games are a framework for approximating Nash equilibria of certain kinds of games with a large number of players.
+There are two equivalent ways of formulating a mean field game - through a system of coupled partial differential equations, or through a system of forward-backward stochastic differential equations.
+
+In this section, we will explore the theory of mean field games.
+We will begin by reviewing important concepts in game theory. 
+Then, we shall review both the PDE system point of view and the FBSDE point of view. 
+Equiped with an understanding of both point of views, we will analyze the limit of N-player games and its relationship to MFG.
+Following the theoretical subsections, we will explore numerical solutions for MFG and applications.
+We shall end the section by analyzing a model for human capital development.
+We refer the reader to Appendix \ref{appendix-game-theory} for a review of game theory concepts, and to Appendix \ref{appendix-mathematical-background} for a review of necessary mathematical background.
+
+
+\subsection{Three roads for Mean Field Games Theory}
+
+Conceptually, there are three approaches to mean field games theory - from physics, from game theory and from economic theory.
+
+\subsubsection{First road: from physics to mean field games}
+In particle physics, situations with large number of particles are handled using mean field theory. Instead of modelling all the inter-particle interactions, one introduces a "mean field" which serve as mediator for the interactions. Each particle both contributes to and is influenced by the mean field.
+
+In order to use this approximation, the inter-particle interactions must be sufficiently weak or regular.
+
+Mean field game theory adapts this methodology to situations in which agents interact in strategic situations. The challenge is to take into account not only the ability of agents to make decisions, but also the interaction between strategies: each player's strategy tries to take into account the other player's strategy.
+\textbf{This changes the nature of the mean field: it is not an statistic on the domain of particle states anymore, but rather a statistic on the domain of strategies and information.}
+
+Although the term "mean-field" is borrowed from Physics, mean field game theory does not restrain itself to applying physical models to economy. Instead, as a branch of game theory, mean field games models aim to \textit{explain} rational behaviour through the structure of the agent's interactions and payoffs. \cite{cousin2010paris}
+
+\subsubsection{Second Road: From Game Theory to Mean Field Games}
+
+In game theory, $N$-player games quickly become intractable as $N$ gets large. Mean Field Games provide a way to approximate the limiting case as $N \to \infty$ for a class of $N$-player game which respect a form of anonymity: direct interactions between players are comparatively small, and players can be interchanged without changing the interaction. This is the case when interactions are mediated through some average of the player's state, for instance.
+The mean field approach consists in approximating the $N$ players by a continuum of players distributed through the state space. Each agent formulates his optimal response given the distribution of players, and conversely this optimal response implies an evolution through time for the player's distribution.
+\textit{In layman's terms, each player formulates his strategy against the crowd, and the crowd evolves according to each player's strategy.}
+
+\subsubsection{Third Road: From Economics to Mean Field Games}
+In economic models following the Theory of General Economic Equilibrium, interactions are mediated by prices. Direct interactions of agents are excluded from these economic models. However, systemic economic effects such as externalities, public goods, etc give rise to interactions which are not mediated by price. Both price formation and systemic effects can be modelled by a mean field type model. This way, MFG theory lends itself as a tool of economic analysis.
+
+
+
+
+\subsection{Analytical point of view}
+To Do
+\begin{itemize}
+    \item Cardaliaguet, Diogo Gomes
+    \item System statement - HJB and FKP
+    \item Existence of solutions - Viscosity Solutions
+    \item Uniqueness
+    \item Approximate Nash Equilibrium
+\end{itemize}
+
+\subsubsection{Reduced Mean-field games}\label{reduced_mfg}
+Among the main motivations for studying MFG are the connections with the theory of $N$-player differential games. A solution of the MFG formalizes the limit case of Nash equilibrium when $N \to \infty$ for $N$-person differential games.
+
+Some reduced mean-field games models can be rigorously derived as the limit of equations characterizing an $N$-player differential game. This subsection presents a heuristic derivation.
+
+Consider first the single-agent optimal control problem. Suppose that the state of an agent at time $t$ is characterized by the vector $\bx_t \in \RR^d$. In addition, assume that the following differential equation describes the state $\bx_t$:
+\ReducedMfgStateEvolution{x}{\alpha}
+
+$$
+\alpha
+$$
+where $\bv_t$ is a control and $x\in\RR^d$ is a given initial condition. This agent seeks to maximize the functional:
+\ReducedMfgPayoffFunctional{x}{v}{u}{u_T}{g[\rho]}
+where $u$ is a Lagrangian, $u_T$ is a terminal payoff and $g[\rho]$ is a term to be made precise later. 
+
+Define
+\ReducedMfgHamiltonian{x}{p}{v}{u}
+We know from Section \eqref{deterministic_optimal_control} that under some regularity assumptions, the value function $V$ associated with the optimal control problem \eqref{deterministic_optimal_control:optimal_control_problem} 
+solves the Hamilton-Jacobi equation in $\RR^d \times [t_0,T)$:
+\ReducedMfgStateHamiltonJacobiTerminalValueProblem{V}{g[\rho]}{u_T}
+Moreover, the optimal control $\bv^*$ is given in feedback form by
+$$\bv^* = H_p(\bx, D_x V(\bx, t)).$$
+The state of a rational agent will evolve according to \eqref{reduced_mfg:state_evolution} with the control $\bv$ equal to the feedback optimal control $\bv^*$.
+
+Consider then a population of rational and indistinguishable agents. The distribution of agents is given by a probability measure $\rho$. This population of agents is subjected to the same optimal control problem. Therefore, the state of each individual is driven by
+\ReducedMfgFeedbackStateEvolution{x}{s}{V}
+
+The function $g$ encodes the dependence of the agent's cost functional on the density of the entire population. This implies that the optimization problem faced by the agents depends on the evolution of $\rho$. Conversely, the evolution of $\rho$ depends on a vector field determined by $V$, which is derived from the control problem of the agents.\footnote{Chicken and the egg problem.}
+
+From Section \eqref{transport_eq}, we know that if $\bx$ satisfies \eqref{reduced_mfg:feedback_state_evolution}, then the evolution of the density $\rho$ in time satisfies a transport equation in $\RR^d \times (t_0, T]$:
+\ReducedMfgDensityTransportInitialValueProblem{V}{\rho}
+
+The mean-field game system associated with this problem is the system of PDE's:
+\ReducedMfgMeanFieldGameSystem{V}{\rho}{u}{g[\rho]}
+coupled with the boundary conditions
+\ReducedMfgMeanFieldGameBoundaryConditions{V}{\rho}{u}{g[\rho]}
+
+
+
+
+\subsection{Probabilistic point of view}
+
+\begin{itemize}
+    \item Reference - Carmona's Book.
+    \item Intro and Definitions - 3.2
+Mean Field Games can be proposed as a system of Forward-Backward Stochastic Differential Equations (FBSDEs). In order to illustrate this, we will construct the system, following the same logical development as in Section \ref{PDE_formulation_section}
+
+Suppose a typical player formulates his best response given the actions of all other players. This amounts to solving an optimal control problem
+\begin{equation}
+\begin{split}
+\begin{cases}
+   \inf_{\alpha \in \mathbb{A}} \EE \left[ \int_0^T f(t,X_t, \mu_t, \alpha_t) dt + g(X_T, \mu_T)\right]  \\
+    \text{subject to}\\
+     dX_t = b(t,X_t, \mu_t, \alpha_t) dt + \sigma(t, X_t, \mu_t) dW_t, \\ 
+     t \in [0,T], X_0 = \xi.
+\end{cases}
+\end{split}
+\end{equation}
+    Where $X_t$ is the state of the typical player, $\alpha_t$ is the player's action, and $\mu_t$ represents the impact of the strategies chosen by other players. We assume there is no control in $\sigma$. In the case of mean field games without common noise, $\mu_t$ is deterministic - it is the marginal distribution at time $t$ of the state of a generic player in the population.
+
+    The value function for this optimal control problem has a probabilistic representation as the solution of a BSDE:
+\begin{equation}
+    \begin{split}
+    \begin{cases}
+        dY_t = - f(t,X_t, \mu_t, \alpha_t) dt + Z_t \cdot dW_t, \quad t \in [0,T],\\
+        Y_T = g(X_T, \mu_T)
+    \end{cases}
+    \end{split}
+\end{equation}
+    where $(X_t)_{0 \leq t \leq T}$ is the controlled process obtained by choosing for $(\alpha_t)_{0\leq t \leq T}$ the specific control 
+    $$
+    \alpha_t = {\hat \alpha} \left( t, X_t, \mu_t, \left(\sigma(t,X_t,\mu_t)^{-1}\right)^{\dagger} Z_t \right), \quad t \in [0,T].
+    $$
+    
+    If we require that the representative player behaves optimally, then $\hat \alpha$ is given by:
+    $$
+    {\hat \alpha} \left( t, x, \mu, y \right) \in \arg\min_{\alpha \in A} H(t,x,\mu,y,\alpha),
+    $$
+where $H$ is the reduced Hamiltonian 
+$$H(t,x,\mu,y,\alpha) = y\cdot b(t,x,\mu, \alpha) + f(t,x,\mu, \alpha).$$
+This choice for $\alpha_t$ couples $dX_t$ and $dY_t$ into a BSDE with deterministic coefficients taking the measure flow $(\mu_t)_{0 \leq t \leq T}$ as input.
+Setting 
+$$
+B(t,x,\mu,y,z) = b\left(t,x,\mu, {\hat \alpha} (t,x,\mu,\sigma(t,x,\mu)^{-1 \dagger}  ))\right),
+$$
+$$
+F(t,x,\mu,y,z) = f\left(t,x,\mu, {\hat \alpha} (t,x,\mu,\sigma(t,x,\mu)^{-1 \dagger}  ))\right)
+$$
+we have the following FBSDE:
+\begin{equation}
+\begin{split}
+     \begin{cases}
+         dX_t = B(t,X_t,\mu_t,Y_t,Z_t) dt + \sigma(t,X_t,\mu_t) dW_t,\\
+         dY_t = - F(t,X_t,\mu_t,Y_t,Z_t) dt + Z_t dW_t, \quad t \in [0,T],\\
+         Y_T = G(X_T, \mu_T).
+     \end{cases}   
+\end{split}
+\end{equation}
+
+Finally, note that in the Nash equilibrium every agent is behaving optimally. This means that the flow of the population distribution represented by 
+${\bf \mu} = (\mu_t)_{0 \leq t \leq T}$  
+should match the flow of marginal distributions of states for the representative agent - that is, the law
+$\mathcal{L}(X_t)_{0 \leq t \leq T}$
+of the forward process 
+$(X_t)_{0 \leq t \leq T}$.
+
+Writing the resulting McKean-Vlasov FBSDE in full:
+\begin{equation}
+\begin{split}
+     \begin{cases}
+         dX_t = B(t,X_t,\mathcal{L}(X_t),Y_t,Z_t) dt + \sigma(t,X_t,\mathcal{L}(X_t)) dW_t,\\
+         dY_t = - F(t,X_t,\mathcal{L}(X_t),Y_t,Z_t) dt + Z_t dW_t, \quad t \in [0,T],\\
+         Y_T = G(X_T, \mathcal{L}(X_T)).
+     \end{cases}   
+\end{split}
+\end{equation}
+
+\item Commentario no paralelo entre formulação estocástica e formulação analítica
+\item Existência - SMP, Unicidade - Lasry Lions Monoticity
+
+    \item FBSDE - 3.2
+    \item LQ MFG 3.5
+\end{itemize}
+
+
+\subsection{N-player game limit point of view}
+To Do
+\begin{itemize}
+    \item What is the limit of a game with respect to the number of players? What notion of limit are we considering?
+    \item Under what conditions can we guarantee that the mean field game approximates the N-player game?
+    \item Follow Cardaliaguet's approach
+\end{itemize}
+
+
+
+\subsection{Numerical Solutions - Classical}
+
+
+Most methods are based on optimality conditions in terms of PDEs or SDEs with suitable discretization schemes, such as finite differences, semi-Lagrangian schemes or probabilistic approaches. These methods are well understood and work well in small dimensions. However, these methods do not perform so well for MFG with high dimensional states or controls, as they suffer from the curse of dimensionality.
+To Do
+\begin{itemize}
+    \item Refer to Lauriere notes on numerical solutions
+\end{itemize}
+
+\subsection{Numerical Solutions - ML}
+Stochastic methods based on Neural Networks have been proposed as a solution for the dimensionality limitation of classical methods.
+To Do
+\begin{itemize}
+    \item Refer to Lauriere Learning MFG
+    \item Artigo Yuri
+\end{itemize}
+
+\subsection{Applications}
+To Do
+\begin{itemize}
+    \item Follow Carmona's application review
+    \item Carmona's article 
+    
+    Applications in Financial Engineering:Systemic Risk, Price Impact and optimal execution, Models for Bank runs
+    
+    Applications in Energy Markets and Environment: MFG Models for Oil Production, MFG models for the eletricity markets and the Grid, Environment Economics.
+
+    Applications to Macroeconomic Growth Models
+
+    Applications to Contract theory and moral hazard.
+\end{itemize}
+
+\subsection{Example: Pareto distribution of salaries}
+
+\begin{itemize}
+    \item chosen because it is similar to what we want to propose.
+    \item we follow \cite{cousin2010paris}
+    \item Players endeavor to increase their human capital in order to increase their salary
+    \item Increasing human capital leads to increased competence and therefore salary. At the same time, reduces people one is competing with, which also increases salary. However, there is a cost to increasing human capital.
+    \item stylized world with no liquidity constraint.
+    \item Consider a large number of agents, each having human capital $x$. This human capital is distributed with pdf $m$, cdf $F$ and tail function $\hat F = 1 - F$.
+\end{itemize}
+
+Define the salary function:
+\begin{equation}
+    w(x, m(t,x)) = \begin{cases}
+        C \frac{x^\alpha}{m(t,x)^\beta}, \text{ if x is in the support of } m(t,\cdot),\\
+        0,\text{ otherwise.}
+    \end{cases}
+\end{equation}
+If $m$ is decreasing in $x$, we find the effects described.
+The cost of increasing human capital is given in terms of the growth intensity function $a: dx_t = a(t,x_t) dt$:
+\begin{equation}
+    H(a, \hat F(t,x)) = \frac{E}{\varphi} \frac{ a^\varphi}{\hat F(t,x)^\delta}
+\end{equation}
+where $E$ denotes inefficiency in human capital growth. Cost depends on the growth intensity $a$ but also on the proximity to the technological frontier, due to the term $\hat F$.
+
+Note that the terms on $m$ and $\hat F$ induce an mean field type interaction.
+
+The parameters $\alpha, \beta, \delta$ and $\varphi$ are positive. Suppose also that $\alpha + \beta = \varphi, \beta = \delta$ and $\varphi > 1$. 
+
+Assume that agents want to maximize their discounted wealth over time:
+\begin{equation}
+    \max_{(x_s), x_0 = x} \int_0^\infty [w(x_s, m(s,x_s)) - H(a(s,x_s), \hat F(s,x_s))] e^{-rs} ds
+\end{equation}
+Assume also that the initial distribution of agents follow a Pareto distribution:
+\begin{equation}
+    m(0,x) = k\frac{1}{x^{k+1}} 1_{x \geq 1},
+\end{equation}
+The initial distribution of salaries is also Pareto, which conforms to reality.
+Introducing the value function $V(t,x)$:
+\begin{equation}
+   V(t,x) = \max_{(x_s), x_0 = x} \int_t^\infty [w(x_s, m(s,x_s)) - H(a(s,x_s), \hat F(s,x_s))] e^{-r(s-t)} ds
+\end{equation}
+we have that the mean field games PDEs for this model are:
+\begin{equation}
+    \begin{split}
+        &\text{(HJB)}\quad \partial_t V + \max_a\left(a\partial_x V + w(x, m(t,x)) - H(a, \hat F(t,x)) \right) - rV = 0,\\
+        &\text{(FKP)}\quad \partial_t m(t,x) + \partial_x( a(t,x) m(t,x)) = 0.
+    \end{split} 
+\end{equation}
+where $a(t,x) = \arg\max_a \left( a \partial_x V + w(x,m(t,x)) - H(a, \hat F(t,x)) \right)$ is the optimal control.
+The function $h: \RR_+ \mapsto \RR, h(a) = \left( a \partial_x V + w(x,m(t,x)) - H(a, \hat F(t,x)) \right)$ has a critical point at 
+$$a^* = \left(\frac{\hat F(t,x)^\delta}{E} \partial_x V\right)^{(\varphi - 1)},$$
+and is concave, therefore $a^* = \arg\max_a h(a)$. Substituting back into the PDE system, we get
+\begin{equation}
+    \begin{split}
+        &\text{(HJB)}\quad \partial_t V + C \frac{x^\alpha}{m(t,x)^\beta} + \frac{\varphi - 1}{\phi} \frac{1}{E^{\frac{1}{\varphi - 1}}} {\hat F}(t,x)^{\frac{\beta}{\varphi - 1}} (\partial_x V)^{\frac{\phi}{\phi - 1}} - rV = 0,\\
+        &\text{(FKP)}\quad \partial_t m(t,x) + \partial_x\left( \left( \frac{\hat F^\beta(t,x)}{E} \partial_x V(t,x)\right) m(t,x)\right) = 0.
+    \end{split}
+\end{equation}
+The system actually has analytical solutions, given some more constraints.
+\begin{proposition}
+    If $\varphi(\varphi - 1) < \beta k$, there is a unique triple $(V,m,\gamma)$ that satisfies both the PDEs and an additional equation on the optimal control function
+    $a(t,x) = \gamma x$.
+
+    Solutions are given by
+\begin{equation}
+    \begin{split}
+        m(t,x) &= k \frac{e^{\gamma k t}}{x^{k+1}} 1_{x \geq e^{\gamma t}},\\
+        V(t,x) &= B e^{-\beta k \gamma t} x^{\beta k + \varphi} 1_{x \geq e^{\gamma t}},    
+    \end{split}
+\end{equation}
+where $\gamma$ and $B$ are related by $\gamma = \left(\frac{B}{E} (\beta k + \varphi)\right)^{\frac{1}{\varphi - 1}}$
+\end{proposition}
+% Candidates
+% Flocking
+% Pareto distribution
+
+\section{Model Proposal}
+\subsection{Economic Theory Review}
+
+\subsubsection{ Mean Field Models (or similar) in Economic Research}
+\begin{itemize}
+    \item Moll, Lucas
+    \item Models for Heterogeneous Agents
+    \item Gabaix, Dynamics of Inequality, 2016 - Sharp rise in inequality not modelled accurately by standard random growth models. The paper suggests some changes to standard models that address this issue: type dependence and scale dependence in wealth accumulation.
+    \item TAPPING INTO TALENT - Model for economy where agents can chose between working on industry or working as a researcher. Has an educational component - agents can only chose to become researchers if they pursue an PhD. Pursuing a PhD has "innate talent" and economic restrictions. Researcher's wage are calculated by solving for the market equilibrium in a free market of ideas. Model is calibrated to census data from Denmark and used to study counterfactual policy exercises.
+    \item Non market interactions - Scheinkman - check for more recent references
+\end{itemize}
+
+\subsubsection{Econometric Research on Education}
+\begin{itemize}
+    \item Articles with stylized facts - Tapping Into Talent
+    \item articles that measure interesting behaviour that we hope the model can replicate.
+    \item articles that argue in favor of the importance of this research
+\end{itemize}
+
+
+\subsection{Linear Quadratic Model}
+\begin{enumerate}
+    \item Analysis
+    \item Semi-analytic solution
+    \item Comparison with N-player
+\end{enumerate}
+
+
+\section{Conclusion}
+
+\appendix
+\addcontentsline{toc}{section}{Appendices}
+\section*{Appendices}
+\section{A little bit of game theory}\label{appendix-game-theory}
+To Do
+\begin{itemize}
+    \item Games - definition - ok, 
+    \item Strategies - ok, 
+    \item Pure Strategies vs Mixed Strategies, - ok
+    \item Nash Equilibrium, - ok 
+    \item Stackelberg Equilibrium,  - ok
+    \item Open Loop, - ok
+    \item Closed Loop. - ok
+    \item Seminal works in game theory
+    \item Historical development
+\end{itemize}
+
+\input{prerequisite_theory/differential_games}
+
+\section{Mathematical background}\label{appendix-mathematical-background}
+
+\subsubsection{Deterministic optimal control problems}\label{deterministic_optimal_control}
+
+Single agent whose state is denoted by $x_t \in \RR^d$, for $t_0 \leq t\leq T$, where $T > 0$ is arbitrarily fixed. The case $T< \infty$ is referred to as the finite horizon optimal control problem.
+
+$$\dot x_t = f(v_t,x_t),$$
+
+where $f: \RR^m \times \RR^d \mapsto \RR^d$ is a given function and $v_t \in \RR^m$ is a control. Let $\mathcal{W} \coloneqq \left\{ v : [t_0, T] \mapsto W, v \in X \right\}$, where $X$ is a suitable function space.
+
+Agent's preferences are expressed through a utility functional $J(u_t, x_t; t)$. For $t \in [t_0,T)$ this functional is given by 
+
+$$
+J(u,x,t) = \int_t^T u(v_s, x_s) ds + \Psi(x_T),
+$$
+where $u : \RR^m\times \RR^d \mapsto \RR$ is the instantaneous utility (or running cost) and $\Psi : \RR^d \mapsto \RR$ is the terminal payoff.
+
+In the case $T = \infty$, we introduce a discount rate $\beta > 0$ and consider
+$$
+J_\beta (u,x;t) = \int_t^\infty e^{-\beta (s - t) u(v_s, x_s)} ds 
+$$
+
+The focus of this section will be a variant of the last problem, namely:
+
+$$
+J_\alpha (u,x;t) = \int_t^\infty e^{-\alpha (s - t) u(v_s, x_s)} ds + e^{-\alpha (T -t)} \Psi(x_T) 
+$$
+
+The single agent seeks to maximize $J_\alpha$ over all possible controls.
+We define the value function $v(x,t)$ as
+
+$$
+V(x,t) = \sup_{v\in \mathcal{W}} J_\alpha (v, x ; t).
+$$
+This function is the maximum possible payoff for the agent at state $x$ in time $t$.
+
+Assumptions on $f$ (for the problem to be addressed rigorously):
+$$f \in C(\RR^m \times \RR^d, \RR^d),\, |f(v, x_1) - f(v, x_2)| \leq C_\theta |x_1 - x_2|, x_1, x_2 \in \RR^d, v\in \RR^m, |v| \leq \theta$$
+
+If the Value function is of class $C^1(\RR^d \times [t_0,T])$, it solves  a nonlinear partial differential equation known as the Hamilton-Jacobi equation:
+$$V_t(x,t) - \alpha V(x,t) + H(x,D_x V(x,t)) = 0,$$
+where the Hamiltonian H is defined as 
+$$H(x,p) = \sup_{v\in W} [p \cdot f(v,x) + u(v,x)],$$
+that is, the Legendre transform of the running cost $u$.
+The optimal control $v_t^*$ is given by 
+$$ H_p (x^*, D_x V(x^*,t)) = f(v^*, x^*)$$
+
+
+\begin{proposition}[Dynamic programming principle]
+    Let $r \in (t_0, T)$ be fixed and assume that $V$ is a value function. Then we have
+    $$
+    V(x,t) = \sup_{v\in \mathcal{W}} \left( \int_r^T e^{-\alpha (s-r)} u(v_s,x_s) ds + e^{-\alpha (r - t) V(x_r,r)} \right).
+    $$
+\end{proposition}
+
+\begin{proof}
+    To do
+\end{proof}
+
+\begin{proposition}[Verification Theorem]
+    Let $U \in C^1(\RR^d \times [t_0, T])$ be a solution to 
+    $$
+    U_t(x,t) - \alpha U(x,t) + H(x, U_x(x,t)) = 0\, \text{(HJ)}
+    $$
+    where 
+    $$
+    H(x,p) = \sup_{v \in W} [p \cdot f(v,x) + u(v,x)],
+    $$
+    with terminal condition $U(x,T) = \psi(x)$. Then
+    $$U(x,t) \geq V(x,t), \forall (x,t) \in \RR^d \times [t_0,T].$$
+    Moreover, if there exists a control $v^*$ such that
+    $$
+    H(x^*_t, U_x (x^*_t, t)) = U_x(x^*_t, t)\cdot f(v^*_t, x^*_t) + u(v^*_t, x^*_t),
+    $$
+    That is, $v^*$ gives an equality in the Hamiltonian, then $v^*$ is an optimal control for the control system and $U(x,t) = V(x,t)$.
+\end{proposition}
+
+\begin{proof}
+    To do
+\end{proof}
+
+
+\subsubsection{Transport Equation}\label{transport_eq}
+Consider a population that is governed at the single agent level by
+\begin{equation}\label{transport_eq:ode}
+\begin{cases}
+    \dot x_t = b(x_t,t), \quad t > t_0,\\
+    x_{t_0} = x.
+\end{cases}
+\end{equation}
+where $b$ is a Lipschitz vector field. The vector field induces a flow that trasports the population's density along time (pushforward). The evolution of the density is described be the \textit{transport equation}, a first order pde:  
+
+\begin{equation}\label{transport_eq:pde}
+\rho_t + \Delta(b(x,t) \rho) = 0.
+\end{equation}
+
+\begin{proposition}[Properties of solutions]    
+Let $\rho$ be a solution of \eqref{transport_eq:pde} with initial condition $\rho(x,t_0) = \rho_0(x)$, for some probability density $\rho_0 \in \mathcal{C}_c^\infty (\RR^d).$ Then we have:
+\begin{itemize}
+    \item Positivity of solutions: $\rho(x,t) \geq 0$ for all $t> t_0$,
+    \item Mass conservation: $\int_{\RR^d} \rho(x,t) dx = \int_{\RR^d} \rho_0(x) dx = 1$ for all $t > 0$.
+\end{itemize}
+\end{proposition}
+
+\begin{proof}
+    To do.
+\end{proof}
+
+Define the flow in $\RR^d$ given by $b$ by $\Phi_t$. This flow maps $x\in \RR^d$ to the solution of \eqref{transport_eq:ode} at the instant $t > t_0$, with initial condition $x$.
+
+We can use the operator $\Phi_t$ to define a family of measures $\theta(x,t)$ over $\RR^d$ from an initial measure $\theta_0$ by 
+\begin{equation}\label{transport_eq:family_of_measures}
+\int_{\RR^d} \phi(x) \theta(x,t) dx = \int_{\RR^d} \phi(\Phi_t(x)) \theta_0 dx    
+\end{equation}
+
+This measure satisfies the transport PDE in the distribution sense. 
+\begin{proposition}[Solutions in the distribution sense]
+Let $\theta$ be the measure defined in \eqref{transport_eq:family_of_measures}. Assume that the vector field $b$ is Lipschitz continuous and denote by $\Phi_t$ the flow corresponding to \eqref{transport_eq:ode}. Then
+\begin{equation}\label{transport_eq:pde_for_measures}
+    \begin{cases}
+        \theta_t(x,t) + \Delta(b(x,t) \theta(x,t)) = 0, \quad (x,t) \in \RR^d \times [t_0,\infty),\\
+        \theta(x,t_0) = \theta_0(x), \quad x\in \RR^d.
+    \end{cases}
+\end{equation}
+in the distributional sense.
+\end{proposition}
+
+\begin{proof}
+    To do.
+\end{proof}
+
+\begin{proposition}[Dirac delta solution]\label{transport_eq:prop:dirac_delta_solution}
+Assume that \eqref{transport_eq:ode} holds and suppose that $b$ is Lipschitz continuous. Then, $\delta_{\Phi_t(x)}$ solves \eqref{transport_eq:pde_for_measures} in the distributional sense.
+\end{proposition}
+
+\begin{proof}
+    To do.
+\end{proof}
+
+\begin{remark} The converse of \eqref{transport_eq:prop:dirac_delta_solution} also holds.
+\end{remark}
+
+\printbibliography
+
+\end{document}
