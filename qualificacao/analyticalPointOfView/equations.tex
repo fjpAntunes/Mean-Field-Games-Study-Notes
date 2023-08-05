@@ -1,6 +1,6 @@
 \newcommand{\HamiltonJacobiPDE}[2]{
 %#1: Value function, #2: independent running cost
-#1_t (x,t) + H(x,D_x #1(x,t)) = #2
+#1_t (x,t) + H(x,\partial_x #1(x,t)) = #2
 }
 \newcommand{\HamiltonJacobiTerminalCondition}[2]{
 %#1: Value function, #2: Terminal payoff
@@ -10,7 +10,7 @@
 
 \newcommand{\DensityTransportPDE}[2]{
     % #1: Value function, #2: Density
-    #2_t(x,t) + \Delta(H_p(x, D_x #1 (x,t)) #2(x,t)) = 0
+    #2_t(x,t) + \nabla(\partial_p H(x, \partial_x #1 (x,t)) #2(x,t)) = 0
 }
 
 \newcommand{\DensityTransportInitialCondition}[1]{
@@ -18,20 +18,16 @@
     #1(x,t_0) = #1_0(x)
 }
 
-
+%ok
 \newcommand{\ReducedMfgStateEvolution}[2]{
-\begin{equation}\label{reduced_mfg:state_evolution}
-\begin{cases}
     \dot{ #1}_t = {#2}_t,\quad t\in (t_0,T],\\
     {#1}_{t_0} = #1_0.
-\end{cases}
-\end{equation}
 }
 
+
 \newcommand{\ReducedMfgPayoffFunctional}[5]{
-\begin{equation}\label{reduced_mfg:payoff_functional}
-J({\bf #2},#1; t_0) = \int_{t_0}^T \left(#3({\bf #2}_s,{\bf #1}_s) + #5 \right) ds + #4({\bf #1}_T),
-\end{equation}}
+({ #2},#1; t_0) = \int_{t_0}^T \left(#3({ #2}_s,{ #1}_s) + #5 \right) ds + #4({ #1}_T),
+}
 
 \newcommand{\ReducedMfgHamiltonian}[4]{
 \begin{equation}\label{reduced_mfg:HJ}

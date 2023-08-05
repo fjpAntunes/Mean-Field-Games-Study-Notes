@@ -4,7 +4,7 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
 
-\input{style.tex}
+\input{../style.tex}
 
 \title{Qualificação}
 \author{Felipe Antunes}
@@ -100,33 +100,60 @@ To Do
 \end{itemize}
 
 \subsubsection{Reduced Mean-field games}\label{reduced_mfg}
-Among the main motivations for studying MFG are the connections with the theory of $N$-player differential games. A solution of the MFG formalizes the limit case of Nash equilibrium when $N \to \infty$ for $N$-person differential games.
+Among the main motivations for studying MFG are the connections with
+ the theory of $N$-player differential games. A solution of the MFG formalizes 
+ the limit case of Nash equilibrium when $N \to \infty$ for $N$-person differential games.
 
-Some reduced mean-field games models can be rigorously derived as the limit of equations characterizing an $N$-player differential game. This subsection presents a heuristic derivation.
+Some reduced mean-field games models can be rigorously derived as the limit 
+of equations characterizing an $N$-player differential game. This subsection presents a heuristic derivation.
 
-Consider first the single-agent optimal control problem. Suppose that the state of an agent at time $t$ is characterized by the vector $\bx_t \in \RR^d$. In addition, assume that the following differential equation describes the state $\bx_t$:
-\ReducedMfgStateEvolution{x}{\alpha}
+Consider first the single-agent optimal control problem.
+Suppose that the state of an agent at time $t$ is characterized by the vector 
+$\state_t \in \RR^d$.
+In addition, assume that the following differential equation describes the state $\state_t$:
+\begin{equation}\label{reduced_mfg:state_evolution}
+\begin{cases}
+\ReducedMfgStateEvolution{\state}{\control}
+\end{cases}
+\end{equation}
 
+where $\control_t$ is a control and $\state_0\in\RR^d$ is a given initial condition. This agent seeks to maximize the functional:
 
-where $\bv_t$ is a control and $x\in\RR^d$ is a given initial condition. This agent seeks to maximize the functional:
-\ReducedMfgPayoffFunctional{x}{v}{u}{u_T}{g[\rho]}
-where $u$ is a Lagrangian, $u_T$ is a terminal payoff and $g[\rho]$ is a term to be made precise later. 
+\begin{equation}\label{reduced_mfg:payoff_functional}
+\ReducedMfgPayoffFunctional{\state}{\control}{\cost}{\cost_T}{g[\rho]}
+\end{equation}
+where $\cost$ is a Lagrangian, $\cost_T$ is a terminal payoff and $g[\rho]$ is a term to be made precise later. 
 
 Define
-\ReducedMfgHamiltonian{x}{p}{v}{u}
-We know from Section \eqref{deterministic_optimal_control} that under some regularity assumptions, the value function $V$ associated with the optimal control problem \eqref{deterministic_optimal_control:optimal_control_problem} 
+\ReducedMfgHamiltonian{\state}{p}{\control}{u}
+We know from Section
+\eqref{deterministic_optimal_control}
+that under some regularity assumptions,the value function $V$ associated with
+the optimal control problem
+\eqref{deterministic_optimal_control:optimal_control_problem} 
 solves the Hamilton-Jacobi equation in $\RR^d \times [t_0,T)$:
 \ReducedMfgStateHamiltonJacobiTerminalValueProblem{V}{g[\rho]}{u_T}
-Moreover, the optimal control $\bv^*$ is given in feedback form by
-$$\bv^* = H_p(\bx, D_x V(\bx, t)).$$
-The state of a rational agent will evolve according to \eqref{reduced_mfg:state_evolution} with the control $\bv$ equal to the feedback optimal control $\bv^*$.
+Moreover, the optimal control $\control^*$ is given in feedback form by
+$$\control^* = \partial_p H(\state, D_x V(\state, t)).$$
+The state of a rational agent will evolve according to 
+\eqref{reduced_mfg:state_evolution} with the control $\control$ equal to the feedback optimal control $\control^*$.
 
-Consider then a population of rational and indistinguishable agents. The distribution of agents is given by a probability measure $\rho$. This population of agents is subjected to the same optimal control problem. Therefore, the state of each individual is driven by
-\ReducedMfgFeedbackStateEvolution{x}{s}{V}
+Consider then a population of rational and indistinguishable agents.
+The distribution of agents is given by a probability measure $\rho$.
+This population of agents is subjected to the same optimal control problem.
+Therefore, the state of each individual is driven by
+\ReducedMfgFeedbackStateEvolution{\state}{s}{V}
 
-The function $g$ encodes the dependence of the agent's cost functional on the density of the entire population. This implies that the optimization problem faced by the agents depends on the evolution of $\rho$. Conversely, the evolution of $\rho$ depends on a vector field determined by $V$, which is derived from the control problem of the agents.\footnote{Chicken and the egg problem.}
+The function $g$ encodes the dependence of the agent's cost functional on the density of the entire population.
+This implies that the optimization problem faced by the agents depends on the evolution of $\rho$.
+Conversely, the evolution of $\rho$ depends on a vector field determined by $V$, which is derived from the control problem of the agents.
+\footnote{Chicken and the egg problem.}
 
-From Section \eqref{transport_eq}, we know that if $\bx$ satisfies \eqref{reduced_mfg:feedback_state_evolution}, then the evolution of the density $\rho$ in time satisfies a transport equation in $\RR^d \times (t_0, T]$:
+From Section
+\eqref{transport_eq},
+we know that if $\state$ satisfies
+\eqref{reduced_mfg:feedback_state_evolution},
+then the evolution of the density $\rho$ in time satisfies a transport equation in $\RR^d \times (t_0, T]$:
 \ReducedMfgDensityTransportInitialValueProblem{V}{\rho}
 
 The mean-field game system associated with this problem is the system of PDE's:
@@ -388,7 +415,7 @@ To Do
     \item Historical development
 \end{itemize}
 
-\input{prerequisite_theory/differential_games}
+\input{../prerequisite_theory/differential_games}
 
 \section{Mathematical background}\label{appendix-mathematical-background}
 
