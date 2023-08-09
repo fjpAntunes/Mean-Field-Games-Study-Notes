@@ -113,26 +113,36 @@ $\state_t \in \RR^d$.
 In addition, assume that the following differential equation describes the state $\state_t$:
 \begin{equation}\label{reduced_mfg:state_evolution}
 \begin{cases}
-\ReducedMfgStateEvolution{\state}{\control}
+    \dot{ \state}_t = {\control}_t,\quad t\in (t_0,T],\\
+    {\state}_{t_0} = \state_0.
 \end{cases}
 \end{equation}
 
 where $\control_t$ is a control and $\state_0\in\RR^d$ is a given initial condition. This agent seeks to maximize the functional:
 
 \begin{equation}\label{reduced_mfg:payoff_functional}
-\ReducedMfgPayoffFunctional{\state}{\control}{\cost}{\cost_T}{g[\rho]}
+    J({ \control},\state; t_0) = \int_{t_0}^T \left(\cost({\control}_s,{\state}_s) + g(\rho) \right) ds + \cost_T({ \state}_T),
 \end{equation}
 where $\cost$ is a Lagrangian, $\cost_T$ is a terminal payoff and $g[\rho]$ is a term to be made precise later. 
 
-Define
-\ReducedMfgHamiltonian{\state}{p}{\control}{u}
+Define the Hamiltonian
+\begin{equation}\label{reduced_mfg:hamiltonian}
+        H(\state,p) \coloneqq \sup_{\control} ( p \cdot \control + \cost(\control,\state)).
+\end{equation}
 We know from Section
 \eqref{deterministic_optimal_control}
 that under some regularity assumptions,the value function $V$ associated with
 the optimal control problem
 \eqref{deterministic_optimal_control:optimal_control_problem} 
 solves the Hamilton-Jacobi equation in $\RR^d \times [t_0,T)$:
-\ReducedMfgStateHamiltonJacobiTerminalValueProblem{V}{g[\rho]}{u_T}
+
+\begin{equation}\label{reduced_mfg:state_evolution_hamiltonian}
+\begin{cases}
+    \partial_t V (\state,t) + H(\state,\partial_x V(\state,t)) = g[\rho], \\
+    V(\state,T) = \cost_T(x)
+\end{cases}
+\end{equation}
+
 Moreover, the optimal control $\control^*$ is given in feedback form by
 $$\control^* = \partial_p H(\state, D_x V(\state, t)).$$
 The state of a rational agent will evolve according to 
@@ -142,8 +152,12 @@ Consider then a population of rational and indistinguishable agents.
 The distribution of agents is given by a probability measure $\rho$.
 This population of agents is subjected to the same optimal control problem.
 Therefore, the state of each individual is driven by
-\ReducedMfgFeedbackStateEvolution{\state}{s}{V}
-
+\begin{equation}\label{reduced_mfg:feedback_state_evolution}
+\begin{cases}
+        {\dot {\bf \state}}_s = H_p({\bf \state}, D_x V({\bf \state},s)),\\
+        {\bf \state}_{t_0} = \state.
+\end{cases}
+\end{equation}
 The function $g$ encodes the dependence of the agent's cost functional on the density of the entire population.
 This implies that the optimization problem faced by the agents depends on the evolution of $\rho$.
 Conversely, the evolution of $\rho$ depends on a vector field determined by $V$, which is derived from the control problem of the agents.
@@ -154,12 +168,28 @@ From Section
 we know that if $\state$ satisfies
 \eqref{reduced_mfg:feedback_state_evolution},
 then the evolution of the density $\rho$ in time satisfies a transport equation in $\RR^d \times (t_0, T]$:
-\ReducedMfgDensityTransportInitialValueProblem{V}{\rho}
-
+\begin{equation}\label{reduced_mfg:density_transport_pde}
+    \begin{cases}
+        \rho_t(x,t) + \nabla(\partial_p H(x, \partial_x V (x,t)) \rho(x,t)) = 0
+        \rho(x,t_0) = \rho_0(x)
+\end{cases}
+\end{equation}
 The mean-field game system associated with this problem is the system of PDE's:
-\ReducedMfgMeanFieldGameSystem{V}{\rho}{u}{g[\rho]}
+
+\begin{equation}\label{reduced_mfg:mfg_system}
+    \begin{cases}
+        \partial_t V (\state,t) + H(\state,\partial_x V(\state,t)) = g[\rho], \\
+        \rho_t(x,t) + \nabla(\partial_p H(x, \partial_x V (x,t)) \rho(x,t)) = 0
+\end{cases}
+\end{equation}
 coupled with the boundary conditions
-\ReducedMfgMeanFieldGameBoundaryConditions{V}{\rho}{u}{g[\rho]}
+
+\begin{equation}\label{reduced_mfg:mfg_boundary_conditions}
+\begin{cases}
+    V(\state,T) = \cost_T(x), \\
+    \rho(x,t_0) = \rho_0(x)
+\end{cases}
+\end{equation}
 
 
 
