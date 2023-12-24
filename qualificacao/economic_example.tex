@@ -1,0 +1,178 @@
+
+\color{blue}
+
+%%%%%%WIP%%%%%
+We'll consider an example from economics in order to illustrate the mean field games methodology.
+In subsection \ref{economic_example:deterministic}, we'll consider the deterministic version.
+Afterwards, in subsection \ref{economic_example:stochastic}, the stochastic version will be analyzed.
+For the deterministic setting, the Nash equilibrium can be formulated using Pontryagin's Maximum Principle 
+as the solution to a system of forward-backwards ODEs,
+or as the solution to a system of forward-back
+%%%%%%%WIP%%%%%
+
+The model was chosen as an example for two reasons.
+First, the mean field interactions arise naturally from the underlying economic theory, which makes the example a fitting introduction.
+Second, the model is similar in nature to the educational model that we shall propose in section \ref{sec:model_proposal}.
+
+
+Consider an idealized economy composed of $N$ agents, with a lifespan from time $t = 0$ to $t = T$.
+Each agent has an amount of capital $k_0^i$ for $i \in \{1,...,N\}$ at time $0$, and they're able to control their consumption $c_t^i \in \RR$ over time.
+The capital dynamics over time $\dot k_t^i$ is governed by two factors:
+a fixed depreciation rate $\delta$ and an endogenous interest rate $r_t$. It is given by the ODE:
+\begin{equation}
+    \dot k_t^i = \left[r_t - \delta \right] k_t^i - c_t^i. 
+\end{equation}
+
+Let's assume that the aggregate production $Y_t$ in the economy is given by a function $F$ of the aggregate capital of the economy $\hat k_t$, that is
+\begin{equation}
+    Y_t = F(\hat k_t),\quad \text{where } \hat k_t = \frac{1}{N} \sum_{i = 1}^N k_t^i.
+\end{equation}
+In economic equilibrium, the interest rate $r_t$ will be determined by the marginal effect of capital $\partial_K Y$ in the aggregate production,
+which itself is a function of the aggregate capital in the economy $K_t$. This will be the source of mean field interactions for our model.
+
+The preference for consumption of the agents is given by an utility function $u(c_t^i)$, 
+and their preference for capital at the end of their lifetime is given by a terminal cost $\psi(k_T^i)$.
+Therefore, agents want to choose their consumption $c(\cdot)$ to optimize the following functional $J(k, c(\cdot))$:
+\begin{equation}
+    J(k, c(\cdot)) = \int_0^T u(c(s)) ds + \psi(k_T),
+\end{equation}
+where $k$ is the starting capital, and $k_T$ is the capital at time $T$ when following control $c(\cdot)$.
+Therefore, the optimization problem faced by agent $i$ is
+\begin{equation}\label{economic_example:N_player_game}
+    \begin{cases}
+        \max_{c^i_{(\cdot)}} \int_0^T u(c^i_s) ds + \psi(k^i_T),\\
+        \text{subject to}\\
+        \dot k_t^i = \left[ \partial_K F(\hat k_t) - \delta \right] k_t^i - c_t^i.
+    \end{cases}
+\end{equation}
+
+In the mean field game framework, instead of directly solving the $N$-player model \eqref{economic_example:N_player_game},
+we solve a different but related problem. 
+We modify the setting of the game from $N$ players distributed at time $t$ according to a discrete probability measure $\mu^N_t$ to infinite players
+distributed according to an atomless probability distribution  $\mu_t$.
+This new setting is the mean field game, and under appropriate conditions its Nash equilibrium is an approximate Nash equilibrium for the $N$ player game.
+
+We're now in position to analyze the model. Analysis of mean field games models have the following pattern:
+\begin{enumerate}
+    \item Find the optimal control for a representative player, given a flow of probability measures $\mu_t$,
+    \item As every player is equal, their optimal trajectories induce a flow $O(\mu_t)$,
+    \item A Nash equilibrium for the MFG is a probability flow $\mu_t^*$ such that $\mu_t^* = O(\mu_t^*)$.
+\end{enumerate}
+By definition, a Nash equilibrium is a state of the game where no player can improve his outcome by unilaterally changing his strategy.
+The measure flow $\mu_t^*$ induces its own time evolution when every player behaves optimally.
+This means they can't improve their outcomes any more,
+which means that the mean field definition of Nash equilibrium is compatible with the classical definition.
+ 
+Let's set $u(c) = \log(c)$ and $\psi(k) = - \frac{1}{2} k^2$.
+Moreover, let's denote $\hat k_t = \int k_t d \mu_t$ and set $F(K) = \frac{C}{2} K^2$, that is, there are increasing returns over aggregated capital.
+In this setting, the interest rate is given by $r_t = C {\hat k_t} $.
+Assuming that an initial capital $k \sim \mu_0$ is given,
+the representative agent faces the following optimization problem:
+\begin{equation}\label{economic_example:representative_agent}
+    \begin{cases}
+        \max_{c_{(\cdot)}} \int_0^T \log(c_s) ds -\frac{1}{2}(k_T)^2,\\
+        \text{subject to}\\
+        \dot k_t = \left[ C {\hat k_t} - \delta \right] k_t - c_t, \quad k_0 = k,
+    \end{cases}
+\end{equation}
+
+% Solve in the PMP formulation
+
+Assuming that ${\hat k_t}$ is given, we can apply Pontryagin's Maximum Principle \ref{ADD STATEMENT TO APPENDIX AND CITATION}
+to conclude that, if an optimal control $c^*_{(\cdot)}$ and a corresponding optimal trajectory $k^*_{(\cdot)}$ exist,
+then there is a costate variable $p_{(\cdot)}$ defined implicitly as the solution of the backwards ordinary differential equation
+\begin{equation}\label{economic_example:costate_ode}
+    \dot p_t = -  \left[C{\hat k_t} - \delta \right] p_t, \quad p_T =  - k^*_T,
+\end{equation}
+that satisfy the maximality condition
+\begin{equation}\label{economic_example:maximality_condition}
+    p_t\left( \left[C {\hat k_t} - \delta \right]k^*_t - c^*_t \right) + \log(c^*_t) = 
+    \max_c \left\{ p_t\left( \left[C {\hat k_t} - \delta \right]k^*_t - c \right) + \log(c) \right\}.
+\end{equation}
+
+We can find candidates for optimal controls and trajectories by calculating
+\begin{equation*}
+    c^* = \arg\max_c  \left\{ p_t\left( \left[C {\hat k_t} - \delta \right]k^*_t - c \right) + \log(c) \right\} = \frac{1}{p_t},
+\end{equation*}
+and solving the forward-backward system of ordinary differential equations
+\begin{equation}\label{economic_example:ode_formulation}
+    \begin{cases}
+         \dot k_t = \left[ C {\hat k_t} - \delta \right] k_t - \frac{1}{p_t},\\
+         \dot p_t = -  \left[C{\hat k_t} - \delta \right] p_t, \\
+         k_0 = k,\, p_T =  - k_T.         
+    \end{cases}
+\end{equation}
+\begin{remark}
+    Note that $k_t$ is actually a random variable dependent on its initial value $k\sim \mu_0$.
+    The system of ODEs implicitly describes the probability measure flow $\mu_t = \mathcal{L}(k_t)$,
+    and the dynamics of this forward-backward system depend on $\mathcal{L}(k_t)$ through $\hat k_t$.
+    Therefore, this system is actually a particular case of a FBSDE with McKean-Vlasov dynamics such as
+    \ref{Add fbsde reference} where $\sigma = 0$.
+\end{remark}
+    Pontryagin's Maximum Principle give us \textit{necessary} conditions for optimal controls and trajectories, but not \textit{sufficient} conditions.
+    In order to guarantee optimality, one method is to analyze the value function $V$ defined as
+\begin{equation}\label{economic_example:value_function_definition}
+    V(k,t) = \sup_{c_{(\cdot)},\, k_t = k} \int_t^T \log(c(s)) ds -\frac{1}{2}(k_T)^2.
+\end{equation}
+Intuitively, the value function evaluates for a given time $t$ and capital $k$ the optimal payoff from that point forward.
+As shown in section \ref{ADD_APPENDIX_FOR_VISCOSITY_SOLUTIONS}, the value function is the viscosity solution for the Hamilton-Jacobi-Bellman equation
+\begin{equation}\label{economic_example:hjb_equation_reduced}
+    \begin{split}
+        &\partial_t V + H(\partial_k V, k,t) = 0,\quad V(k,T) = -\frac{1}{2}(k)^2,\\
+        &\text{where }
+        H(p,k,t) = \sup_{c} p\left[ \left(C {\hat k_t - \delta}\right)k - c \right] + \log(c).
+    \end{split}
+\end{equation}
+This equation encodes the system of ODEs in \ref{economic_example:ode_formulation} through the Hamiltonian function by the relations
+\begin{equation*}
+    \dot k_t = \partial_p H,\, \dot p_t = -\partial_k H.
+\end{equation*}
+Moreover, as shown in \ref{ADD_APPENDIX_FOR_TRANSPORT_EQUATION_AND_FKP},
+when the agents' capital evolve according to $\dot k = \partial_p H$,
+the probability density function $\rho(\cdot, t)$ for the agents probability measure $\mu_t$ at time $t$
+is the weak solution for the Kolmogorov-Fokker-Planck equation with initial condition $\rho_0$ given by the pdf of $\mu_0$
+\begin{equation}\label{economic_example:fkp_equation_reduced}
+\begin{split}
+    &\partial_t \rho - \partial_k \left( \partial_p H \rho \right) = 0, \rho(k,0) = \rho_0.
+\end{split}
+\end{equation}
+In the Nash Equilibrium, the capital per capita at time $t$ is a function of $\rho$ given by $\hat k_t(\rho) = \int_{\RR} k \rho(k,t) dk$.
+Substituting 
+\begin{equation*}
+    H(p,k,t) = \left(C {\hat k_t(\rho) - \delta}\right)k p  - 1  - \log(p)
+\end{equation*}
+on \ref{economic_example:hjb_equation_reduced} and \ref{economic_example:fkp_equation_reduced}, we have the full PDE system
+\begin{equation}
+    \begin{cases}
+        \partial_t V +  \left(C {\hat k_t(\rho) - \delta}\right)k\partial_k V - 1  - \log(\partial_k V) = 0,\quad V(k,T) = -\frac{1}{2}(k)^2,\\
+        \partial_t \rho - \partial_k \left( \left[ \left(C {\hat k_t}(\rho) - \delta\right) k - (\partial_k V)^{-1} \right]\rho \right) = 0, \rho(k,0) = \rho_0.
+    \end{cases}
+\end{equation}
+\color{black}
+% Solve in the HJB-FKP formulation
+
+% Add stochasticity
+We can modify this example by adding noise to each player's dynamics.
+In this setting, the representative agent faces the following problem
+\begin{equation}
+    \text{optimization problem placeholder}
+\end{equation}
+This time, the problem can either be formulated as a system of 
+forward-backward stochastic differential equations with McKean Vlasov Dynamics:
+\begin{equation}
+    \text{FBSDE-MV}
+\end{equation}
+or as a system of second-order partial differential equations:
+\begin{equation}
+    \text{HJB-FKP system}
+\end{equation}
+
+% HJB-FKP <> FBSDE
+
+
+
+%"Toy models" -> game theoretical models are not supposed to be taken literally, or applied directly to real life situation. In some sense, they're more like fables. Take Prisoner's dilemma, for instance: shows an archetype of strategic interactions that can be recognized in many different situations.
+
+%Introducing MFG through toy models is a didatic way of presenting the concepts and mathematics of the theory.
+
+
