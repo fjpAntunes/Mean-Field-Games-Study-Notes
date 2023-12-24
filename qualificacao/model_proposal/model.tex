@@ -1,11 +1,13 @@
 
 \textcolor{red}{Start with N-player version}
 
-Let $\Omega = \mathbb{R} \times \mathbb{R}^+$ be our state space, and the tuple $(a,h)$ in $\Omega$ describe the amount of capital and the skill level of the agent, respectively \textcolor{red}{elaborate this phrase}. Suppose agents are distributed over $\Omega$ at time $t$ with a measure $\mu_t \in \mathcal{P}(\Omega)$.
-Agents control their consumption $c_t \in \mathbb{R}^+$, and the proportion of time they dedicate to production $u_t \in [0,1]$. \textcolor{red}{devote a paragraph for the controls.}
-We assume that time not used to production is used to improve their skill. 
+Consider an economy with $N$ agents, evolving in the time interval $[0,T]$.
+Each agent is described at time $t$ by his wealth $A_t$ and his skill level $H_t$,
+with $(A_t, H_t) \in \Omega = \mathbb{R} \times \mathbb{R}^+$ for every $t \in [0,T]$.
+Agents control their consumption $c_t \in \mathbb{R}^+$, and the proportion of time they dedicate to working $u_t \in [0,1]$. 
+We assume that the proportion $1 - u_t$ of time not used to working is used to improve their skill level. 
 
-Agents face the following optimization problem:
+Each agent face the following optimization problem:
 \begin{equation}
 \begin{cases}
         \sup\limits_{(u,c) \in \mathcal{U} \times \mathcal{C}}\mathbb{E} [ \int_0^T f_c(c_s) + f_u(u_s) ds + Q(A_T) ], \text{ s.t.}\\
@@ -13,8 +15,11 @@ Agents face the following optimization problem:
         d A_t = \left[ (\bar r_t - \delta) A_t + \bar w_t H_t u_t - c_t  \right] dt + \sigma_a A_t d W^a_t.
 \end{cases}
 \end{equation}
+
+
 \textcolor{red}{explain term by term. Add table  for parameters.}
 
+Suppose agents are distributed over $\Omega$ at time $t$ with a measure $\mu_t \in \mathcal{P}(\Omega)$.
 Moreover, suppose that the production function $F$ for the economy depends on aggregate capital $\bar a$ and the effective supply of ability $\bar h^e$, and is given by a Cobb-Douglas function \cite{Add Refernce for Cobb-Douglas} as 
 $$F(\bar a,\bar h^e) = k ({\bar a})^\beta ({\bar h^e})^{1-\beta}.$$
 
