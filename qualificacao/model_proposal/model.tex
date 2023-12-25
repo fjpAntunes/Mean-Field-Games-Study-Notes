@@ -1,6 +1,3 @@
-
-\textcolor{red}{Start with N-player version}
-
 Consider an economy with $N$ agents, evolving in the time interval $[0,T]$.
 Each agent is described at time $t$ by his wealth $A_t$ and his skill level $H_t$,
 with $(A_t, H_t) \in \Omega = \mathbb{R} \times \mathbb{R}^+$ for every $t \in [0,T]$.
@@ -15,13 +12,31 @@ Each agent face the following optimization problem:
         d A_t = \left[ (\bar r_t - \delta) A_t + \bar w_t H_t u_t - c_t  \right] dt + \sigma_a A_t d W^a_t.
 \end{cases}
 \end{equation}
+The term $f_c(c_s)$ is a running utility for consumption, whereas $f_u(u_s)$ is a running utility for proportion of time spent working.
+The term $Q(A_T)$ represents utility over terminal wealth.
 
+The agent's skill level $H_t$ evolves through time with a drift term $H^\xi_t g(1 - u_t) dt$ and a noise term $\sigma_h H_t dW^h_t$.
+The function $g$ represents the effectiveness of time $1 - u_t$ employed in improving skill level,
+ whereas the term $H_t^\xi$ captures the impact of current skill level in effectiveness of effort.
+ For $\xi > 0$, higher skill levels lead to higher effectiveness.
+  However, for $\xi < 0$, higher skill levels lead to lower effectiveness.
+  As for $\xi = 0$, the skill level is indifferent to effectiveness.
 
-\textcolor{red}{explain term by term. Add table  for parameters.}
+The agent's wealth $A_t$ evolves with a drift term $\left[ (\bar r_t - \delta) A_t + \bar w_t H_t u_t - c_t  \right] dt $ and a noise term $\sigma_a A_t d W^a_t$.
+The drift term is composed of interest returns over current wealth, wages proportional to time dedicated to working and a reduction on wealth due to consumption given by $c_t$.
+The interest returns are described by $(\bar r_t - \delta) A_t$, where $\delta$ is a depreciation rate and $\bar r_t$ is the interest rate of the economy, to be determined endogenously through mean field interactions.
+The wages are given by $\bar w_t H_t u_t$, where $H_t$ is the agent's skill level, $u_t$ is the proportion of time dedicated to work and $\bar w_t$ is the wage rate per time per skill of the economy, which also will be determined endogenously through mean field interactions.
+
+The noise terms $\sigma_h H_t dW^h_t$ and $\sigma_a A_t dW^a_t$ are driven by independent brownian motions $W^h_t$ and $W^a_t$.
+We consider that each agent has independent noise.
+
+\textcolor{red}{elaborate on the aggregate quantities description}
+
+Moreover, suppose that the production function $F$ for the economy depends on aggregate capital $\bar a$ and the effective supply of ability 
+$\bar h^e$, and is given by a Cobb-Douglas function \cite{Add Refernce for Cobb-Douglas} as 
+$$F(\bar a,\bar h^e) = k ({\bar a})^\beta ({\bar h^e})^{1-\beta}.$$
 
 Suppose agents are distributed over $\Omega$ at time $t$ with a measure $\mu_t \in \mathcal{P}(\Omega)$.
-Moreover, suppose that the production function $F$ for the economy depends on aggregate capital $\bar a$ and the effective supply of ability $\bar h^e$, and is given by a Cobb-Douglas function \cite{Add Refernce for Cobb-Douglas} as 
-$$F(\bar a,\bar h^e) = k ({\bar a})^\beta ({\bar h^e})^{1-\beta}.$$
 
 Given an measure flow $(\mu_t)_{t \in [0,T]}$ and a feedback form for the control $u: u(a,h), $, we can calculate the aggregate quantities
 \begin{equation*}
