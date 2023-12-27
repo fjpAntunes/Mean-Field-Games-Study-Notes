@@ -30,7 +30,6 @@ The wages are given by $\bar w_t H_t u_t$, where $H_t$ is the agent's skill leve
 The noise terms $\sigma_h H_t dW^h_t$ and $\sigma_a A_t dW^a_t$ are driven by independent brownian motions $(W^h_t)_{t \in [0,T]}$ and $W^a_t$.
 We consider that each agent has independent noise.
 
-\textcolor{red}{elaborate on the aggregate quantities description}
 Interaction between agents is mediated through $\bar r_t$ and $\bar w_t$.
 These values depend on aggreates of the agent's states and on the production function of the economy as folows:
 Suppose that the economy has a Cobb-Douglas production \cite{find a citation for cobb douglas} function $F$ which depends on average wealth $\bar a_t$ 
@@ -41,30 +40,43 @@ At time $t$, the agents are distributed over $\Omega$ with a measure $\mu^N_t \i
 \]
 Average wealth is then given by
 \[
-\bar a_t = \int_\Omega \, a \, d\mu^N_t (a,h),
+\bar a(\mu^N_t) \coloneqq \int_\Omega \, a \, d\mu^N_t (a,h),
 \]
 whereas the effective supply of skilled labor is given by
 \[
-\bar h_t^{eff} = \int_\Omega \, u(a,h) h \, d\mu^N_t (a,h).
+\bar h^{eff}(\mu^N_t) \coloneqq \int_\Omega \, u(a,h) h \, d\mu^N_t (a,h).
 \]
 The interpretation for average wealth is straightforward.
 The effective supply of skilled labor is a weighted average of skill over the population, where the weights $u(a,h)$ are the proportion of time dedicated to work as a function of the state $(a,h)$.
-It is clear that $\bar h^{eff} \leq \int_\Omega  h \, d\mu^N_t (a,h) = \bar h$, where equality holds if every agent dedicates his whole time to work.
+It is clear that $\bar h^{eff}(\mu^N_t) \leq \int_\Omega  h \, d\mu^N_t (a,h) \coloneqq \bar h(\mu^N_t)$, where equality holds if every agent dedicates his whole time to work.
 
 At economic equilibrium, the interest rate and the wage rate are equal to their marginal increase in production \cite{find a citation for this}, that is
 \[
-\bar r_t= \partial_a F(\bar a_t, \bar h_t^{eff}), \quad \bar w_t= \partial_h F(\bar a_t, \bar h_t^{eff}).
+\bar r(\mu^N_t)= \partial_a F(\bar a(\mu^N_t), \bar h^{eff}(\mu^N_t)), \quad \bar w(\mu^N_t)= \partial_h F(\bar a(\mu^N_t), \bar h^{eff}(\mu^N_t)).
 \]
+To simplify the notation, we denote
+$\bar a_t \coloneqq \bar a(\mu^N_t), \bar h^{eff}_t = \bar h^{eff}(\mu^N_t), \bar r_t = \bar r(\mu^N_t), \bar w_t = \bar w(\mu^N_t)$.
+
+
 For a production function $F(a,h) = C a^\beta h^{1 - \beta}$, $0 \leq \beta \leq 1$, we have
 \[
-\bar r_t = C \beta {\bar a}^{\beta - 1} ({\bar h^{eff}})^{1 - beta}, \quad  \bar w_t = C (1 - \beta) {\bar a}^{beta} ({\bar h^{eff}})^{ - beta}.
+\bar r_t = C \beta {\bar a_t}^{\beta - 1} ({\bar h}^{eff}_t)^{1 - beta} = \beta \frac{F(\bar a_t, \bar h^{eff}_t)}{\bar a_t},
 \]
-
+and
+\[
+\bar w_t = C (1 - \beta) {\bar a}^{beta} ({\bar h^{eff}})^{ - beta} = (1 - \beta) \frac{F (\bar a_t, \bar h^{eff}_t)}{\bar h^{eff}_t}.
+\]
+An agent at state $(a,h)$ will receive $\bar r_t a$ as interest and $\bar h^{eff}_t u(a,h) h$ as wages.
+Integrating over the population's density measure $\mu^N_t$ leads to
+\[
+    \int_\Omega \bar r_t a \, d\mu^N_t(a,h) = \beta F(\bar a_t, \bar h^{eff}_t),\quad \int_\Omega \bar h^{eff}_t u(a,h) h \, d\mu^N_t(a,h) = (1 - \beta) F(\bar a_t, \bar h^{eff}_t).    
+\]
+This means that the aggregate increase in the agent's wealth is equal to the production of the economy.
 
 \textcolor{red}{analyze monotonicity and convexity wrt. aggregate quantities}
 
 
-Solutions for \eqref{education_model:mfg_analytic_system} describe Nash equilibria for the mean-field limit of the game.
+Solutions for \eqref{education_model:mfg_analytic_system} describe Nash equilibria for the limit of the game as $N \to \infty$, that is, the mean-field limit of the game.
 The function $V: [0,T] \times \Omega \mapsto \mathbb{R}$ is the value function for the game at the Nash equilibrium,
 whereas the probability measure flow $\mu: [0,T] \times \Omega \mapsto \mathbb{R}$ describe the time evolution of the  population density over the state space $\Omega$.
 \begin{equation}\label{education_model:mfg_analytic_system}
@@ -81,6 +93,9 @@ where
         \HH_c(p) = \sup\limits_{c} \left \{  f_c(c) - c \, p \right \}
     \end{cases}
 \end{equation}
+
+\textcolor{red}{write MV-FBSDE formulation}
+\textcolor{red}{write master equation formulation}
 
 \subsection{Numerical Illustration}
         A deterministic, simplified version of the model was simulated through Picard iterations.
