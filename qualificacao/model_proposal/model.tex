@@ -5,7 +5,7 @@ Agents control their consumption $c_t \in \mathbb{R}^+$, and the proportion of t
 We assume that the proportion $1 - u_t$ of time not used to working is used to improve their skill level. 
 
 Each agent face the following optimization problem:
-\begin{equation}
+\begin{equation}\label{education_model:representative_agent_optimization}
 \begin{cases}
         \sup\limits_{(u,c) \in \mathcal{U} \times \mathcal{C}}\mathbb{E} [ \int_0^T f_c(c_s) + f_u(u_s) ds + Q(A_T) ], \text{ s.t.}\\
         d A_t = \left[ (\bar r_t - \delta) A_t + \bar w_t H_t u_t - c_t  \right] dt + \sigma_a A_t d W^a_t.
@@ -76,7 +76,8 @@ This means that the aggregate increase in the agent's wealth is equal to the pro
 \textcolor{red}{analyze monotonicity and convexity wrt.\ aggregate quantities}
 
 
-Solutions for~\eqref{education_model:mfg_analytic_system} describe Nash equilibria for the limit of the game as $N \to \infty$, that is, the mean-field limit of the game.
+Solutions for~\eqref{education_model:mfg_analytic_system} describe Nash equilibria for the limit of the game as $N \to \infty$,
+ that is, the mean-field limit of the game.
 The function $V: [0,T] \times \Omega \mapsto \mathbb{R}$ is the value function for the game at the Nash equilibrium,
 whereas the probability measure flow $\mu: [0,T] \times \Omega \mapsto \mathbb{R}$ describe the time evolution of the  population density over the state space $\Omega$.
 \begin{equation}\label{education_model:mfg_analytic_system}
@@ -94,7 +95,22 @@ where
     \end{cases}
 \end{equation}
 
-\textcolor{red}{write MV-FBSDE formulation}
+The Nash equilibria can also be formulated as the solution to a system of 
+McKean-Vlasov Forward Backward Stochastic Differential Equations (MV-FBSDE),
+by applying the Stochastic Maximum Principle to the optimization problem~\eqref{education_model:representative_agent_optimization}.
+This leads to the following system:
+\begin{equation}\label{education_model:mfg_fbsde_system}
+    \begin{cases}
+        d A_t = \left[ (\bar r_t - \delta) A_t + \bar w_t H_t {\hat u}(A_t,H_t,P_t,Q_t) - {\hat c}(A_t,H_t,P_t,Q_t)  \right] dt + \sigma_a A_t d W^a_t.
+        d H_t = H^\xi_t g(1 - {\hat u}(A_t,H_t,P_t,Q_t)) dt + \sigma_h H_t d W^h_t,\\
+        d P_t = -\left[ (\bar r_t - \delta) P_t + \sigma_a P'_t \right]dt + P'_t d W^a_t,\\
+        d Q_t = - \left[ \xi H_t^{\xi - 1} g(1 - {\hat u}(A_t,H_t,P_t,Q_t) ) Q_t + {\bar w} {\hat u}(A_t, H_t, P_t, Q_t) P_t + \sigma_h Q'_t \right] dt + Q'_t d W^h_t,\\
+        \mathcal{L}(A_0, H_0) = \mu_0, \, P_T = \partial_a Q(A_T), Q_T = 0.
+    \end{cases}
+\end{equation}
+The solutions for both formulations are related: $\mathcal{L}(A_t, H_t) = \mu_t$, $P_t = \partial_a V(t,A_t,H_t)$ and $Q_t = \partial_h V(t,A_t,H_t)$.
+Note that the dependency of the dynamics on the law $\mathcal{L}(A_t,H_t)$ is implicit in $\bar r_t$ and $\bar w_t$.
+
 \textcolor{red}{write master equation formulation}
 
 \subsection{Numerical Illustration}
