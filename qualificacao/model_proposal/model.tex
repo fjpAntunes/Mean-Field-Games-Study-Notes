@@ -1,38 +1,83 @@
+Consider an economy with $N$ agents, evolving in the time interval $[0,T]$.
+Each agent is described at time $t$ by his wealth $A_t$ and his skill level $H_t$,
+with $(A_t, H_t) \in \Omega = \mathbb{R} \times \mathbb{R}^+$ for every $t \in [0,T]$.
+Agents control their consumption $c_t \in \mathbb{R}^+$, and the proportion of time they dedicate to working $u_t \in [0,1]$. 
+We assume that the proportion $1 - u_t$ of time not used to working is used to improve their skill level. 
 
-\textcolor{red}{Start with N-player version}
-
-Let $\Omega = \mathbb{R} \times \mathbb{R}^+$ be our state space, and the tuple $(a,h)$ in $\Omega$ describe the amount of capital and the skill level of the agent, respectively \textcolor{red}{elaborate this phrase}. Suppose agents are distributed over $\Omega$ at time $t$ with a measure $\mu_t \in \mathcal{P}(\Omega)$.
-Agents control their consumption $c_t \in \mathbb{R}^+$, and the proportion of time they dedicate to production $u_t \in [0,1]$. \textcolor{red}{devote a paragraph for the controls.}
-We assume that time not used to production is used to improve their skill. 
-
-Agents face the following optimization problem:
-\begin{equation}
+Each agent face the following optimization problem:
+\begin{equation}\label{education_model:representative_agent_optimization}
 \begin{cases}
         \sup\limits_{(u,c) \in \mathcal{U} \times \mathcal{C}}\mathbb{E} [ \int_0^T f_c(c_s) + f_u(u_s) ds + Q(A_T) ], \text{ s.t.}\\
-        d H_t = H^\xi_t g(1 - u_t) dt + \sigma_h H_t d W^h_t,\\
         d A_t = \left[ (\bar r_t - \delta) A_t + \bar w_t H_t u_t - c_t  \right] dt + \sigma_a A_t d W^a_t.
+        d H_t = H^\xi_t g(1 - u_t) dt + \sigma_h H_t d W^h_t,\\
 \end{cases}
 \end{equation}
-\textcolor{red}{explain term by term. Add table  for parameters.}
+The term $f_c(c_s)$ is a running utility for consumption, whereas $f_u(u_s)$ is a running utility for proportion of time spent working.
+The term $Q(A_T)$ represents utility over terminal wealth.
 
-Moreover, suppose that the production function $F$ for the economy depends on aggregate capital $\bar a$ and the effective supply of ability $\bar h^e$, and is given by a Cobb-Douglas function \cite{Add Refernce for Cobb-Douglas} as 
-$$F(\bar a,\bar h^e) = k ({\bar a})^\beta ({\bar h^e})^{1-\beta}.$$
+The agent's skill level $H_t$ evolves through time with a drift term $H^\xi_t g(1 - u_t) dt$ and a noise term $\sigma_h H_t dW^h_t$.
+The function $g$ represents the effectiveness of time $1 - u_t$ employed in improving skill level,
+ whereas the term $H_t^\xi$ captures the impact of current skill level in effectiveness of effort.
+ For $\xi > 0$, higher skill levels lead to higher effectiveness.
+  However, for $\xi < 0$, higher skill levels lead to lower effectiveness.
+  As for $\xi = 0$, the skill level is indifferent to effectiveness.
 
-Given an measure flow $(\mu_t)_{t \in [0,T]}$ and a feedback form for the control $u: u(a,h), $, we can calculate the aggregate quantities
-\begin{equation*}
-    \begin{cases}
-        \bar a_t = \int_\Omega a\, d\mu_t(a,h),\\
-        \bar h^e_t = \int_\Omega u(a,h)\, h d\mu_t (a,h).
-    \end{cases}
-\end{equation*}
-The value $\bar a_t$ is the average wealth of the economy, whereas $\bar h^e_t$ is the effective supply of skilled labor in the economy - note that the the integral term is a weighted average of the skill $h$ level over the population distribution $\mu_t$, where the weights $u(a,h)$ are the proportion of time an agent with wealth $a$ and skill level $h$ devotes to work.
+The agent's wealth $A_t$ evolves with a drift term $\left[ (\bar r_t - \delta) A_t + \bar w_t H_t u_t - c_t  \right] dt $ and a noise term $\sigma_a A_t d W^a_t$.
+The drift term is composed of interest returns over current wealth, wages proportional to time dedicated to working and a reduction on wealth due to consumption given by $c_t$.
+The interest returns are described by $(\bar r_t - \delta) A_t$, where $\delta$ is a depreciation rate and $\bar r_t$ is the interest rate of the economy, to be determined endogenously through mean field interactions.
+The wages are given by $\bar w_t H_t u_t$, where $H_t$ is the agent's skill level, $u_t$ is the proportion of time dedicated to work and $\bar w_t$ is the wage rate per time per skill of the economy, which also will be determined endogenously through mean field interactions.
 
-At economic equilibrium, the interest rate and wage per time per ability satisfy
-$$\bar r_t = \partial_a F(\bar a_t, \bar h^e_t),\quad \bar w_t = \partial_h F(\bar a_t, \bar h^e_t).$$
-\textcolor{red}{analyze monotonicity and convexity wrt. aggregate quantities}
+The noise terms $\sigma_h H_t dW^h_t$ and $\sigma_a A_t dW^a_t$ are driven by independent brownian motions ${(W^h_t)}_{t \in [0,T]}$ and $W^a_t$.
+We consider that each agent has independent noise.
+
+Interaction between agents is mediated through $\bar r_t$ and $\bar w_t$.
+These values depend on aggreates of the agent's states and on the production function of the economy as folows:
+Suppose that the economy has a Cobb-Douglas production~\cite{find a citation for cobb douglas} function $F$ which depends on average wealth $\bar a_t$ 
+and on the effective supply of skilled labor $\bar h_t^{eff}$.
+At time $t$, the agents are distributed over $\Omega$ with a measure $\mu^N_t \in \mathcal{P}(\Omega)$ given by
+\[
+\mu^N_t = \frac{1}{N} \sum_{i = 1}^N \delta_{(A^i_t, H^i_t)}.
+\]
+Average wealth is then given by
+\[
+\bar a(\mu^N_t) \coloneqq \int_\Omega \, a \, d\mu^N_t (a,h),
+\]
+whereas the effective supply of skilled labor is given by
+\[
+\bar h^{eff}(\mu^N_t) \coloneqq \int_\Omega \, u(a,h) h \, d\mu^N_t (a,h).
+\]
+The interpretation for average wealth is straightforward.
+The effective supply of skilled labor is a weighted average of skill over the population, where the weights $u(a,h)$ are the proportion of time dedicated to work as a function of the state $(a,h)$.
+It is clear that $\bar h^{eff}(\mu^N_t) \leq \int_\Omega  h \, d\mu^N_t (a,h) \coloneqq \bar h(\mu^N_t)$, where equality holds if every agent dedicates his whole time to work.
+
+At economic equilibrium, the interest rate and the wage rate are equal to their marginal increase in production~\cite{find a citation for this}, that is
+\[
+\bar r(\mu^N_t)= \partial_a F(\bar a(\mu^N_t), \bar h^{eff}(\mu^N_t)), \quad \bar w(\mu^N_t)= \partial_h F(\bar a(\mu^N_t), \bar h^{eff}(\mu^N_t)).
+\]
+To simplify the notation, we denote
+$\bar a_t \coloneqq \bar a(\mu^N_t), \bar h^{eff}_t = \bar h^{eff}(\mu^N_t), \bar r_t = \bar r(\mu^N_t), \bar w_t = \bar w(\mu^N_t)$.
 
 
-Solutions for \eqref{education_model:mfg_analytic_system} describe Nash equilibria for the mean-field limit of the game.
+For a production function $F(a,h) = C a^\beta h^{1 - \beta}$, $0 \leq \beta \leq 1$, we have
+\[
+\bar r_t = C \beta {\bar a_t}^{\beta - 1} {({\bar h}^{eff}_t)}^{1 - beta} = \beta \frac{F(\bar a_t, \bar h^{eff}_t)}{\bar a_t},
+\]
+and
+\[
+\bar w_t = C (1 - \beta) {\bar a}^{beta} {({\bar h^{eff}})}^{ - beta} = (1 - \beta) \frac{F (\bar a_t, \bar h^{eff}_t)}{\bar h^{eff}_t}.
+\]
+An agent at state $(a,h)$ will receive $\bar r_t a$ as interest and $\bar h^{eff}_t u(a,h) h$ as wages.
+Integrating over the population's density measure $\mu^N_t$ leads to
+\[
+    \int_\Omega \bar r_t a \, d\mu^N_t(a,h) = \beta F(\bar a_t, \bar h^{eff}_t),\quad \int_\Omega \bar h^{eff}_t u(a,h) h \, d\mu^N_t(a,h) = (1 - \beta) F(\bar a_t, \bar h^{eff}_t).    
+\]
+This means that the aggregate increase in the agent's wealth is equal to the production of the economy.
+
+\textcolor{red}{analyze monotonicity and convexity wrt.\ aggregate quantities}
+
+
+Solutions for~\eqref{education_model:mfg_analytic_system} describe Nash equilibria for the limit of the game as $N \to \infty$,
+ that is, the mean-field limit of the game.
 The function $V: [0,T] \times \Omega \mapsto \mathbb{R}$ is the value function for the game at the Nash equilibrium,
 whereas the probability measure flow $\mu: [0,T] \times \Omega \mapsto \mathbb{R}$ describe the time evolution of the  population density over the state space $\Omega$.
 \begin{equation}\label{education_model:mfg_analytic_system}
@@ -50,6 +95,24 @@ where
     \end{cases}
 \end{equation}
 
+The Nash equilibria can also be formulated as the solution to a system of 
+McKean-Vlasov Forward Backward Stochastic Differential Equations (MV-FBSDE),
+by applying the Stochastic Maximum Principle to the optimization problem~\eqref{education_model:representative_agent_optimization}.
+This leads to the following system:
+\begin{equation}\label{education_model:mfg_fbsde_system}
+    \begin{cases}
+        d A_t = \left[ (\bar r_t - \delta) A_t + \bar w_t H_t {\hat u}(A_t,H_t,P_t,Q_t) - {\hat c}(A_t,H_t,P_t,Q_t)  \right] dt + \sigma_a A_t d W^a_t.
+        d H_t = H^\xi_t g(1 - {\hat u}(A_t,H_t,P_t,Q_t)) dt + \sigma_h H_t d W^h_t,\\
+        d P_t = -\left[ (\bar r_t - \delta) P_t + \sigma_a P'_t \right]dt + P'_t d W^a_t,\\
+        d Q_t = - \left[ \xi H_t^{\xi - 1} g(1 - {\hat u}(A_t,H_t,P_t,Q_t) ) Q_t + {\bar w} {\hat u}(A_t, H_t, P_t, Q_t) P_t + \sigma_h Q'_t \right] dt + Q'_t d W^h_t,\\
+        \mathcal{L}(A_0, H_0) = \mu_0, \, P_T = \partial_a Q(A_T), Q_T = 0.
+    \end{cases}
+\end{equation}
+The solutions for both formulations are related: $\mathcal{L}(A_t, H_t) = \mu_t$, $P_t = \partial_a V(t,A_t,H_t)$ and $Q_t = \partial_h V(t,A_t,H_t)$.
+Note that the dependency of the dynamics on the law $\mathcal{L}(A_t,H_t)$ is implicit in $\bar r_t$ and $\bar w_t$.
+
+\textcolor{red}{write master equation formulation}
+
 \subsection{Numerical Illustration}
         A deterministic, simplified version of the model was simulated through Picard iterations.
         
@@ -57,7 +120,7 @@ where
         
         We aim to use this simulation as a benchmark for further studies.        
         Let's set \textcolor{red}{Parameter table}
-        $$g(1- u) = (1 - u),\,\xi = 0,\, \delta = 0.05, \, k = 0.5,\, f_c(c) = \log(c), f_u(u) = -\frac{\alpha}{2} u^2, Q(a) = a.$$        
+        %$$g(1- u) = (1 - u),\,\xi = 0,\, \delta = 0.05, \, k = 0.5,\, f_c(c) = \log(c), f_u(u) = -\frac{\alpha}{2} u^2, Q(a) = a.$$        
         In this case, we have 
         \begin{equation}
             \begin{cases}    
