@@ -8,32 +8,32 @@ Each agent face the following optimization problem:
 \begin{equation}\label{education_model:representative_agent_optimization}
 \begin{cases}
         \sup\limits_{(u,c) \in \mathcal{U} \times \mathcal{C}}\mathbb{E} [ \int_0^T f_c(c_s) + f_u(u_s) ds + Q(A_T) ], \text{ s.t.}\\
-        d A_t = \left[ (\bar r_t - \delta) A_t + \bar w_t H_t u_t - c_t  \right] dt + \sigma_a A_t d W^a_t.
-        d H_t = H^\xi_t g(1 - u_t) dt + \sigma_h H_t d W^h_t,\\
+        d A_t = \left[ (\bar r_t - \delta) A_t + \bar w_t H_t u_t - c_t  \right] dt + \sigma_a A_t d W^a_t,\\
+        d H_t = H^\xi_t g(1 - u_t) dt + \sigma_h H_t d W^h_t.
 \end{cases}
 \end{equation}
 The term $f_c(c_s)$ is a running utility for consumption, whereas $f_u(u_s)$ is a running utility for proportion of time spent working.
 The term $Q(A_T)$ represents utility over terminal wealth.
-
-The agent's skill level $H_t$ evolves through time with a drift term $H^\xi_t g(1 - u_t) dt$ and a noise term $\sigma_h H_t dW^h_t$.
-The function $g$ represents the effectiveness of time $1 - u_t$ employed in improving skill level,
- whereas the term $H_t^\xi$ captures the impact of current skill level in effectiveness of effort.
- For $\xi > 0$, higher skill levels lead to higher effectiveness.
-  However, for $\xi < 0$, higher skill levels lead to lower effectiveness.
-  As for $\xi = 0$, the skill level is indifferent to effectiveness.
 
 The agent's wealth $A_t$ evolves with a drift term $\left[ (\bar r_t - \delta) A_t + \bar w_t H_t u_t - c_t  \right] dt $ and a noise term $\sigma_a A_t d W^a_t$.
 The drift term is composed of interest returns over current wealth, wages proportional to time dedicated to working and a reduction on wealth due to consumption given by $c_t$.
 The interest returns are described by $(\bar r_t - \delta) A_t$, where $\delta$ is a depreciation rate and $\bar r_t$ is the interest rate of the economy, to be determined endogenously through mean field interactions.
 The wages are given by $\bar w_t H_t u_t$, where $H_t$ is the agent's skill level, $u_t$ is the proportion of time dedicated to work and $\bar w_t$ is the wage rate per time per skill of the economy, which also will be determined endogenously through mean field interactions.
 
-The noise terms $\sigma_h H_t dW^h_t$ and $\sigma_a A_t dW^a_t$ are driven by independent brownian motions ${(W^h_t)}_{t \in [0,T]}$ and $W^a_t$.
+The agent's skill level $H_t$ evolves through time with a drift term $H^\xi_t g(1 - u_t) dt$ and a noise term $\sigma_h H_t dW^h_t$.
+The function $g$ represents the effectiveness of time $1 - u_t$ employed in improving skill level,
+ whereas the term $H_t^\xi$ captures the impact of current skill level in effectiveness of effort.
+ For $\xi > 0$, higher skill levels lead to higher effectiveness.
+  However, for $\xi < 0$, higher skill levels lead to lower effectiveness.
+  As for $\xi = 0$, the effectiveness is indifferent to skill level.
+
+The noise terms $\sigma_h H_t dW^h_t$ and $\sigma_a A_t dW^a_t$ are driven by independent brownian motions ${(W^h_t)}_{t \in [0,T]}$ and ${(W^a_t)}_{t \in [0,T]}$.
 We consider that each agent has independent noise.
 
 Interaction between agents is mediated through $\bar r_t$ and $\bar w_t$.
 These values depend on aggreates of the agent's states and on the production function of the economy as folows:
-Suppose that the economy has a Cobb-Douglas production~\cite{find a citation for cobb douglas} function $F$ which depends on average wealth $\bar a_t$ 
-and on the effective supply of skilled labor $\bar h_t^{eff}$.
+Suppose that the economy has a Cobb-Douglas production~\cite{cobb1928theory} function $F$ which depends on average wealth $\bar a_t$ 
+and on the effective supply of skilled labor $\heff_t$.
 At time $t$, the agents are distributed over $\Omega$ with a measure $\mu^N_t \in \mathcal{P}(\Omega)$ given by
 \[
 \mu^N_t = \frac{1}{N} \sum_{i = 1}^N \delta_{(A^i_t, H^i_t)}.
@@ -44,40 +44,36 @@ Average wealth is then given by
 \]
 whereas the effective supply of skilled labor is given by
 \[
-\bar h^{eff}(\mu^N_t) \coloneqq \int_\Omega \, u(a,h) h \, d\mu^N_t (a,h).
+\heff(\mu^N_t) \coloneqq \int_\Omega \, u(a,h) h \, d\mu^N_t (a,h).
 \]
 The interpretation for average wealth is straightforward.
 The effective supply of skilled labor is a weighted average of skill over the population, where the weights $u(a,h)$ are the proportion of time dedicated to work as a function of the state $(a,h)$.
-It is clear that $\bar h^{eff}(\mu^N_t) \leq \int_\Omega  h \, d\mu^N_t (a,h) \coloneqq \bar h(\mu^N_t)$, where equality holds if every agent dedicates his whole time to work.
+It is clear that $\heff(\mu^N_t) \leq \int_\Omega  h \, d\mu^N_t (a,h) \coloneqq \bar h(\mu^N_t)$, where equality holds if every agent dedicates his whole time to work.
 
-At economic equilibrium, the interest rate and the wage rate are equal to their marginal increase in production~\cite{find a citation for this}, that is
+At economic equilibrium, the interest rate and the wage rate are equal to their marginal increase in production~\cite{cobb1928theory}, that is
 \[
-\bar r(\mu^N_t)= \partial_a F(\bar a(\mu^N_t), \bar h^{eff}(\mu^N_t)), \quad \bar w(\mu^N_t)= \partial_h F(\bar a(\mu^N_t), \bar h^{eff}(\mu^N_t)).
+\bar r(\mu^N_t)= \partial_a F(\bar a(\mu^N_t), \heff(\mu^N_t)), \quad \bar w(\mu^N_t)= \partial_h F(\bar a(\mu^N_t), \heff(\mu^N_t)).
 \]
 To simplify the notation, we denote
-$\bar a_t \coloneqq \bar a(\mu^N_t), \bar h^{eff}_t = \bar h^{eff}(\mu^N_t), \bar r_t = \bar r(\mu^N_t), \bar w_t = \bar w(\mu^N_t)$.
-
-
+\[
+\bar a_t \coloneqq \bar a(\mu^N_t), \heff_t = \heff(\mu^N_t), \bar r_t = \bar r(\mu^N_t), \bar w_t = \bar w(\mu^N_t).
+\]
 For a production function $F(a,h) = C a^\beta h^{1 - \beta}$, $0 \leq \beta \leq 1$, we have
 \[
-\bar r_t = C \beta {\bar a_t}^{\beta - 1} {({\bar h}^{eff}_t)}^{1 - beta} = \beta \frac{F(\bar a_t, \bar h^{eff}_t)}{\bar a_t},
+\bar r_t = C \beta {\bar a_t}^{\beta - 1} {(\heff_t)}^{1 - \beta} = \beta \frac{F(\bar a_t, \heff_t)}{\bar a_t},
 \]
 and
 \[
-\bar w_t = C (1 - \beta) {\bar a}^{beta} {({\bar h^{eff}})}^{ - beta} = (1 - \beta) \frac{F (\bar a_t, \bar h^{eff}_t)}{\bar h^{eff}_t}.
+\bar w_t = C (1 - \beta) {\bar a}_t^{\beta} {({\heff}_t)}^{ - \beta} = (1 - \beta) \frac{F (\bar a_t, \heff_t)}{\heff_t}.
 \]
-An agent at state $(a,h)$ will receive $\bar r_t a$ as interest and $\bar h^{eff}_t u(a,h) h$ as wages.
+An agent at state $(a,h)$ will receive $\bar r_t a$ as interest and $\bar w_t u(a,h) h$ as wages.
 Integrating over the population's density measure $\mu^N_t$ leads to
 \[
-    \int_\Omega \bar r_t a \, d\mu^N_t(a,h) = \beta F(\bar a_t, \bar h^{eff}_t),\quad \int_\Omega \bar h^{eff}_t u(a,h) h \, d\mu^N_t(a,h) = (1 - \beta) F(\bar a_t, \bar h^{eff}_t).    
+    \int_\Omega \bar r_t a \, d\mu^N_t(a,h) = \beta F(\bar a_t, \heff_t),\quad \int_\Omega \bar w_t u(a,h) h \, d\mu^N_t(a,h) = (1 - \beta) F(\bar a_t, \heff_t).    
 \]
 This means that the aggregate increase in the agent's wealth is equal to the production of the economy.
 
-\textcolor{red}{analyze monotonicity and convexity wrt.\ aggregate quantities}
-
-
-Solutions for~\eqref{education_model:mfg_analytic_system} describe Nash equilibria for the limit of the game as $N \to \infty$,
- that is, the mean-field limit of the game.
+Solutions for the mean field system~\eqref{education_model:mfg_analytic_system} describe Nash equilibria for the limit of the game as $N \to \infty$~\cite{cardaliaguet2010notes}.
 The function $V: [0,T] \times \Omega \mapsto \mathbb{R}$ is the value function for the game at the Nash equilibrium,
 whereas the probability measure flow $\mu: [0,T] \times \Omega \mapsto \mathbb{R}$ describe the time evolution of the  population density over the state space $\Omega$.
 \begin{equation}\label{education_model:mfg_analytic_system}
@@ -97,21 +93,28 @@ where
 
 The Nash equilibria can also be formulated as the solution to a system of 
 McKean-Vlasov Forward Backward Stochastic Differential Equations (MV-FBSDE),
-by applying the Stochastic Maximum Principle to the optimization problem~\eqref{education_model:representative_agent_optimization}.
-This leads to the following system:
-\begin{equation}\label{education_model:mfg_fbsde_system}
+by applying the Stochastic Maximum Principle to the optimization problem~\eqref{education_model:representative_agent_optimization}~\cite{carmona2018probabilistic}.
+Suppose there exist functions $\hat u : \mathbb{R}^+ \times \mathbb{R} \times \mathbb{R} \mapsto [0,1] $ and $\hat c : \mathbb{R} \mapsto \mathbb{R}^+$ such that
+\begin{equation}
     \begin{cases}
-        d A_t = \left[ (\bar r_t - \delta) A_t + \bar w_t H_t {\hat u}(A_t,H_t,P_t,Q_t) - {\hat c}(A_t,H_t,P_t,Q_t)  \right] dt + \sigma_a A_t d W^a_t.
-        d H_t = H^\xi_t g(1 - {\hat u}(A_t,H_t,P_t,Q_t)) dt + \sigma_h H_t d W^h_t,\\
-        d P_t = -\left[ (\bar r_t - \delta) P_t + \sigma_a P'_t \right]dt + P'_t d W^a_t,\\
-        d Q_t = - \left[ \xi H_t^{\xi - 1} g(1 - {\hat u}(A_t,H_t,P_t,Q_t) ) Q_t + {\bar w} {\hat u}(A_t, H_t, P_t, Q_t) P_t + \sigma_h Q'_t \right] dt + Q'_t d W^h_t,\\
-        \mathcal{L}(A_0, H_0) = \mu_0, \, P_T = \partial_a Q(A_T), Q_T = 0.
+         \left \{ h^\xi \, g(1 - {\hat u}(h,p,q))\, q + h {\hat u}(h,p,q) \, \bar w (\mu)\, p + f_u({\hat u}(h,p,q))\right\} = \HH_u(h,p,q),\\
+         \left \{  f_c({\hat c}(p)) - {\hat c}(p) \, p \right \} = \HH_c(p)
     \end{cases}
 \end{equation}
-The solutions for both formulations are related: $\mathcal{L}(A_t, H_t) = \mu_t$, $P_t = \partial_a V(t,A_t,H_t)$ and $Q_t = \partial_h V(t,A_t,H_t)$.
+Let $\hat u_t \coloneqq \hat u(H_t,P_t,Q_t)$ and $\hat c_t \coloneqq \hat c(P_t)$.
+Then solutions $(A_t, H_t, P_t, P'_t, Q_t, Q'_t)$ for the MV-FBSDE
+\begin{equation}\label{education_model:mfg_fbsde_system}
+    \begin{cases}
+        d A_t = \left[ (\bar r_t - \delta) A_t + \bar w_t H_t {\hat u}_t - {\hat c}_t  \right] dt + \sigma_a A_t d W^a_t,\\
+        d H_t = H^\xi_t g(1 - {\hat u}_t) dt + \sigma_h H_t d W^h_t,\\
+        d P_t = -\left[ (\bar r_t - \delta) P_t + \sigma_a P'_t \right]dt + P'_t d W^a_t,\\
+        d Q_t = - \left[ \xi H_t^{\xi - 1} g(1 - {\hat u}_t ) Q_t + {\bar w} {\hat u}_t P_t + \sigma_h Q'_t \right] dt + Q'_t d W^h_t,\\
+        \mathcal{L}(A_0, H_0) = \mu_0, \, P_T = \partial_a Q(A_T), Q_T = 0,
+    \end{cases}
+\end{equation}
+describe Nash equilibria for the mean field limit of the game.
 Note that the dependency of the dynamics on the law $\mathcal{L}(A_t,H_t)$ is implicit in $\bar r_t$ and $\bar w_t$.
-
-\textcolor{red}{write master equation formulation}
+Solutions for~\eqref{education_model:mfg_analytic_system} and~\eqref{education_model:mfg_analytic_system} are related through $\mathcal{L}(A_t, H_t) = \mu_t$, $P_t = \partial_a V(t,A_t,H_t)$ and $Q_t = \partial_h V(t,A_t,H_t)$.
 
 \subsection{Numerical Illustration}
         A deterministic, simplified version of the model was simulated through Picard iterations.
