@@ -1,14 +1,15 @@
 %%%%%%WIP%%%%%
+
 We'll consider an example from economics in order to illustrate the mean field games methodology.
 The model was chosen as an example for two reasons.
 First, the mean field interactions arise naturally from the underlying economic theory, which makes the example a fitting introduction.
-Second, the model is similar in nature to the educational model that we shall propose in sectio~\ref{sec:model_proposal}.
+Second, the model is similar in nature to the educational model that we shall propose in section~\ref{model_proposal}.
 
 The example will be formulated in the deterministic setting, where the Nash equilibrium can be formulated using Pontryagin's Maximum Principle 
 as the solution to a system of forward-backwards ODEs.
 
 Consider an idealized economy composed of $N$ agents, with an optimization interval from time $t = 0$ to $t = T$.
-Each agent has an amount of capital $k_0^i$ for $i \in \{1,\ldots,N\}$ at time $0$, and they're able to control their c~nsumption $c_t^i \in \RR$ over time.
+Each agent has an amount of capital $k_0^i$ for $i \in \{1,\ldots,N\}$ at time $0$, and they're able to control their consumption $c_t^i \in \RR$ over time.
 The capital dynamics over time $\dot k_t^i$ is governed by two factors:
 a fixed depreciation rate $\delta$ and an endogenous interest rate $r_t$. It is given by the ODE
 \begin{equation}
@@ -114,7 +115,7 @@ As shown in section~\ref{ADD_APPENDIX_FOR_VISCOSITY_SOLUTIONS}, the value functi
 \end{equation}
 This equation encodes the system of ODEs in~\ref{economic_example:ode_formulation} through the Hamiltonian function by the relations
 \begin{equation*}
-    \dot k_t = \partial_p H,\, \dot p_t = -\partial_k H.
+    \dot k_t = \partial_p H,\quad \dot p_t = -\partial_k H.
 \end{equation*}
 Moreover, as shown in~\ref{ADD_APPENDIX_FOR_TRANSPORT_EQUATION_AND_FKP},
 when the agents' capital evolve according to $\dot k = \partial_p H$,
@@ -122,19 +123,19 @@ the probability density function $\rho(\cdot, t)$ for the agents probability mea
 is the weak solution for the Kolmogorov-Fokker-Planck equation with initial condition $\rho_0$ given by the pdf of $\mu_0$
 \begin{equation}\label{economic_example:fkp_equation_reduced}
 \begin{split}
-    &\partial_t \rho - \partial_k \left( \partial_p H \rho \right) = 0, \rho(k,0) = \rho_0.
+    &\partial_t \rho - \partial_k \left( \partial_p H \rho \right) = 0, \quad\rho(k,0) = \rho_0.
 \end{split}
 \end{equation}
 In the Nash Equilibrium, the capital per capita at time $t$ is a function of $\rho$ given by $\hat k_t(\rho) = \int_{\RR} k \rho(k,t) dk$.
 Substituting 
 \begin{equation*}
-    H(p,k,t) = \left(C {\hat k_t(\rho) - \delta}\right)k p  - 1  - \log(p)
+    H(p,k,t) = \left(C {\hat k_t(\rho) - \delta}\right)k p  - 1  - \log(p),
 \end{equation*}
 on~\ref{economic_example:hjb_equation_reduced} and~\ref{economic_example:fkp_equation_reduced}, we have the full PDE system
 \begin{equation}
     \begin{cases}
-        \partial_t V +  \left(C {\hat k_t(\rho) - \delta}\right)k\partial_k V - 1  - \log(\partial_k V) = 0,\quad V(k,T) = -\frac{1}{2}{(k)}^2,\\
-        \partial_t \rho - \partial_k \left( \left[ \left(C {\hat k_t}(\rho) - \delta\right) k - {(\partial_k V)}^{-1} \right]\rho \right) = 0, \rho(k,0) = \rho_0.
+        \partial_t V +  \left(C {\hat k_t(\rho) - \delta}\right)k\partial_k V - 1  - \log(\partial_k V) = 0,  \quad V(k,T) = -\frac{1}{2}{(k)}^2,\\
+        \partial_t \rho - \partial_k \left( \left[ \left(C {\hat k_t}(\rho) - \delta\right) k - {(\partial_k V)}^{-1} \right]\rho \right) = 0, \quad \rho(k,0) = \rho_0.
     \end{cases}
 \end{equation}
 \color{black}
