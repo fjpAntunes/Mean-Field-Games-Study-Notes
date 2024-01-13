@@ -1,10 +1,10 @@
 Consider an economy with $N$ agents, evolving in the time interval $[0,T]$.
 Each agent is described at time $t$ by his wealth $A_t$ and his skill level $H_t$,
 with $(A_t, H_t) \in \Omega = \mathbb{R} \times \mathbb{R}^+$ for every $t \in [0,T]$.
-Agents control their consumption $c_t \in \mathbb{R}^+$, and the proportion of time they dedicate to working $u_t \in [0,1]$. 
+Agents control their consumption $c_t \in \mathbb{R}^+$, and the proportion of time dedicated to working $u_t \in [0,1]$. 
 We assume that the proportion $1 - u_t$ of time not used to working is used to improve their skill level. 
-
-Each agent face the following optimization problem:
+Moreover, each agent face the following optimization problem:
+\textcolor{red}{describe in more details mean field methodology - population fixed then optimal control - then population evolution - before or together with discussion of mean field quantities}
 \begin{equation}\label{education_model:representative_agent_optimization}
 \begin{cases}
         \sup\limits_{(u,c) \in \mathcal{U} \times \mathcal{C}}\mathbb{E} [ \int_0^T f_c(c_s) + f_u(u_s) ds + Q(A_T) ], \text{ s.t.}\\
@@ -16,9 +16,7 @@ The term $f_c(c_s)$ is a running utility for consumption, whereas $f_u(u_s)$ is 
 The term $Q(A_T)$ represents utility over terminal wealth.
 
 The agent's wealth $A_t$ evolves with a drift term $\left[ (\bar r_t - \delta) A_t + \bar w_t H_t u_t - c_t  \right] dt $ and a noise term $\sigma_a A_t d W^a_t$.
-The drift term is composed of interest returns over current wealth, wages proportional to time dedicated to working and a reduction on wealth due to consumption given by $c_t$.
-The interest returns are described by $(\bar r_t - \delta) A_t$, where $\delta$ is a depreciation rate and $\bar r_t$ is the interest rate of the economy, to be determined endogenously through mean field interactions.
-The wages are given by $\bar w_t H_t u_t$, where $H_t$ is the agent's skill level, $u_t$ is the proportion of time dedicated to work and $\bar w_t$ is the wage rate per time per skill of the economy, which also will be determined endogenously through mean field interactions.
+The drift term is composed of interest returns over current wealth given by $(\bar r_t - \delta) A_t$, wages $\bar w_t H_t u_t$  proportional to time dedicated to working and a reduction on wealth due to consumption given by $c_t$. The interest rate of the economy $\bar r_t$ and the wage rate per time per skill $\bar w_t$  are determined endogenously through mean field interactions, whereas $\delta$ is a given depreciation rate. 
 
 The agent's skill level $H_t$ evolves through time with a drift term $H^\xi_t g(1 - u_t) dt$ and a noise term $\sigma_h H_t dW^h_t$.
 The function $g$ represents the effectiveness of time $1 - u_t$ employed in improving skill level,
@@ -71,15 +69,15 @@ Integrating over the population's density measure $\mu^N_t$ leads to
 \[
     \int_\Omega \bar r_t a \, d\mu^N_t(a,h) = \beta F(\bar a_t, \heff_t),\quad \int_\Omega \bar w_t u(a,h) h \, d\mu^N_t(a,h) = (1 - \beta) F(\bar a_t, \heff_t).    
 \]
-This means that the aggregate increase in the agent's wealth is equal to the production of the economy.
+This means that the economy is closed in the sense that everything that is produced is distributed either as interest or as wages.
 
 Solutions for the mean field system~\eqref{education_model:mfg_analytic_system} describe Nash equilibria for the limit of the game as $N \to \infty$~\cite{cardaliaguet2010notes}.
 The function $V: [0,T] \times \Omega \mapsto \mathbb{R}$ is the value function for the game at the Nash equilibrium,
 whereas the probability measure flow $\mu: [0,T] \times \Omega \mapsto \mathbb{R}$ describe the time evolution of the  population density over the state space $\Omega$.
 \begin{equation}\label{education_model:mfg_analytic_system}
     \begin{cases}
-        \partial_t V + (\bar r  - \delta) a \partial_a V + \HH_u  + \HH_c + \frac{1}{2} \sigma_a^2 a^2 \partial_{aa} V + \frac{1}{2} \sigma^2_h h^2 \partial_{hh} V = 0,\\
-        \partial_t \mu + \partial_a \left( \left[ (\bar r - \delta) a + \partial_p \HH_u + \partial_p \HH_c \right] \mu \right)  + \partial_h \left( \partial_q \HH_u\, \mu\right)  - \frac{1}{2} \sigma_a^2 \partial_{aa} (a^2\mu) - \frac{1}{2} \sigma^2_h \partial_{hh} (h^2\mu) = 0,\\
+        \partial_t V + (\bar r  - \delta) a \partial_a V + \HH_u(h, \partial_a V, \partial_h V)  + \HH_c(\partial_a V) + \frac{1}{2} \sigma_a^2 a^2 \partial_{aa} V + \frac{1}{2} \sigma^2_h h^2 \partial_{hh} V = 0,\\
+        \partial_t \mu + \partial_a \left( \left[ (\bar r - \delta) a + \partial_p \HH_u(h, \partial_a V, \partial_h V) + \partial_p \HH_c(\partial_a V) \right] \mu \right)  + \partial_h \left( \partial_q \HH_u(h, \partial_a V, \partial_h V)\, \mu\right)  - \frac{1}{2} \sigma_a^2 \partial_{aa} (a^2\mu) - \frac{1}{2} \sigma^2_h \partial_{hh} (h^2\mu) = 0,\\
         \mu(0,a,h) = \mu_0,\quad V(T,a,h) = Q(a)
     \end{cases}
 \end{equation}
@@ -102,13 +100,13 @@ Suppose there exist functions $\hat u : \mathbb{R}^+ \times \mathbb{R} \times \m
     \end{cases}
 \end{equation}
 Let $\hat u_t \coloneqq \hat u(H_t,P_t,Q_t)$ and $\hat c_t \coloneqq \hat c(P_t)$.
-Then solutions $(A_t, H_t, P_t, P'_t, Q_t, Q'_t)$ for the MV-FBSDE
+Then solutions $(A_t, H_t, P_t, Z^p_t, Q_t, Z^q_t)$ for the MV-FBSDE
 \begin{equation}\label{education_model:mfg_fbsde_system}
     \begin{cases}
         d A_t = \left[ (\bar r_t - \delta) A_t + \bar w_t H_t {\hat u}_t - {\hat c}_t  \right] dt + \sigma_a A_t d W^a_t,\\
         d H_t = H^\xi_t g(1 - {\hat u}_t) dt + \sigma_h H_t d W^h_t,\\
-        d P_t = -\left[ (\bar r_t - \delta) P_t + \sigma_a P'_t \right]dt + P'_t d W^a_t,\\
-        d Q_t = - \left[ \xi H_t^{\xi - 1} g(1 - {\hat u}_t ) Q_t + {\bar w} {\hat u}_t P_t + \sigma_h Q'_t \right] dt + Q'_t d W^h_t,\\
+        d P_t = -\left[ (\bar r_t - \delta) P_t + \sigma_a Z^p_t \right]dt + Z^p_t d W^a_t,\\
+        d Q_t = - \left[ \xi H_t^{\xi - 1} g(1 - {\hat u}_t ) Q_t + {\bar w} {\hat u}_t P_t + \sigma_h Z^q_t \right] dt + Z^q_t d W^h_t,\\
         \mathcal{L}(A_0, H_0) = \mu_0, \, P_T = \partial_a Q(A_T), Q_T = 0,
     \end{cases}
 \end{equation}
