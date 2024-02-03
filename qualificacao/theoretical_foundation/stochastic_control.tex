@@ -1,0 +1,43 @@
+This section is a compendium of optimal stochastic control.
+We follow \cite{Pham} and present briefly the necessary results
+for a full understanding of MFG theory.
+
+Consider a system governed by the controlled
+stochastic differential equation (SDE) in $\RR^n$:
+\begin{equation}
+    d X_s = b(X_s, \alpha_s)ds + \sigma(X_s, \alpha_s) d W_s
+\end{equation}
+where $W$ is a $d$-dimensional Brownian motion on a filtered probability space
+$(\Omega, \mathcal{F}, \mathbb{F} = (\mathbb{F}_t)_{t \geq 0}, \mathbb{P} )$ satisfying the
+usual conditions.
+The coefficients $b(t,x,a)$ and $\sigma(t,x,a)$ are depend on $t$, except
+in the case of infinite horizon problems.
+The control $\alpha = (\alpha_s)$ is a progressively measurable process w.r.t.
+$\mathbb{F}$, valued in $A \subset \RR^m$.
+
+The functions $b: \mathbb{R}^n \times A \mapsto \mathbb{R}^n$ and 
+$\sigma: \mathbb{R}^n \times A \mapsto \RR^{n\times d}$ are uniformly
+Lipschitz over $A$: $\exists K \geq 0, \forall x,y, \in \RR^n, \forall a \in A$,
+\begin{equation}\label{soc:diffusion_uniformly_lipschitz}
+    | b(x,a) - b(y,a) | + | \sigma(x,a) - \sigma(y,a) | \geq K | x - y |.   
+\end{equation}
+
+Fix a time $0 < T < \infty$, and let $\mathcal{A}$ be the set of control processes
+$\alpha$ such that
+\begin{equation}\label{soc:diffusion_quadratic_bound}
+    \mathbb{E}\left[ \int^T_0 |b( 0,\alpha_t )|^2 + |\sigma( 0, \alpha_t )|^2 dt \right] < \infty.
+\end{equation}
+
+Conditions~\eqref{}
+
+Dynamic Programming Principle
+
+
+
+Hamilton Jacobi Bellman Equation
+
+Viscosity Solutions
+
+BSDEs
+
+Stochastic Maximum Principle
