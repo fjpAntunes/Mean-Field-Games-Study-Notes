@@ -1,10 +1,10 @@
-This section is a compendium of optimal stochastic control.
+This section is a compendium of stochastic control.
 We follow \cite{Pham} and present briefly the necessary results
 for a full understanding of MFG theory.
 
 Consider a system governed by the controlled
 stochastic differential equation (SDE) in $\RR^n$:
-\begin{equation}
+\begin{equation}\label{soc:controlled_sde}
     d X_s = b(X_s, \alpha_s)ds + \sigma(X_s, \alpha_s) d W_s
 \end{equation}
 where $W$ is a $d$-dimensional Brownian motion on a filtered probability space
@@ -28,9 +28,71 @@ $\alpha$ such that
     \mathbb{E}\left[ \int^T_0 |b( 0,\alpha_t )|^2 + |\sigma( 0, \alpha_t )|^2 dt \right] < \infty.
 \end{equation}
 
-Conditions~\eqref{}
+Conditions~\eqref{soc:diffusion_uniformly_lipschitz} 
+and~\eqref{soc:diffusion_quadratic_bound} ensure the existence and uniqueness
+of a strong solution to the SDE~\eqref{soc:controlled_sde}
+for every control $\alpha \in \mathcal{A}$ and for every initial condition
+$(t,x) \in [0,T] \times \RR^n$, and we denote by $\{ X_s^{t,x}, t \leq s \leq T \}$
+this solution with a.s. continuous paths. Moreover, under these conditions,
+it follows that
+\begin{equation}
+    \begin{gather}
+        \mathbb{E} \left[ \sup\limits_{t\leq s \leq T} \right] < \infty,\\
+        \lim_{h \to 0^+} \mathbb{E} \left[ \sup\limits_{s\in [t,t+h]} | X_s^{t,x} - x |^2 \right] = 0.
+    \end{gather}
+\end{equation}
 
-Dynamic Programming Principle
+We now turn to the definitions of the objective function and the value function.
+Let $ f: [0,T] \times \RR^n \times A \mapsto \RR $ and $ g: \RR^n \mapsto \RR $
+be two measurable functions. Assume that is either $g$ lower-bounded or 
+satisfies a quadratic growth condition 
+$| g(x) | \leq C(1 + |x|^2),\ \forall x \in \RR^n$, for some constant $C$
+independent of $x$.
+
+For $(t,x) \in [0,T] \times \RR^n$, let $\mathcal{A}(t,x) \subset \mathcal{A}$
+be such that, $\forall \alpha in \mathcal{A}(t,x)$
+\begin{equation}
+    \mathbb{E}\left[ \int_t^T | f(s, X_s^{t,x}, \alpha_s) | ds \right] < \infty,
+\end{equation}
+and assume $\mathcal{A}(t,x)$ is not empty for all
+$(t,x) \in [0,T] \times \RR^n$.
+
+We can now define the objective function $J$
+\begin{equation}
+    J(t, x, \alpha) = \mathbb{E}\left[ \int_t^T f(s, X_s^{t,x}, \alpha_s) ds + g(X^{t,x}_T) \right],
+\end{equation}
+for all $(t,x) \in [0,T] \times \RR^n$ and $\alpha \in \mathcal{A}(t,x)$.
+We want to maximize over the controlled processes the objective function, so
+we introduce the associated value function $v$:
+\begin{equation}
+    v(t,x) = \sup_{\alpha \in \mathcal{A}(t,x)} J(t,x,\alpha).
+\end{equation}
+Given an initial condition $(t,x) \in \left[ 0,T \right) \times \RR^n$, we say
+that $\hat \alpha \in \mathcal{A}(t,x)$ is an optimal control if
+$v(t,x) = J(t,x,\hat \alpha)$.
+Moreover, a control process $\alpha$ in the form $\alpha_s = a(s,X_s^{t,x})$ for
+a measurable function $a: [0,T] \times \RR^n \mapsto A$ is
+called a Markovian control.
+
+We are now in position to state a fundamental property of the value function $v$,
+called the \textit{Dynamic Programming Principle}:
+
+\begin{theorem}[Dynamic Programming Principle]
+    Let $(t,x) \in [0,T] \times \RR^n$. The value function $v$ satisfies
+    \begin{equation}
+    \begin{gather} 
+        v(t,x) &= \sup_{\alpha \in \mathcal{A}(t,x)}
+        \sup_{\theta \in \mathcal{T}_{t,T}}
+        \mathbb{E}\left[ \int_t^\theta f(s, X_s^{t,x}, \alpha_s) ds + v(\theta, X^{t,x}_\theta) \right]\\
+        &=\sup_{\alpha \in \mathcal{A}(t,x)}
+        \inf_{\theta \in \mathcal{T}_{t,T}}
+        \mathbb{E}\left[ \int_t^\theta f(s, X_s^{t,x}, \alpha_s) ds + v(\theta, X^{t,x}_\theta) \right]
+    \end{gather}
+    \end{equation}
+    where $\mathcal{T}_{t, T}$ is the set of stopping times valued in $[t,T]$.
+\end{theorem}
+
+
 
 
 
