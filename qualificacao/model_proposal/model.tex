@@ -3,13 +3,12 @@ Each agent is described at time $t$ by his wealth $A_t$ and his skill level $H_t
 with $(A_t, H_t) \in \Omega = \mathbb{R} \times \mathbb{R}^+$ for every $t \in [0,T]$.
 Agents control their consumption $c_t \in \mathbb{R}^+$, and the proportion of time dedicated to working $u_t \in [0,1]$. 
 We assume that the proportion $1 - u_t$ of time not used to working is used to improve their skill level. 
-Moreover, each agent face the following optimization problem:
-\textcolor{red}{describe in more details mean field methodology - population fixed then optimal control - then population evolution - before or together with discussion of mean field quantities}
+Moreover, for every $i \in \{1,...,N\}$,  agent $i$ faces the following optimization problem:
 \begin{equation}\label{education_model:representative_agent_optimization}
 \begin{cases}
-        \sup\limits_{(u,c) \in \mathcal{U} \times \mathcal{C}}\mathbb{E} [ \int_0^T f_c(c_s) + f_u(u_s) ds + Q(A_T) ], \text{ s.t.}\\
-        d A_t = \left[ (\bar r_t - \delta) A_t + \bar w_t H_t u_t - c_t  \right] dt + \sigma_a A_t d W^a_t,\\
-        d H_t = H^\xi_t g(1 - u_t) dt + \sigma_h H_t d W^h_t.
+        \sup\limits_{(u,c) \in \mathcal{U} \times \mathcal{C}}\mathbb{E} [ \int_0^T f_c(c^i_s) + f_u(u^i_s) ds + Q(A^i_T) ], \text{ s.t.}\\
+        d A^i_t = \left[ (\bar r_t - \delta) A^i_t + \bar w_t H^i_t u^i_t - c^i_t  \right] dt + \sigma_a A^i_t d W^{a,i}_t,\\
+        d H^i_t = (H^i_t)^\xi g(1 - u^i_t) dt + \sigma_h H^i_t d W^{h,i}_t.
 \end{cases}
 \end{equation}
 The term $f_c(c_s)$ is a running utility for consumption, whereas $f_u(u_s)$ is a running utility for proportion of time spent working.
@@ -71,13 +70,18 @@ Integrating over the population's density measure $\mu^N_t$ leads to
 \]
 This means that the economy is closed in the sense that everything that is produced is distributed either as interest or as wages.
 
-Solutions for the mean field system~\eqref{education_model:mfg_analytic_system} describe Nash equilibria for the limit of the game as $N \to \infty$~\cite{cardaliaguet2010notes}.
+For a given population evolution described by a measure flow $\mu_t \in C([0,T],\mathcal{P}(\Omega))$, the optimal control problem~\eqref{education_model:representative_agent_optimization} is a standard stochastic optimal control problem.
+However, the optimal trajectories for this optimization problem define a measure flow, which we denote $O(\mu_t)$   
+A Nash equilibrium for the mean-field limit of the game is a measure flow $\mu^*_t$ such that $ \mu^*_t = O(\mu^*_t)$, that is, the flow is induced by the optimal trajectories of its own associated optimization problem.
+
+Coupling the HJB equation describing the value function for the optimization problem and the FKP equation describing the measure flow, we arrive at System~\eqref{education_model:mfg_analytic_system}, which describes Nash equilibria for the limit of the game as $N \to \infty$~\cite{cardaliaguet2010notes}.
 The function $V: [0,T] \times \Omega \mapsto \mathbb{R}$ is the value function for the game at the Nash equilibrium,
 whereas the probability measure flow $\mu: [0,T] \times \Omega \mapsto \mathbb{R}$ describe the time evolution of the  population density over the state space $\Omega$.
 \begin{equation}\label{education_model:mfg_analytic_system}
     \begin{cases}
         \partial_t V + (\bar r  - \delta) a \partial_a V + \HH_u(h, \partial_a V, \partial_h V)  + \HH_c(\partial_a V) + \frac{1}{2} \sigma_a^2 a^2 \partial_{aa} V + \frac{1}{2} \sigma^2_h h^2 \partial_{hh} V = 0,\\
-        \partial_t \mu + \partial_a \left( \left[ (\bar r - \delta) a + \partial_p \HH_u(h, \partial_a V, \partial_h V) + \partial_p \HH_c(\partial_a V) \right] \mu \right)  + \partial_h \left( \partial_q \HH_u(h, \partial_a V, \partial_h V)\, \mu\right)  - \frac{1}{2} \sigma_a^2 \partial_{aa} (a^2\mu) - \frac{1}{2} \sigma^2_h \partial_{hh} (h^2\mu) = 0,\\
+        \partial_t \mu + \partial_a \left( \left[ (\bar r - \delta) a + \partial_p \HH_u(h, \partial_a V, \partial_h V) + \partial_p \HH_c(\partial_a V) \right] \mu \right) 
+        \\ \quad \quad \quad \quad \quad \quad \quad \quad \quad + \partial_h \left( \partial_q \HH_u(h, \partial_a V, \partial_h V)\, \mu\right)  - \frac{1}{2} \sigma_a^2 \partial_{aa} (a^2\mu) - \frac{1}{2} \sigma^2_h \partial_{hh} (h^2\mu) = 0,\\
         \mu(0,a,h) = \mu_0,\quad V(T,a,h) = Q(a)
     \end{cases}
 \end{equation}
