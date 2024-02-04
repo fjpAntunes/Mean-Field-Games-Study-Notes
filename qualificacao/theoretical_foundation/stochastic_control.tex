@@ -35,12 +35,10 @@ for every control $\alpha \in \mathcal{A}$ and for every initial condition
 $(t,x) \in [0,T] \times \RR^n$, and we denote by $\{ X_s^{t,x}, t \leq s \leq T \}$
 this solution with a.s. continuous paths. Moreover, under these conditions,
 it follows that
-\begin{equation}
     \begin{gather}
         \mathbb{E} \left[ \sup\limits_{t\leq s \leq T} \right] < \infty,\\
         \lim_{h \to 0^+} \mathbb{E} \left[ \sup\limits_{s\in [t,t+h]} | X_s^{t,x} - x |^2 \right] = 0.
     \end{gather}
-\end{equation}
 
 We now turn to the definitions of the objective function and the value function.
 Let $ f: [0,T] \times \RR^n \times A \mapsto \RR $ and $ g: \RR^n \mapsto \RR $
@@ -79,16 +77,14 @@ called the \textit{Dynamic Programming Principle}:
 
 \begin{theorem}[Dynamic Programming Principle]
     Let $(t,x) \in [0,T] \times \RR^n$. The value function $v$ satisfies
-    \begin{equation}
-    \begin{gather} 
-        v(t,x) &= \sup_{\alpha \in \mathcal{A}(t,x)}
+\begin{gather} 
+        v(t,x) = \sup_{\alpha \in \mathcal{A}(t,x)}
         \sup_{\theta \in \mathcal{T}_{t,T}}
         \mathbb{E}\left[ \int_t^\theta f(s, X_s^{t,x}, \alpha_s) ds + v(\theta, X^{t,x}_\theta) \right]\\
-        &=\sup_{\alpha \in \mathcal{A}(t,x)}
+        =\sup_{\alpha \in \mathcal{A}(t,x)}
         \inf_{\theta \in \mathcal{T}_{t,T}}
         \mathbb{E}\left[ \int_t^\theta f(s, X_s^{t,x}, \alpha_s) ds + v(\theta, X^{t,x}_\theta) \right]
-    \end{gather}
-    \end{equation}
+\end{gather}
     where $\mathcal{T}_{t, T}$ is the set of stopping times valued in $[t,T]$.
 \end{theorem}
 
