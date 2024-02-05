@@ -1,0 +1,22 @@
+Mean field games is a branch of game theory, which is a set of concepts, mathematical tools, theorems, simulations methods and algorithms intended to model situations where agents make decisions strategically. Mean field game theory focus specifically a game with an infinite number of identical (symmetric) players. The infinite number of players are represented by their probability distribution over the state (or action) space.
+
+Analysis of MFG focus on the interaction between a representative player sampled from the distribution, and the distribution itself. In essence, the representative player formulates his best response to the crowd. However, as every player is equal, the best response of the representative player determines the evolution of the crowd.
+
+
+Applications focus mostly on Nash equilibria or social optimum, respectively mean field game and mean field control.
+Mean field games concern the "competitive" setting, where each player decides his actions by means of solving  his own optimization problem. Mean field control, on the other hand, describe the "cooperative" setting, where the player's actions are derived from an optimization problem on the player's distribution as a whole. 
+
+As an illustrative example, consider crowd motion: a crowd in a music festival could be modelled as a mean field game, with each individual attempting to optimize his position considering the loudness and the crowd's density. However, a military parade could be modelled as a mean field control, with each individual given orders to follow by a commander who wants to optimize the troop's distribution. 
+
+In both cases, the optimality conditions give rise to coupled equations with a forward-backward structure: the forward equation describe the evolution of the distribution of players, while the backward equation describes the optimization problem for the representative player. The problem can be formulated in an analytical approach or in a probabilistic approach. 
+In the analytical formulation, we have a system composed of a Fokker-Plank PDE with initial condition and a Hamilton-Jacobi-Bellman PDE with terminal condition \cite{lasry2007mean}.
+As for the probabilistic formulation, we have a system of Forward-Backward SDE with McKean-Vlasov interactions \cite{carmona2013mean}. 
+
+\if{
+Some fields of application for MFG are 
+\begin{itemize}
+    \item economics: financial engineering [citations] and macroeconomic models [citations],
+    \item population dynamics [citations], crowd motion [] and epidemiology [citations]
+    \item engineering: energy production and management [citations], security and communication [citations], autonomous vehicles [citations].
+\end{itemize}
+}\fi

@@ -16,85 +16,28 @@
 
 
 \section{Introduction}
-
-Mean field games is a branch of game theory, which is a set of concepts, mathematical tools, theorems, simulations methods and algorithms intended to model situations where agents make decisions strategically. Mean field game theory focus specifically a game with an infinite number of identical (symmetric) players. The infinite number of players are represented by their probability distribution over the state (or action) space.
-
-Analysis of MFG focus on the interaction between a representative player sampled from the distribution, and the distribution itself. In essence, the representative player formulates his best response to the crowd. However, as every player is equal, the best response of the representative player determines the evolution of the crowd.
-
-
-Applications focus mostly on Nash equilibria or social optimum, respectively mean field game and mean field control.
-Mean field games concern the "competitive" setting, where each player decides his actions by means of solving  his own optimization problem. Mean field control, on the other hand, describe the "cooperative" setting, where the player's actions are derived from an optimization problem on the player's distribution as a whole. 
-
-As an illustrative example, consider crowd motion: a crowd in a music festival could be modelled as a mean field game, with each individual attempting to optimize his position considering the loudness and the crowd's density. However, a military parade could be modelled as a mean field control, with each individual given orders to follow by a commander who wants to optimize the troop's distribution. 
-
-In both cases, the optimality conditions give rise to coupled equations with a forward-backward structure: the forward equation describe the evolution of the distribution of players, while the backward equation describes the optimization problem for the representative player. The problem can be formulated in an analytical approach or in a probabilistic approach. 
-In the analytical formulation, we have a system composed of a Fokker-Plank PDE with initial condition and a Hamilton-Jacobi-Bellman PDE with terminal condition \cite{lasry2007mean}.
-As for the probabilistic formulation, we have a system of Forward-Backward SDE with McKean-Vlasov interactions \cite{carmona2013mean}. 
-
-\if{
-Some fields of application for MFG are 
-\begin{itemize}
-    \item economics: financial engineering [citations] and macroeconomic models [citations],
-    \item population dynamics [citations], crowd motion [] and epidemiology [citations]
-    \item engineering: energy production and management [citations], security and communication [citations], autonomous vehicles [citations].
-\end{itemize}
-}\fi
+\input{qualificacao/introduction/intro}
 
 \subsection{An example from economics}
-\input{qualificacao/economic_example}
+\input{qualificacao/introduction/economic_example}
 
 \section{Theoretical Review - Mean Field Games Theory}
+\input{qualificacao/theoretical_review/intro}
 
-\subsection{Theoretical Review outline}
-
-Mean field games are a framework for approximating Nash equilibria of certain kinds of games with a large number of players.
-There are two equivalent ways of formulating a mean field game - through a system of coupled partial differential equations, or through a system of forward-backward stochastic differential equations.
-
-In this section, we will explore the theory of mean field games.
-We will begin by reviewing important concepts in game theory. 
-Then, we shall review both the PDE system point of view and the FBSDE point of view. 
-Equiped with an understanding of both point of views, we will analyze the limit of N-player games and its relationship to MFG.
-Following the theoretical subsections, we will explore numerical solutions for MFG and applications.
-We shall end the section by analyzing a model for human capital development.
-We refer the reader to Appendix \ref{appendix-game-theory} for a review of game theory concepts, and to Appendix \ref{appendix-mathematical-background} for a review of necessary mathematical background.
-
-
-\subsection{Three roads for Mean Field Games Theory}
-
-Conceptually, there are three approaches to mean field games theory - from physics, from game theory and from economic theory.
-
-\subsubsection{First road: from physics to mean field games}
-
-% To do
-% Add an physical example - i.e. gravity vs termal pressure model
-In particle physics, situations with large number of particles are handled using mean field theory. Instead of modelling all the inter-particle interactions, one introduces a "mean field" which serve as mediator for the interactions. Each particle both contributes to and is influenced by the mean field.
-
-In order to use this approximation, the inter-particle interactions must be sufficiently weak or regular.
-
-Mean field game theory adapts this methodology to situations in which agents interact in strategic situations. The challenge is to take into account not only the ability of agents to make decisions, but also the interaction between strategies: each player's strategy tries to take into account the other player's strategy.
-\textbf{This changes the nature of the mean field: it is not an statistic on the domain of particle states anymore, but rather a statistic on the domain of strategies and information.}
-
-Although the term "mean-field" is borrowed from Physics, mean field game theory does not restrain itself to applying physical models to economy. Instead, as a branch of game theory, mean field games models aim to \textit{explain} rational behaviour through the structure of the agent's interactions and payoffs. \cite{cousin2010paris}
-
-\subsubsection{Second Road: From Game Theory to Mean Field Games}
-
-In game theory, $N$-player games quickly become intractable as $N$ gets large. Mean Field Games provide a way to approximate the limiting case as $N \to \infty$ for a class of $N$-player game which respect a form of anonymity: direct interactions between players are comparatively small, and players can be interchanged without changing the interaction. This is the case when interactions are mediated through some average of the player's state, for instance.
-The mean field approach consists in approximating the $N$ players by a continuum of players distributed through the state space. Each agent formulates his optimal response given the distribution of players, and conversely this optimal response implies an evolution through time for the player's distribution.
-\textit{In layman's terms, each player formulates his strategy against the crowd, and the crowd evolves according to each player's strategy.}
-
-\subsubsection{Third Road: From Economics to Mean Field Games}
-% To Do
-% Add toy model with general equilibrium, reference it here
-In economic models following the Theory of General Economic Equilibrium, interactions are mediated by prices. Direct interactions of agents are excluded from these economic models. However, systemic economic effects such as externalities, public goods, etc give rise to interactions which are not mediated by price. Both price formation and systemic effects can be modelled by a mean field type model. This way, MFG theory lends itself as a tool of economic analysis.
 \textcolor{red}{
+\subsection{To Dos}
 \begin{itemize}
     \item Stochastic Optimal Control - DPP, Viscosity Solutions and Stochastic Maximum Principle.
     \item  Wasserstein Analysis - Wasserstein Metric, Convergence, Continuity and Transport Equation, Derivative w.r.t. prob measure (3 formulations)
+    \item Organize MFG sections
 \end{itemize}}
 
-\subsection{Stochastic Optimal Control}
+\subsection{Stochastic Optimal Control}\label{theo_review:soc}
 
-\input{qualificacao/theoretical_foundation/stochastic_control}
+\input{qualificacao/theoretical_review/stochastic_control}
+
+\subsection{Wasserstein Spaces}\label{theo_review:wass}
+\input{qualificacao/theoretical_review/wasserstein_calculus}
 
 \subsection{Analytical point of view}
 %% To do
@@ -333,35 +276,12 @@ To Do
 \end{itemize}
 
 
+
 \section{Model Proposal}\label{model_proposal}
-We propose a game theoretical model for time allocation between work and education.
-The model is based on Lucas's human capital growth model \cite{lucas1988mechanics} and Aiyagari’s growth model \cite{achdou2014partial,carmona2018probabilistic}.
-\textcolor{red}{Add paragraph about lucas model and paragraph about aiyagari's model.}
-The agents interactions are mediated through the interest rate and wage rate of the economy, which depend on aggregated quantities of the agent's states.
-
-\textcolor{red}{Elaborate on the justification for the interest rate and the wage rate.
-Explain skill level/wage rate}
-
-Some expected results of this research are qualitative properties and numerical solutions of the mean field limit of the game. \textcolor{red}{develop goals}
-
+\input{qualificacao/model_proposal/intro}
 \subsection{Economic Theory Review}\label{model_proposal:motivation}
 
-\subsubsection{ Mean Field Models (or similar) in Economic Research}
-\begin{itemize}
-    \item Moll, Lucas
-    \item Models for Heterogeneous Agents
-    \item Gabaix, Dynamics of Inequality, 2016 - Sharp rise in inequality not modelled accurately by standard random growth models. The paper suggests some changes to standard models that address this issue: type dependence and scale dependence in wealth accumulation.
-    \item TAPPING INTO TALENT - Model for economy where agents can chose between working on industry or working as a researcher. Has an educational component - agents can only chose to become researchers if they pursue an PhD. Pursuing a PhD has "innate talent" and economic restrictions. Researcher's wage are calculated by solving for the market equilibrium in a free market of ideas. Model is calibrated to census data from Denmark and used to study counterfactual policy exercises.
-    \item Non market interactions - Scheinkman - check for more recent references
-\end{itemize}
-
-\subsubsection{Econometric Research on Education}
-\begin{itemize}
-    \item Articles with stylized facts - Tapping Into Talent
-    \item articles that measure interesting behaviour that we hope the model can replicate.
-    \item articles that argue in favor of the importance of this research
-    \item Growth models review - specially Lucas and Ayiagari
-\end{itemize}
+\input{qualificacao/model_proposal/economic_motivation}
 
 
 \subsection{Model}\label{model_proposal:proposal}
