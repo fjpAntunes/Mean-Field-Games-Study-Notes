@@ -88,13 +88,205 @@ called the \textit{Dynamic Programming Principle}:
     where $\mathcal{T}_{t, T}$ is the set of stopping times valued in $[t,T]$.
 \end{theorem}
 
+\begin{proof}
+    Given an admissible control $\mathcal{A}(t,x)$, by pathwise uniqueness of the flow of the SDE for $X$ we have
+    \begin{equation}
+        X_s^{t,x} =  X_s^{\theta, X_\theta^{t,x}}, \, s \geq \theta
+    \end{equation}
+    for any stopping time $\theta \in [t,T]$. By the tower property of expectations, 
+    we have
+    \begin{align*}
+        J(t,x,\alpha) &= \mathbb{E}\left[ \int_t^T f(s, X_s^{t,x}, \alpha_s) ds + G(X_T^{t,x})  \right] \\
+        &= \mathbb{E}\left[ \mathbb{E} \left[ \int_t^Tf(s, X_s^{t,x}, \alpha_s) ds + G(X_T^{t,x}) | \mathcal{F}_\theta \right] \right] \\
+        &= \mathbb{E}\left[  \int_t^\theta f(s,X_s^{t,x}, \alpha_s) ds +  \mathbb{E} \left[ \int_\theta^T f(s, X_s^{t,x}, \alpha_s) ds + G(X_T^{t,x}) | \mathcal{F}_\theta \right] \right]\\ 
+        &= \mathbb{E}\left[  \int_t^\theta f(s,X_s^{t,x}, \alpha_s) ds +  J(\theta, X_\theta^{t,x}, \alpha) \right].
+    \end{align*}
+    By the definition of the value function $v$, $J(t,x,\alpha) \leq v(t,x)$.
+    Moreover, as $\theta$ is arbitrary in $\mathcal{T}_{t,T}$, we have
+    \begin{align*}
+        J(t,x,\alpha) &\leq \inf_{\theta \in \mathcal{T}_{t,T}} \mathbb{E}\left[ \int_t^\theta f(s, X_s^{t,x}, \alpha_s) ds  + v(\theta, X_\theta^{t,x})\right] \\
+        & \leq \sup_{\alpha \in \mathcal{A}(t,x)} \inf_{\theta \in \mathcal{T}_{t,T}} \mathbb{E}\left[ \int_t^\theta f(s,X^{t,x}_s, \alpha_s) ds + v(\theta, X_\theta^{t,x}) \right]. 
+    \end{align*}
+    by taking the supremum over $\alpha$ in the left side, we conclude that
+    \begin{equation}
+        v(t,x)  \leq \sup_{\alpha \in \mathcal{A}(t,x)} \inf_{\theta \in \mathcal{T}_{t,T}} \mathbb{E}\left[ \int_t^\theta f(s,X^{t,x}_s, \alpha_s) ds + v(\theta, X_\theta^{t,x}) \right]. 
+    \end{equation}
+    Now, for the other side of the inequality: fix some arbitrary control
+    $\alpha \in \mathcal{A}(t,x)$ and $\theta \in \mathcal{T}_{t,T}$.
+    By definition of the value functions, for any $\epsilon > 0$ and 
+    $\omega in \Omega$, there exists an $\epsilon$-optimal control
+    $\alpha^{\epsilon, \omega} \in \mathcal{A}( \theta(\omega), X^{t,x}_{\theta(\omega)} (\omega)  )$
+    such that
+\begin{equation}\label{soc:dpp_proof_epsilon_optimal_control}
+    v(\theta(\omega), X^{t,x}_{\theta(\omega)}(\omega)) - \epsilon \leq J(\theta(\omega), X^{t,x}_{\theta(\omega)}(\omega), \alpha^{\epsilon, \omega}).
+\end{equation}    
+    We can define the process
+\begin{equation*}
+    \hat\alpha_s(\omega) = 
+    \begin{cases}
+        \alpha_s(\omega), s \in [0,\theta(\omega)],\\
+        \alpha_s^{\epsilon, \omega}(\omega), s \in [\theta(\omega), T].
+    \end{cases}
+\end{equation*}
+As stated in~\cite{Pham}, it can be shown that $\hat \alpha$ is progressively measurable,
+so it lies in $\mathcal{A}(t,x)$.
+Again, by the tower property and by inequality~\eqref{soc:dpp_proof_epsilon_optimal_control}
+\begin{align*}
+    v(t,x) &\geq J(t,x, \hat \alpha) = \mathbb{E}\left[ \int_t^\theta f(s,X^{t,x}_s, \alpha_s) ds + J(\theta, X^{t,x}_\theta, \alpha^\epsilon) \right] \\
+            &\geq \mathbb{E}\left[ \int_t^\theta f(s,X^{t,x}_s, \alpha_s) ds + v(\theta, X^{t,x}_\theta) \right] - \epsilon.
+\end{align*}
+As $\alpha, \theta$ were arbitrary, we conclude that
+\begin{equation}
+    v(t,x) \geq \sup_{\alpha \in \mathcal{A}(t,x)} \sup_{\theta \in \mathcal{T}_{t,T}} \mathbb{E} \left[ \int_t^\theta f(s, X_s^{t,x}, \alpha_s) ds + v(\theta, X^{t,x}_\theta) \right].
+\end{equation}
+Combining both inequalities concludes the proof.
+\end{proof}
+
+From the dynamic programming principle, we can derive the Hamilton-Jacobi-Bellman (HJB)
+equation. The HJB equation is an infinitesimal version of the DPP, which describes
+the local behaviour of the value function.
+
+Consider the time $\theta = t + h$ and a constant control $\alpha_s = a$, for some
+arbitrary $a \in A$. From the statement of the DPP, we have
+\begin{equation}\label{soc:dpp_ineq}
+    v(t,x) \geq \mathbb{E}\left[ \int_t^{t + h} f(s,X^{t,x}_s,a) ds + v(t+h, X^{t,x}_{t+h}) \right]
+\end{equation}
+By assuming smoothness of $v$, we can apply Ito's formula between $t$ and $t+ h$:
+\begin{equation*}
+    v(t+h, X^{t,x}_{t+h}) = v(t,x) + \int^{t+h}_t \left( \frac{\partial v}{\partial t} + \mathcal{L}^a v\right)(s, X^{t,x}_s) ds + \int_t^{t+h} \frac{\partial v}{\partial x} (s, X^{t,x}_s) dW_s,
+\end{equation*}
+where $\mathcal{L}^a$ is the operator associated with the
+diffusion~\eqref{soc:controlled_sde}, defined by
+\begin{equation}
+    \mathcal{L}^a v = b(x,a) \partial_x v + \frac{1}{2}\text{tr} (\sigma(x,a) \sigma'(x,a) \partial_{xx}v).
+\end{equation}
+By substituting back into~\eqref{soc:dpp_ineq}, we have
+\begin{equation*}
+    0 \geq \mathbb{E}\left[ \int^{t+h}_t \left( \frac{\partial v}{\partial t} + \mathcal{L}^a v\right)(s, X^{t,x}_s) + f(s, X^{t,x}_s, a)  ds\right]
+\end{equation*}
+We can divide by $h$, apply the mean value theorem and take $h\to 0$ to arrive at
+\begin{equation*}
+    0 \geq \frac{\partial v}{\partial t} (t,x) + \mathcal{L}^a v(t,x) + f(t,x,a).
+\end{equation*}
+Since this holds for any $a \in A$, we have that
+\begin{equation}\label{soc:hjb_inequality}
+    - \frac{\partial v}{\partial t} (t,x) - \sup_{a \in A} \left[ \mathcal{L}^a v(t,x) + f(t,x,a) \right] \geq 0.
+\end{equation}
+
+On the other hand, suppose that $\alpha^*$ is an optimal control.
+Then equality is achieved in the DPP:
+\begin{equation}
+    v(t,x) = \mathbb{E}\left[ \int^{t+h}_t f(s, X^*_s, \alpha^*_s) ds + v(t + h, X^*_{t+h}) \right],
+\end{equation}
+where $X^*$ is the evolution of the system starting from $x$ at $t$, with control $\alph^*$.
+By the same procedure as above, we arrive at
+\begin{equation}
+    - \frac{\partial v}{\partial t} (t,x) - \mathcal{L}^a v(t,x) - f(t,x,a) = 0.
+\end{equation}
+which, combined with~\eqref{soc:hjb_inequality} allows us to conclude that
+\begin{equation}
+    - \frac{\partial v}{\partial t} (t,x) - \sup_{a \in A} \left[ \mathcal{L}^a v(t,x) + f(t,x,a) \right] = 0
+\end{equation}
+for every $(t,x) \in [0,T) \times \RR^n $ where the supremum in $a$ is finite.
+
+If we define the Hamiltonian function $H : [0,T] \times \RR^n \times \RR^n \times \mathcal{S}_n \mapsto \RR$
+by
+\begin{equation}
+    H(t,x,p,M) = \sup_{a \in A} \left[ b(x,a)\cdot p + \frac{1}{2} \text{tr} (\sigma \sigma' (x,a) M) + f(t,x,a) \right],
+\end{equation}
+we can rewrite the PDE as
+\begin{equation}\label{soc:hjb_equation}
+    -\frac{ \partial v}{\partial t} (t,x) - H(t,x,\partial_x v(t,x), \partial_{xx} v(t,x)) = 0
+\end{equation}
+which is the Hamilton-Jacobi-Bellman equation.
+The PDE has a terminal condition given by
+\begin{equation}
+    v(T,x) = g(x), \forall x \in \RR^n,
+\end{equation}
+which results from the definition of $v$ at the time horizon $T$.
+
+In order to derive the Hamilton-Jacobi-Bellman equation, we assumed smoothness
+of the value function. However, this does not necessarily hold, even in simple
+cases. To deal with this difficulty, the notion of viscosity solutions was 
+introduced, which allows a rigorous formulation for the HJB to be given under
+the assumption of local boundedness. Moreover, viscosity solutions satisfy a 
+comparison principle, from which we can derive uniqueness of solutions.
+We shall state the definition and uniqueness result here, and
+ refer to~\cite[Pham, Bressan Piccoli, Livro do IMPA] for a deeper exposition, 
+ and to~\cite{crandall1992user} for a seminal reference to the topic.
+
+ Let's consider the first order case, with a PDE of the form
+ \begin{equation*}
+    F(x,u, D u) = 0, x \in \Omega \subset \RR^n
+ \end{equation*}
+the theory of viscosity solutions show that the solutions $u^\epsilon(\cdot)$
+to the equation
+\begin{equation*}
+    F(x, u^\epsilon, D u^\epsilon) = \epsilon \Delta u^\epsilon
+\end{equation*}
+converge to a unique limit $u(\cdot)$ as $\epsilon \to 0+$.
+This limit is the viscosity solution to the PDE.
+Moreover, the viscosity solution $u$ can be uniquely characterized by inequalities
+in the superdifferential set $D^+ u(x)$ and the subdifferential set $D^- u(x)$
+as follows:
+\begin{itemize}
+    \item A function $u \in C(\Omega)$ is a viscosity subsolution if
+\begin{equation*}
+    F(x, u(x), p) \leq 0, \text{ for every } x \in \Omega, p \in D^+ u(x).
+\end{equation*}
+    \item A function $u \in C(\Omega)$ is a viscosity supersolution if
+\begin{equation*}
+    F(x, u(x), p) \geq 0, \text{ for every } x \in \Omega, p \in D^- u(x).
+\end{equation*}
+    \item A function $u \in C(\Omega)$ is a viscosity solution if it is both
+    a viscosity supersolution and a viscosity subsolution.
+\end{itemize}
+We can characterize the superdifferential (respectively the subdifferential) in
+terms of test functions $\phi \in C^1(\Omega)$:
+\begin{lemma}
+    Let $u \in C(\Omega)$ and $x_0 \in \Omega$. Then $p_0  \in D^+ u(x_0)$ if and 
+    only if there exists $\phi \in C^1(\Omega)$ such that:
+\begin{enumerate}
+    \item $u - \phi$ has a local maximum in $x_0$;
+    \item $(u - \phi)(x_0) = 0$;
+    \item $D \phi(x_0) = p_0$;
+\end{enumerate}
+\end{lemma}
+For $p_0 \in D^- u(x_0)$, instead of a local maximum we have a local minimum.
+This allows us to give an equivalent definition of viscosity solutions in terms 
+of test functions. In fact, for second-order PDEs
+of the form
+\begin{equation}
+    F(x, u, D u, D^2 u) = 0,
+\end{equation}
+where $F$ is assumed to satisfy the ellipticity condition
+\begin{equation}
+    M \leq \hat M \rightarrow F(x,r,p,M) \geq F(x,r,p,\hat M),
+\end{equation}
+for all $x \in \Omega, r \in \RR, p \in \RR^n, M,\hat M \in \mathcal{S}_n$,
+this definition can be extended by considering test functions in $C^2(\Omega)$:
+\begin{definition}
+    \begin{itemize}
+        \item An upper-semicontinuous function $u : \Omega \mapsto \RR$ is a viscosity subsolution if
+    \begin{equation*}
+        F(x_0, u(x_0), D \phi(x_0), D^2 \phi(x_0)) \leq 0,
+    \end{equation*}
+    for all $x_0 \in \Omega$ and for all $\phi \in C^2(\Omega)$ such that $x_0$ is a maximum point of $u - \phi$.
+        \item A lower-semicontinuous function $u : \Omega \mapsto \RR$ is a viscosity supersolution if
+    \begin{equation*}
+        F(x_0, u(x_0), D\phi(x_0), D^2 \phi(x_0)) \geq 0,
+    \end{equation*}
+    for all $x_0 \in \Omega$ and for all $\phi \in C^2(\Omega)$ such that $x_0$ is a minimum point of $u - \phi$.
+        \item A function $u : \Omega \maapsto \RR$ is a viscosity solution if it is both
+        a viscosity supersolution and a viscosity subsolution.
+    \end{itemize}
+\end{definition}
 
 
 
-
-Hamilton Jacobi Bellman Equation
 
 Viscosity Solutions
+
 
 BSDEs
 
