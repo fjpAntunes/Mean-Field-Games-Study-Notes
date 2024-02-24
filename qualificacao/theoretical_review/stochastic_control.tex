@@ -1,5 +1,5 @@
 This section is a compendium of stochastic control.
-We follow \cite{Pham} and present briefly the necessary results
+We follow~\cite{pham2009continuous} and present briefly the necessary results
 for a full understanding of MFG theory.
 
 Consider a system governed by the controlled
@@ -8,7 +8,7 @@ stochastic differential equation (SDE) in $\RR^n$:
     d X_s = b(X_s, \alpha_s)ds + \sigma(X_s, \alpha_s) d W_s
 \end{equation}
 where $W$ is a $d$-dimensional Brownian motion on a filtered probability space
-$(\Omega, \mathcal{F}, \mathbb{F} = (\mathbb{F}_t)_{t \geq 0}, \mathbb{P} )$ satisfying the
+$(\Omega, \mathcal{F}, \mathbb{F} = {(\mathbb{F}_t)}_{t \geq 0}, \mathbb{P} )$ satisfying the
 usual conditions.
 The coefficients $b(t,x,a)$ and $\sigma(t,x,a)$ are depend on $t$, except
 in the case of infinite horizon problems.
@@ -33,7 +33,7 @@ and~\eqref{soc:diffusion_quadratic_bound} ensure the existence and uniqueness
 of a strong solution to the SDE~\eqref{soc:controlled_sde}
 for every control $\alpha \in \mathcal{A}$ and for every initial condition
 $(t,x) \in [0,T] \times \RR^n$, and we denote by $\{ X_s^{t,x}, t \leq s \leq T \}$
-this solution with a.s. continuous paths. Moreover, under these conditions,
+this solution with a.s.\ continuous paths. Moreover, under these conditions,
 it follows that
     \begin{gather}
         \mathbb{E} \left[ \sup\limits_{t\leq s \leq T} \right] < \infty,\\
@@ -97,7 +97,7 @@ called the \textit{Dynamic Programming Principle}:
     we have
     \begin{align*}
         J(t,x,\alpha) &= \mathbb{E}\left[ \int_t^T f(s, X_s^{t,x}, \alpha_s) ds + G(X_T^{t,x})  \right] \\
-        &= \mathbb{E}\left[ \mathbb{E} \left[ \int_t^Tf(s, X_s^{t,x}, \alpha_s) ds + G(X_T^{t,x}) | \mathcal{F}_\theta \right] \right] \\
+        &= \mathbb{E}\left[ \mathbb{E} \left[ \int_t^T f(s, X_s^{t,x}, \alpha_s) ds + G(X_T^{t,x}) | \mathcal{F}_\theta \right] \right] \\
         &= \mathbb{E}\left[  \int_t^\theta f(s,X_s^{t,x}, \alpha_s) ds +  \mathbb{E} \left[ \int_\theta^T f(s, X_s^{t,x}, \alpha_s) ds + G(X_T^{t,x}) | \mathcal{F}_\theta \right] \right]\\ 
         &= \mathbb{E}\left[  \int_t^\theta f(s,X_s^{t,x}, \alpha_s) ds +  J(\theta, X_\theta^{t,x}, \alpha) \right].
     \end{align*}
@@ -128,7 +128,7 @@ called the \textit{Dynamic Programming Principle}:
         \alpha_s^{\epsilon, \omega}(\omega), s \in [\theta(\omega), T].
     \end{cases}
 \end{equation*}
-As stated in~\cite{Pham}, it can be shown that $\hat \alpha$ is progressively measurable,
+As stated in~\cite{pham2009continuous}, it can be shown that $\hat \alpha$ is progressively measurable,
 so it lies in $\mathcal{A}(t,x)$.
 Again, by the tower property and by inequality~\eqref{soc:dpp_proof_epsilon_optimal_control}
 \begin{align*}
@@ -178,7 +178,7 @@ Then equality is achieved in the DPP:
 \begin{equation}
     v(t,x) = \mathbb{E}\left[ \int^{t+h}_t f(s, X^*_s, \alpha^*_s) ds + v(t + h, X^*_{t+h}) \right],
 \end{equation}
-where $X^*$ is the evolution of the system starting from $x$ at $t$, with control $\alph^*$.
+where $X^*$ is the evolution of the system starting from $x$ at $t$, with control $\alpha^*$.
 By the same procedure as above, we arrive at
 \begin{equation}
     - \frac{\partial v}{\partial t} (t,x) - \mathcal{L}^a v(t,x) - f(t,x,a) = 0.
@@ -212,7 +212,7 @@ introduced, which allows a rigorous formulation for the HJB to be given under
 the assumption of local boundedness. Moreover, viscosity solutions satisfy a 
 comparison principle, from which we can derive uniqueness of solutions.
 We shall state the definition and uniqueness result here, and
- refer to~\cite[Pham, Bressan Piccoli, Livro do IMPA] for a deeper exposition, 
+ refer to~\cite{pham2009continuous,bressan2007introduction,lopes1997introduccao} for a deeper exposition, 
  and to~\cite{crandall1992user} for a seminal reference to the topic.
 
  Let's consider the first order case, with a PDE of the form
@@ -277,7 +277,7 @@ this definition can be extended by considering test functions in $C^2(\Omega)$:
         F(x_0, u(x_0), D\phi(x_0), D^2 \phi(x_0)) \geq 0,
     \end{equation*}
     for all $x_0 \in \Omega$ and for all $\phi \in C^2(\Omega)$ such that $x_0$ is a minimum point of $u - \phi$.
-        \item A function $u : \Omega \maapsto \RR$ is a viscosity solution if it is both
+        \item A function $u : \Omega \mapsto \RR$ is a viscosity solution if it is both
         a viscosity supersolution and a viscosity subsolution.
     \end{itemize}
 \end{definition}

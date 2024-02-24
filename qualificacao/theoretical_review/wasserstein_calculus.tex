@@ -1,4 +1,4 @@
-PLACEHOLDER
+tPLACEHOLDER
 References : Cardaliaguet Notes, Ambrosio book, 
 Wasserstein distance and Topology in Probability Measure Spaces
 
@@ -22,7 +22,7 @@ The Wassertestein distance is a special case of Monge-Kantorovich distances
 \end{equation*}
 One important property of Monge-Kantorovich distances is the existence of at least
 one optimal measure, that is, one $\hat  \gamma \in \Pi(\mu,\nu)$ such that
-$\d_p(m,m') = \left[ \int_{\Omega^2} d^p(x,y) d {\hat \gamma}(x,y) \right]^{\frac{1}{p}}$.
+$d_p(m,m') = \left[ \int_{\Omega^2} d^p(x,y) d {\hat \gamma}(x,y) \right]^{\frac{1}{p}}$.
 The measure $\hat \gamma$ is called optimal transport plan.
 
 In the case of the Wasserstein distance, an stronger property is satisfied when 
@@ -179,7 +179,7 @@ satisfies the system of $HJ$ equations:
 \begin{equation}
     -\frac{\partial U_i^N}{\partial t} + \frac{1}{2}|D_{x_i} U_i^N|^2 - F\left( \frac{1}{N-1}  \sum_{j\neq i} \delta_{x_j} \right) + \sum_{j \neq i} \langle D_{x_j} U^N_j, D_{x_j} U^N_i \rangle = 0
 \end{equation}
-as stated in \cite{Cardaliaget}, the family of feedbacks $(\alpha_i(x,t) = - D_{x_i} U^N_i (x,t))$
+as stated in~\cite{cardaliaguet2010notes}, the family of feedbacks $(\alpha_i(x,t) = - D_{x_i} U^N_i (x,t))$
 provides a Nash equilibrium for the game.
 
 Now, assume that $U^N$ satisfy the following estimates
@@ -200,11 +200,11 @@ where as before, we have set
 \begin{equation}
     m^{N-1}_{(x_j)} = \frac{1}{N-1} \sum_{j \geq 2} \delta_{x_j}, \text{ and } m^N_x = \frac{1}{N} \sum_{j = 1}^N \delta_{x_j}.
 \end{equation}
-As stated in \cite{Cardaliaget}, we have
+As stated in~\cite{cardaliaguet2010notes}, we have
 \begin{equation}
     \frac{\partial U^N_i}{\partial t} \to \frac{\partial U(x,t,m)}{\partial t}, \quad |D_{x_i} U_i^N|^2 \to |D_x U (x,t,m)|^2.
 \end{equation}
-It can also be proved \cite{Cardaliaget reference 53} that
+It can also be proved~\cite{cardaliaguet2010notes} that
 \begin{equation}
     \sum_{j\neq i} \langle D_{x_j} U^N_j , D_{x_j} U^N_i \rangle \to \langle D_m U(\cdot,t,m), D_x U(\cdot, t, m) \rangle_{L^2_m}.
 \end{equation}
@@ -217,7 +217,7 @@ is some $U\in \mathcal{C}^0(\RR^d \times [0,T] \times \mathcal{P}_2) $
         U(x,T,m) = g(x,m)
     \end{cases}
  \end{equation}
- Note that this differential equation includes a differential with respect to^
+ Note that this differential equation includes a differential with respect to
  a probability measure.
   Let's apply an idea similar to the method of characteristics to this equation:
   let $m(t)$ be an absolute continuous measure flow over $\mathcal{P}_2$, and
@@ -225,7 +225,7 @@ is some $U\in \mathcal{C}^0(\RR^d \times [0,T] \times \mathcal{P}_2) $
 \begin{equation}
     \frac{\partial u}{\partial t} = \frac{\partial U}{\partial t} + \langle D_m U (\cdot, t, m(t)), v(t) \rangle_{L^2_{m(t)}},
 \end{equation}
-    where $v(t)$ is the vector field driving $m(t)$ through the continuity equation $\patial_t m + \div( m(x,t) v(x,t) ) = 0$
+    where $v(t)$ is the vector field driving $m(t)$ through the continuity equation $\partial_t m + \div( m(x,t) v(x,t) ) = 0$
     We can rewrite equation~\eqref{wass:simple_master_equation} as 
 \begin{equation}
     \frac{\partial U}{ \partial t} + \langle D_m U, - D_x U \rangle_{L^2_m} = \frac{1}{2} |D_x U(x,t,m)|^2 - F.
