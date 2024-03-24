@@ -1,0 +1,101 @@
+
+
+We follow~\cite{cardaliaguet2010notes} to give an example of mean field convergence in the number of players.
+Consider a differential game with $N$ players in $\RR^d$ where each player
+controls his velocity. In this setting, the state of player $i$
+ evolves according to
+\begin{equation}
+    x'_i(t) = \alpha_i(t).
+\end{equation}
+The cost functional for player $i$ is of the form
+\begin{equation}
+    J_i(x, t, (\alpha_j)_j) = \int_t^T L_i (x_1(s), \dots, x_N(s), \alpha_i(s)) ds + g_i(x_1(T), \dots, x_N(T)).
+\end{equation}
+
+We assume that
+\begin{equation}
+    L_i(x_1, \dots, x_N, \alpha) = \frac{1}{2}|\alpha|^2 + F\left( \frac{1}{N-1} \sum_{j \neq i} \delta_{x_j}  \right)
+\end{equation}
+where $F : \mathcal{P}_2 \mapsto \RR$ is continuous, and
+\begin{equation}
+    g_i(x_1, \dots, x_N) = g(x_i, \frac{1}{N-1} \sum_{j\neq i} \delta_{x_j})
+\end{equation}
+where $g: \RR^d \times \mathcal{P}_2$ is continuous.
+
+We assume that a smooth, symmetric Nash equilibrium in feedback form exists for
+this game - that is, there is a map
+$U^N : \RR^d \times [0,T] \times (\RR^d)^{(N-1)} \mapsto \RR$ such that
+\begin{equation}
+    U^N_i(x_i, t, (x_j)_{j\neq i}) = U^N(x_i, t, (x_j)_{j\neq i})
+\end{equation}
+satisfies the system of $HJ$ equations:
+\begin{equation}
+    -\partial_t U_i^N + \frac{1}{2}|\partial_{x_i} U_i^N|^2 - F\left( \frac{1}{N-1}  \sum_{j\neq i} \delta_{x_j} \right) + \sum_{j \neq i} \langle \partial_{x_j} U^N_j, \partial_{x_j} U^N_i \rangle = 0
+\end{equation}
+as stated in~\cite{cardaliaguet2010notes}, the family of feedbacks $(\alpha_i(x,t) = - \partial_{x_i} U^N_i (x,t))$
+provides a Nash equilibrium for the game.
+
+Now, assume that $U^N$ satisfy the following estimates
+\begin{equation}
+    \sup_{x_1, t, (x_j)_j \leq 2} \left| \partial_{x_1, t} U^N (x_1, t, (x_j)) \right| \leq C,
+\end{equation}
+and
+\begin{equation}
+    \sup_{x_1, t, (x_j)_j \leq 2} \left| \partial_{x_j} U^N (x_1, t, (x_j)) \right| \leq  \frac{C}{N}, \text{ for } j\neq 2.
+\end{equation}
+Under these conditions, and up to a subsequence, there is a map 
+$U : \RR^d \times [0,T] \times \mathcal{P}_2 \mapsto \RR$ such that,
+for any $R > 0$,
+\begin{equation}
+    \sup_{|x| \leq R, t, (x_j)_{j\geq 2}} | U^N(x,t,m^{N-1}_{(x_j)}) - U(x,t,m^N_x) | \to 0
+\end{equation}
+where as before, we have set
+\begin{equation}
+    m^{N-1}_{(x_j)} = \frac{1}{N-1} \sum_{j \geq 2} \delta_{x_j}, \text{ and } m^N_x = \frac{1}{N} \sum_{j = 1}^N \delta_{x_j}.
+\end{equation}
+As stated in~\cite{cardaliaguet2010notes}, we have
+\begin{equation}
+    \frac{\partial U^N_i}{\partial t} \to \frac{\partial U(x,t,m)}{\partial t}, \quad |\partial_{x_i} U_i^N|^2 \to |\partial_x U (x,t,m)|^2.
+\end{equation}
+It can also be proved~\cite{cardaliaguet2010notes} that
+\begin{equation}
+    \sum_{j\neq i} \langle \partial_{x_j} U^N_j , \partial_{x_j} U^N_i \rangle \to \langle D_m U(\cdot,t,m), \partial_x U(\cdot, t, m) \rangle_{L^2_m}.
+\end{equation}
+So far we have heuristically explained that the limit of $U^N$ as $N \to \infty$
+is some $U\in \mathcal{C}^0(\RR^d \times [0,T] \times \mathcal{P}_2) $
+ which satisfies 
+ \begin{equation}\label{wass:simple_master_equation}
+    \begin{cases}
+        - \frac{\partial U}{ \partial t} + \frac{1}{2} |\partial_x U(x,t,m)|^2 - F + \langle D_m U, \partial_x U \rangle_{L^2_m} = 0\text{ in }\RR^d \times [0,T] \times \mathcal{P}_2,\\
+        U(x,T,m) = g(x,m)
+    \end{cases}
+ \end{equation}
+ Note that this differential equation includes a differential with respect to
+ a probability measure.
+  Let's apply an idea similar to the method of characteristics to this equation:
+  let $m(t)$ be an absolute continuous measure flow over $\mathcal{P}_2$, and
+  let $u(x,t) = U(x,t,m(t))$. We have that
+\begin{equation}
+    \frac{\partial u}{\partial t} = \frac{\partial U}{\partial t} + \langle D_m U (\cdot, t, m(t)), v(t) \rangle_{L^2_{m(t)}},
+\end{equation}
+    where $v(t)$ is the vector field driving $m(t)$ through the continuity equation $\partial_t m + \nabla \cdot( m(x,t) v(x,t) ) = 0$
+    We can rewrite equation~\eqref{wass:simple_master_equation} as 
+\begin{equation}
+    \frac{\partial U}{ \partial t} + \langle D_m U, - \partial_x U \rangle_{L^2_m} = \frac{1}{2} |\partial_x U(x,t,m)|^2 - F.
+\end{equation}
+    Therefore, if we \textit{choose} as driver of $m(t)$ the vector field $v(x,t) = - \partial_x U(x,t,m(t))$,
+    we have
+\begin{equation}
+    \frac{\partial u}{\partial t} =  \frac{\partial U}{ \partial t}(x,t,m(t)) + \langle D_m U(\cdot, t, m(t) ), - \partial_x U(\cdot, t, m(t) ) \rangle_{L^2_m} = \frac{1}{2} |\partial_x u(x,t)|^2 - F
+\end{equation}
+    from which we arrive at the MFG system of PDEs:
+\begin{equation}
+    \begin{cases}
+        - \frac{\partial u}{\partial t} + \frac{1}{2} |\partial_x u(x,t)|^2  = F(m), \\
+        \partial_t m - \nabla \cdot( \partial_x u(x,t) m(x,t) ) = 0,\\
+        m(0) = m_0, \, u(x,T) = g(x, m(T))
+    \end{cases}
+\end{equation}
+    where the first equation holds in the viscosity sense, and the second
+    one holds in the sense of distributions.
+    The vector field $v(x,t) = -\partial_x U(x,t,m(t))$ is aptly called the \textit{decoupling field}.

@@ -7,9 +7,20 @@
 \input{style.tex}
 \addbibresource{sample.bib}
 
-\title{Qualificação}
+\title{A Mean Field Game Model For Educational Choices}
 \author{Felipe Antunes}
 \date{\today}
+
+%"The great wish of some is to avenge themselves on some particular
+%enemy, the great wish of others is to save their own pocket.  Slow
+%in assembling, they devote a very small fraction of the time to the
+%consideration of any public object, most of it to the prosecution of
+%their own objects.  Meanwhile each fancies that no harm will come of
+%his neglect, that it is the business of someone else to look after
+%this or that for him; and so, by the same notion being entertained
+%by all separately, the common cause imperceptibly decays".
+% Thucydides - "The history of the Peloponnesian War"
+
 
 \begin{document}
 
@@ -25,14 +36,6 @@
 \section{Theoretical Review - Mean Field Games Theory}
 \input{qualificacao/theoretical_review/intro}
 
-\textcolor{red}{
-\subsection{To Dos}
-\begin{itemize}
-    \item Stochastic Optimal Control - DPP, Viscosity Solutions and Stochastic Maximum Principle.
-    \item  Wasserstein Analysis - Wasserstein Metric, Convergence, Continuity and Transport Equation, Derivative w.r.t. prob measure (3 formulations)
-    \item Organize MFG sections
-\end{itemize}}
-
 \subsection{Stochastic Optimal Control}\label{theo_review:soc}
 
 \input{qualificacao/theoretical_review/stochastic_control}
@@ -40,248 +43,13 @@
 \subsection{Wasserstein Spaces}\label{theo_review:wass}
 \input{qualificacao/theoretical_review/wasserstein_calculus}
 
-\if{
-\subsection{Analytical point of view}
-%% To do
-% - Write as system of forward backward ode's
-% - write as system of PDE's
-To Do
-\begin{itemize}
-    \item Cardaliaguet, Diogo Gomes
-    \item System statement - HJB and FKP
-    \item Existence of solutions - Viscosity Solutions
-    \item Uniqueness
-    \item Approximate Nash Equilibrium
-\end{itemize}
+\subsection{Convergence of Mean Field Games - Example}\label{theo_review:mfg_convergence}
+\input{qualificacao/theoretical_review/mean_field_game_convergence}
 
-\subsubsection{Reduced Mean-field games}\label{reduced_mfg}
-Among the main motivations for studying MFG are the connections with
- the theory of $N$-player differential games. A solution of the MFG formalizes 
- the limit case of Nash equilibrium when $N \to \infty$ for $N$-person differential games.
-
-Some reduced mean-field games models can be rigorously derived as the limit 
-of equations characterizing an $N$-player differential game. This subsection presents a heuristic derivation.
-
-Consider first the single-agent optimal control problem.
-Suppose that the state of an agent at time $t$ is characterized by the vector 
-$\state_t \in \RR^d$.
-In addition, assume that the following differential equation describes the state $\state_t$:
-\begin{equation}\label{reduced_mfg:state_evolution}
-\begin{cases}
-    \dot{ \state}_t = {\control}_t,\quad t\in (t_0,T],\\
-    {\state}_{t_0} = \state_0.
-\end{cases}
-\end{equation}
-
-where $\control_t$ is a control and $\state_0\in\RR^d$ is a given initial condition. This agent seeks to maximize the functional:
-
-\begin{equation}\label{reduced_mfg:payoff_functional}
-    J({ \control},\state; t_0) = \int_{t_0}^T \left(\cost({\control}_s,{\state}_s) + g[\rho] \right) ds + \cost_T({ \state}_T),
-\end{equation}
-where $\cost$ is a Lagrangian, $\cost_T$ is a terminal payoff and $g[\rho]$ is a term to be made precise later. 
-
-Define the Hamiltonian
-\begin{equation}\label{reduced_mfg:hamiltonian}
-        H(\state,p) \coloneqq \sup_{\control} ( p \cdot \control + \cost(\control,\state)).
-\end{equation}
-We know from Section
-\eqref{deterministic_optimal_control}
-that under some regularity assumptions,the value function $V$ associated with
-the optimal control problem
-\eqref{deterministic_optimal_control:optimal_control_problem} 
-solves the Hamilton-Jacobi equation in $\RR^d \times [t_0,T)$:
-\begin{equation}\label{reduced_mfg:state_evolution_hamiltonian}
-\begin{cases}
-    \partial_t V (\state,t) + H(\state,\partial_x V(\state,t)) = g[\rho], \\
-    V(\state,T) = \cost_T(\state).
-\end{cases}
-\end{equation}
-Moreover, the optimal control $\control^*$ is given in feedback form by
-$$\control^*(\state,t) = \partial_p H(\state, D_x V(\state, t)).$$
-The state of a rational agent will evolve according to 
-\eqref{reduced_mfg:state_evolution} with the control $\control$ equal to the feedback optimal control $\control^*$.
-
-Consider then a continuum of rational and indistinguishable agents.
-The distribution of agents is given by an atomless probability measure $\rho$.
-This population of agents is subjected to the same optimal control problem.
-Therefore, the state of each individual is driven by
-\begin{equation}\label{reduced_mfg:feedback_state_evolution}
-\begin{cases}
-        {\dot {\state}}_s = \control^*(\state,t),\\
-        {\state}_{t_0} = \state_0.
-\end{cases}
-\end{equation}
-The function $g$ encodes the dependence of the agent's cost functional on the density of the entire population.
-This implies that the optimization problem faced by the agents depends on the evolution of $\rho$.
-Conversely, the evolution of $\rho$ depends on a vector field determined by $V$, which is derived from the control problem of the agents.
-\footnote{Chicken and the egg problem.}
-
-From Section
-\eqref{transport_eq},
-we know that if $\state$ satisfies
-\eqref{reduced_mfg:feedback_state_evolution},
-then the evolution of the density $\rho$ in time satisfies a transport equation in $\RR^d \times (t_0, T]$:
-\begin{equation}\label{reduced_mfg:density_transport_pde}
-    \begin{cases}
-        \partial_t \rho(\state,t) + \nabla(\control^*(\state,t) \rho(\state,t)) = 0
-        \rho(\state,t_0) = \rho_0(\state)
-\end{cases}
-\end{equation}
-The mean-field game system associated with this problem is then the system of PDE's:
-
-\begin{equation}\label{reduced_mfg:mfg_system}
-    \begin{cases}
-        \partial_t V (\state,t) + H(\state,\partial_x V(\state,t)) = g[\rho], \\
-        \partial_t \rho(\state,t) + \nabla(\partial_p H(\state, \partial_x V (\state,t)) \rho(\state,t)) = 0
-\end{cases}
-\end{equation}
-coupled with the boundary conditions
-
-\begin{equation}\label{reduced_mfg:mfg_boundary_conditions}
-\begin{cases}
-    V(\state,T) = \cost_T(x), \\
-    \rho(\state,t_0) = \rho_0(\state)
-\end{cases}
-\end{equation}
-
-
-
-
-\subsection{Probabilistic point of view}
-%% To do
-% Write as system of second order pde's
-\begin{itemize}
-    \item Reference - Carmona's Book.
-    \item Intro and Definitions - 3.2
-Mean Field Games can be proposed as a system of Forward-Backward Stochastic Differential Equations (FBSDEs). In order to illustrate this, we will construct the system, following the same logical development as in Section \ref{PDE_formulation_section}
-
-Suppose a typical player formulates his best response given the actions of all other players. This amounts to solving an optimal control problem
-\begin{equation}
-\begin{split}
-\begin{cases}
-   \inf_{\alpha \in \mathbb{A}} \EE \left[ \int_0^T f(t,X_t, \mu_t, \alpha_t) dt + g(X_T, \mu_T)\right]  \\
-    \text{subject to}\\
-     dX_t = b(t,X_t, \mu_t, \alpha_t) dt + \sigma(t, X_t, \mu_t) dW_t, \\ 
-     t \in [0,T], X_0 = \xi.
-\end{cases}
-\end{split}
-\end{equation}
-    Where $X_t$ is the state of the typical player, $\alpha_t$ is the player's action, and $\mu_t$ represents the impact of the strategies chosen by other players. We assume there is no control in $\sigma$. In the case of mean field games without common noise, $\mu_t$ is deterministic - it is the marginal distribution at time $t$ of the state of a generic player in the population.
-
-    The value function for this optimal control problem has a probabilistic representation as the solution of a BSDE:
-\begin{equation}
-    \begin{split}
-    \begin{cases}
-        dY_t = - f(t,X_t, \mu_t, \alpha_t) dt + Z_t \cdot dW_t, \quad t \in [0,T],\\
-        Y_T = g(X_T, \mu_T)
-    \end{cases}
-    \end{split}
-\end{equation}
-    where $(X_t)_{0 \leq t \leq T}$ is the controlled process obtained by choosing for $(\alpha_t)_{0\leq t \leq T}$ the specific control 
-    $$
-    \alpha_t = {\hat \alpha} \left( t, X_t, \mu_t, \left(\sigma(t,X_t,\mu_t)^{-1}\right)^{\dagger} Z_t \right), \quad t \in [0,T].
-    $$
-    
-    If we require that the representative player behaves optimally, then $\hat \alpha$ is given by:
-    $$
-    {\hat \alpha} \left( t, x, \mu, y \right) \in \arg\min_{\alpha \in A} H(t,x,\mu,y,\alpha),
-    $$
-where $H$ is the reduced Hamiltonian 
-$$H(t,x,\mu,y,\alpha) = y\cdot b(t,x,\mu, \alpha) + f(t,x,\mu, \alpha).$$
-This choice for $\alpha_t$ couples $dX_t$ and $dY_t$ into a BSDE with deterministic coefficients taking the measure flow $(\mu_t)_{0 \leq t \leq T}$ as input.
-Setting 
-$$
-B(t,x,\mu,y,z) = b\left(t,x,\mu, {\hat \alpha} (t,x,\mu,\sigma(t,x,\mu)^{-1 \dagger}  ))\right),
-$$
-$$
-F(t,x,\mu,y,z) = f\left(t,x,\mu, {\hat \alpha} (t,x,\mu,\sigma(t,x,\mu)^{-1 \dagger}  ))\right)
-$$
-we have the following FBSDE:
-\begin{equation}
-\begin{split}
-     \begin{cases}
-         dX_t = B(t,X_t,\mu_t,Y_t,Z_t) dt + \sigma(t,X_t,\mu_t) dW_t,\\
-         dY_t = - F(t,X_t,\mu_t,Y_t,Z_t) dt + Z_t dW_t, \quad t \in [0,T],\\
-         Y_T = G(X_T, \mu_T).
-     \end{cases}   
-\end{split}
-\end{equation}
-
-Finally, note that in the Nash equilibrium every agent is behaving optimally. This means that the flow of the population distribution represented by 
-${\bf \mu} = (\mu_t)_{0 \leq t \leq T}$  
-should match the flow of marginal distributions of states for the representative agent - that is, the law
-$\mathcal{L}(X_t)_{0 \leq t \leq T}$
-of the forward process 
-$(X_t)_{0 \leq t \leq T}$.
-
-Writing the resulting McKean-Vlasov FBSDE in full:
-\begin{equation}
-\begin{split}
-     \begin{cases}
-         dX_t = B(t,X_t,\mathcal{L}(X_t),Y_t,Z_t) dt + \sigma(t,X_t,\mathcal{L}(X_t)) dW_t,\\
-         dY_t = - F(t,X_t,\mathcal{L}(X_t),Y_t,Z_t) dt + Z_t dW_t, \quad t \in [0,T],\\
-         Y_T = G(X_T, \mathcal{L}(X_T)).
-     \end{cases}   
-\end{split}
-\end{equation}
-
-\item Commentario no paralelo entre formulação estocástica e formulação analítica
-\item Existência - SMP, Unicidade - Lasry Lions Monoticity
-
-    \item FBSDE - 3.2
-    \item LQ MFG 3.5
-\end{itemize}
-
-
-\subsection{N-player game limit point of view}
-To Do
-\begin{itemize}
-    \item What is the limit of a game with respect to the number of players? What notion of limit are we considering?
-    \item Under what conditions can we guarantee that the mean field game approximates the N-player game?
-    \item Follow Cardaliaguet's approach
-\end{itemize}
-
-
-
-
-
-\subsection{Numerical Solutions - Classical}
-
-
-Most methods are based on optimality conditions in terms of PDEs or SDEs with suitable discretization schemes, such as finite differences, semi-Lagrangian schemes or probabilistic approaches. These methods are well understood and work well in small dimensions. However, these methods do not perform so well for MFG with high dimensional states or controls, as they suffer from the curse of dimensionality.
-To Do
-\begin{itemize}
-    \item Refer to Lauriere notes on numerical solutions
-\end{itemize}
-
-\subsection{Numerical Solutions - ML}
-Stochastic methods based on Neural Networks have been proposed as a solution for the dimensionality limitation of classical methods.
-To Do
-\begin{itemize}
-    \item Refer to Lauriere Learning MFG
-    \item Artigo Yuri
-\end{itemize}
-
-\subsection{Applications}
-To Do
-\begin{itemize}
-    \item Follow Carmona's application review
-    \item Carmona's article 
-    
-    Applications in Financial Engineering:Systemic Risk, Price Impact and optimal execution, Models for Bank runs
-    
-    Applications in Energy Markets and Environment: MFG Models for Oil Production, MFG models for the eletricity markets and the Grid, Environment Economics.
-
-    Applications to Macroeconomic Growth Models
-
-    Applications to Contract theory and moral hazard.
-\end{itemize}
-
-}\fi
 
 \section{Model Proposal}\label{model_proposal}
 \input{qualificacao/model_proposal/intro}
-\subsection{Economic Theory Review}\label{model_proposal:motivation}
+\subsection{Literature Review}\label{model_proposal:motivation}
 
 \input{qualificacao/model_proposal/economic_motivation}
 
@@ -293,168 +61,12 @@ To Do
 
 
 \section{Conclusion}
-
+\input{qualificacao/introduction/conclusion}
 \appendix
 \addcontentsline{toc}{section}{Appendices}
 \section*{Appendices}
-\section{A little bit of game theory}\label{appendix-game-theory}
-To Do
-\begin{itemize}
-    \item Games - definition - ok, 
-    \item Strategies - ok, 
-    \item Pure Strategies vs Mixed Strategies, - ok
-    \item Nash Equilibrium, - ok 
-    \item Stackelberg Equilibrium,  - ok
-    \item Open Loop, - ok
-    \item Closed Loop. - ok
-    \item Seminal works in game theory
-    \item Historical development
-\end{itemize}
+\section{A brief review of game theory}\label{appendix-game-theory}
 
 \input{prerequisite_theory/differential_games}
-
-\section{Mathematical background}\label{appendix-mathematical-background}
-
-\subsubsection{Deterministic optimal control problems}\label{deterministic_optimal_control}
-
-Single agent whose state is denoted by $x_t \in \RR^d$, for $t_0 \leq t\leq T$, where $T > 0$ is arbitrarily fixed. The case $T< \infty$ is referred to as the finite horizon optimal control problem.
-
-$$\dot x_t = f(v_t,x_t),$$
-
-where $f: \RR^m \times \RR^d \mapsto \RR^d$ is a given function and $v_t \in \RR^m$ is a control. Let $\mathcal{W} \coloneqq \left\{ v : [t_0, T] \mapsto W, v \in X \right\}$, where $X$ is a suitable function space.
-
-Agent's preferences are expressed through a utility functional $J(u_t, x_t; t)$. For $t \in [t_0,T)$ this functional is given by 
-
-$$
-J(u,x,t) = \int_t^T u(v_s, x_s) ds + \Psi(x_T),
-$$
-where $u : \RR^m\times \RR^d \mapsto \RR$ is the instantaneous utility (or running cost) and $\Psi : \RR^d \mapsto \RR$ is the terminal payoff.
-
-In the case $T = \infty$, we introduce a discount rate $\beta > 0$ and consider
-$$
-J_\beta (u,x;t) = \int_t^\infty e^{-\beta (s - t) u(v_s, x_s)} ds 
-$$
-
-The focus of this section will be a variant of the last problem, namely:
-
-$$
-J_\alpha (u,x;t) = \int_t^\infty e^{-\alpha (s - t) u(v_s, x_s)} ds + e^{-\alpha (T -t)} \Psi(x_T) 
-$$
-
-The single agent seeks to maximize $J_\alpha$ over all possible controls.
-We define the value function $v(x,t)$ as
-
-$$
-V(x,t) = \sup_{v\in \mathcal{W}} J_\alpha (v, x ; t).
-$$
-This function is the maximum possible payoff for the agent at state $x$ in time $t$.
-
-Assumptions on $f$ (for the problem to be addressed rigorously):
-$$f \in C(\RR^m \times \RR^d, \RR^d),\, |f(v, x_1) - f(v, x_2)| \leq C_\theta |x_1 - x_2|, x_1, x_2 \in \RR^d, v\in \RR^m, |v| \leq \theta$$
-
-If the Value function is of class $C^1(\RR^d \times [t_0,T])$, it solves  a nonlinear partial differential equation known as the Hamilton-Jacobi equation:
-$$V_t(x,t) - \alpha V(x,t) + H(x,D_x V(x,t)) = 0,$$
-where the Hamiltonian H is defined as 
-$$H(x,p) = \sup_{v\in W} [p \cdot f(v,x) + u(v,x)],$$
-that is, the Legendre transform of the running cost $u$.
-The optimal control $v_t^*$ is given by 
-$$ H_p (x^*, D_x V(x^*,t)) = f(v^*, x^*)$$
-
-
-\begin{proposition}[Dynamic programming principle]
-    Let $r \in (t_0, T)$ be fixed and assume that $V$ is a value function. Then we have
-    $$
-    V(x,t) = \sup_{v\in \mathcal{W}} \left( \int_r^T e^{-\alpha (s-r)} u(v_s,x_s) ds + e^{-\alpha (r - t) V(x_r,r)} \right).
-    $$
-\end{proposition}
-
-\begin{proof}
-    To do
-\end{proof}
-
-\begin{proposition}[Verification Theorem]
-    Let $U \in C^1(\RR^d \times [t_0, T])$ be a solution to 
-    $$
-    U_t(x,t) - \alpha U(x,t) + H(x, U_x(x,t)) = 0\, \text{(HJ)}
-    $$
-    where 
-    $$
-    H(x,p) = \sup_{v \in W} [p \cdot f(v,x) + u(v,x)],
-    $$
-    with terminal condition $U(x,T) = \psi(x)$. Then
-    $$U(x,t) \geq V(x,t), \forall (x,t) \in \RR^d \times [t_0,T].$$
-    Moreover, if there exists a control $v^*$ such that
-    $$
-    H(x^*_t, U_x (x^*_t, t)) = U_x(x^*_t, t)\cdot f(v^*_t, x^*_t) + u(v^*_t, x^*_t),
-    $$
-    That is, $v^*$ gives an equality in the Hamiltonian, then $v^*$ is an optimal control for the control system and $U(x,t) = V(x,t)$.
-\end{proposition}
-
-\begin{proof}
-    To do
-\end{proof}
-
-
-\subsubsection{Transport Equation}\label{transport_eq}
-Consider a population that is governed at the single agent level by
-\begin{equation}\label{transport_eq:ode}
-\begin{cases}
-    \dot x_t = b(x_t,t), \quad t > t_0,\\
-    x_{t_0} = x.
-\end{cases}
-\end{equation}
-where $b$ is a Lipschitz vector field. The vector field induces a flow that trasports the population's density along time (pushforward). The evolution of the density is described be the \textit{transport equation}, a first order pde:  
-
-\begin{equation}\label{transport_eq:pde}
-\rho_t + \Delta(b(x,t) \rho) = 0.
-\end{equation}
-
-\begin{proposition}[Properties of solutions]    
-Let $\rho$ be a solution of \eqref{transport_eq:pde} with initial condition $\rho(x,t_0) = \rho_0(x)$, for some probability density $\rho_0 \in \mathcal{C}_c^\infty (\RR^d).$ Then we have:
-\begin{itemize}
-    \item Positivity of solutions: $\rho(x,t) \geq 0$ for all $t> t_0$,
-    \item Mass conservation: $\int_{\RR^d} \rho(x,t) dx = \int_{\RR^d} \rho_0(x) dx = 1$ for all $t > 0$.
-\end{itemize}
-\end{proposition}
-
-\begin{proof}
-    To do.
-\end{proof}
-
-Define the flow in $\RR^d$ given by $b$ by $\Phi_t$. This flow maps $x\in \RR^d$ to the solution of \eqref{transport_eq:ode} at the instant $t > t_0$, with initial condition $x$.
-
-We can use the operator $\Phi_t$ to define a family of measures $\theta(x,t)$ over $\RR^d$ from an initial measure $\theta_0$ by 
-\begin{equation}\label{transport_eq:family_of_measures}
-\int_{\RR^d} \phi(x) \theta(x,t) dx = \int_{\RR^d} \phi(\Phi_t(x)) \theta_0 dx    
-\end{equation}
-
-This measure satisfies the transport PDE in the distribution sense. 
-\begin{proposition}[Solutions in the distribution sense]
-Let $\theta$ be the measure defined in \eqref{transport_eq:family_of_measures}. Assume that the vector field $b$ is Lipschitz continuous and denote by $\Phi_t$ the flow corresponding to \eqref{transport_eq:ode}. Then
-\begin{equation}\label{transport_eq:pde_for_measures}
-    \begin{cases}
-        \theta_t(x,t) + \Delta(b(x,t) \theta(x,t)) = 0, \quad (x,t) \in \RR^d \times [t_0,\infty),\\
-        \theta(x,t_0) = \theta_0(x), \quad x\in \RR^d.
-    \end{cases}
-\end{equation}
-in the distributional sense.
-\end{proposition}
-
-\begin{proof}
-    To do.
-\end{proof}
-
-\begin{proposition}[Dirac delta solution]\label{transport_eq:prop:dirac_delta_solution}
-Assume that \eqref{transport_eq:ode} holds and suppose that $b$ is Lipschitz continuous. Then, $\delta_{\Phi_t(x)}$ solves \eqref{transport_eq:pde_for_measures} in the distributional sense.
-\end{proposition}
-
-\begin{proof}
-    To do.
-\end{proof}
-
-\begin{remark} The converse of \eqref{transport_eq:prop:dirac_delta_solution} also holds.
-\end{remark}
-
-\printbibliography
 
 \end{document}

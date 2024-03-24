@@ -119,13 +119,11 @@ Note that the dependency of the dynamics on the law $\mathcal{L}(A_t,H_t)$ is im
 Solutions for~\eqref{education_model:mfg_analytic_system} and~\eqref{education_model:mfg_analytic_system} are related through $\mathcal{L}(A_t, H_t) = \mu_t$, $P_t = \partial_a V(t,A_t,H_t)$ and $Q_t = \partial_h V(t,A_t,H_t)$.
 
 \subsection{Numerical Illustration}
-        A deterministic, simplified version of the model was simulated through Picard iterations.
+        The $N$-player deterministic version of the model was simulated through an adapted shooting algorithm: after sampling from the initial population, the algorithm alternates between keeping the population fixed and updating the costate trajectories, and keeping the costate fixed and updateing the population trajectories. This is done until convergence is achived in the mean values for the population. Code for the simulations is available at \url{https://colab.research.google.com/drive/1fgmoCEkJ3KD8tQgA-7nmKwYbuQ_cLSlW}
         
-        \textcolor{red}{describe in more details what you did.}
-        
-        We aim to use this simulation as a benchmark for further studies.        
-        Let's set \textcolor{red}{Parameter table}
-        %$$g(1- u) = (1 - u),\,\xi = 0,\, \delta = 0.05, \, k = 0.5,\, f_c(c) = \log(c), f_u(u) = -\frac{\alpha}{2} u^2, Q(a) = a.$$        
+        The model was simplified in order to achieve convergence with this algorithm. 
+        Let's set 
+        $$g(1- u) = (1 - u),\,\xi = 0,\, \delta = 0.05, \, k = 0.5,\, f_c(c) = \log(c), f_u(u) = -\frac{\alpha}{2} u^2, Q(a) = a.$$        
         In this case, we have 
         \begin{equation}
             \begin{cases}    
@@ -133,8 +131,15 @@ Solutions for~\eqref{education_model:mfg_analytic_system} and~\eqref{education_m
             \HH_c (p) = \sup\limits_{c} \left\{ \log(c) - cp \right\}.
             \end{cases}
         \end{equation} 
-        Two scenarios are simulated: $\alpha = 0.5$ and  $\alpha = 2$ representing a lower and a higher preference to education versus work, respectively.
+        Two scenarios were simulated in figure~\eqref{fig:mfg_simulations}: $\alpha = 0.5$ and  $\alpha = 2$ representing a lower and a higher preference to education versus work, respectively.
+        The simulations show that, in the model, an increased preference for education leads to increased average wealth and interest rates and aggregate production of the economy. The effect in the effective supply of skilled labor is a decrease in the short term and an increase in the long term, whereas the wages per skill per time are decreased.
 
-        \textcolor{red}{Try to solve PDEs using DGM}
-        \textcolor{red}{Change format of plots to suit document.}
-        %\includegraphics[width=\textwidth]{simulations_mfg.png}
+
+    \begin{figure}[ht]
+        \centering
+        \resizebox{1\linewidth}{!}{
+        \includegraphics[width=\textwidth]{qualificacao/model_proposal/simulations/simulations_mfg.png}
+        }
+        \caption{\footnotesize Simulation of two scenarios: $\alpha = 0.5$ and  $\alpha = 2$, representing a lower and a higher preference to education versus work, respectively. The dashed line represents the higher preference to education. In the top plot, we have the average wealth in blue and the interest rate in orange. In the middle plot, we have the effective supply of skilled labor in blue and the wages in orange. In the bottom plot, we have the aggregate production of the economy. }
+        \label{fig:mfg_simulations}
+    \end{figure}

@@ -1,6 +1,7 @@
-tPLACEHOLDER
-References : Cardaliaguet Notes, Ambrosio book, 
-Wasserstein distance and Topology in Probability Measure Spaces
+This section is a compendium of the topology and differential structure of
+Wasserstein spaces. We follow~\cite{cardaliaguet2010notes,ambrosio2005gradient,ambrosio2021lectures}.
+Our goal is to characterize absolute continuous measure flows as solutions to the continuity equation,
+and to define the derivative of function in Wasserstein space with respect to the measure.
 
 Let $\Omega \subset \RR^n$, $\mathcal{P}(\Omega)$ be the set of Borel
 probability measures on $X$, and $\mathcal{P}_2(\Omega) \subset \mathcal{P}(\Omega)$
@@ -27,7 +28,7 @@ The measure $\hat \gamma$ is called optimal transport plan.
 
 In the case of the Wasserstein distance, an stronger property is satisfied when 
 $\mu$ is absolutely continuous: the optimal transport plan can be realized as
-an \textit{optimal transport map}
+an \textit{optimal transport map}~\cite{cardaliaguet2010notes}.
 \begin{theorem}[Existence of an optimal transport map]
     If $\mu \in \mathcal{P}_2(\Omega)$ is absolutely continuous, then,
     for any $\nu \in \mathcal{P}_2(\Omega)$, there exists a convex map 
@@ -40,10 +41,10 @@ an \textit{optimal transport map}
 where the symbol $\sharp$ denotes the push-forward of the measure with respect to the map,
 that is, for $\psi : \Omega \mapsto \Omega$, $\psi \sharp \mu(A) = \mu(\psi^{-1}(A))$
 
+Definition~\eqref{wass:absolutely_continuous_curves} 
+and theorems~(\ref{wass:metric_derivative},~\ref{wass:abs_continuity_and_continuity_eq}) are found in~\cite{ambrosio2005gradient}. 
 
-Flows in Wasserstein Space
-
-\begin{definition}[Absolutely Continuous Curves in Wasserstein space]
+\begin{definition}[Absolutely Continuous Curves in Wasserstein space]\label{wass:absolutely_continuous_curves}
     Let $v : (a,b) \mapsto \mathcal{P}_2(\Omega)$ be a curve.
     We say that $v$ is absolutely continuous if there exists
     $m \in L^1(a,b)$ such that
@@ -54,10 +55,10 @@ Flows in Wasserstein Space
 
 Among all choices of $m$ in~\eqref{wass:absolute_continuity}, there is a minimal
 one, which describes the \textit{metric derivative} of the curve
-\begin{theorem}[Metric derivative]
+\begin{theorem}[Metric derivative]\label{wass:metric_derivative}
     For any absolute continuous curve $v$ over $\mathcal{P}_2$, the limit
     \begin{equation}
-        |v'|(t) = \coloneqq \lim_{s \to t} \frac{d(v(s), v(t))}{|s - t|}
+        |v'|(t) \coloneqq \lim_{s \to t} \frac{d(v(s), v(t))}{|s - t|}
     \end{equation}
     exists for $\mathcal{L}$-a.e. $t \in (a,b)$. Moreover, the function
     $ t \mapsto |v'|(t) $ belongs to $L^1(a,b)$, is an admissible integrand for
@@ -68,7 +69,7 @@ one, which describes the \textit{metric derivative} of the curve
     for each function $m$ satisfying~\eqref{wass:absolute_continuity}.
 \end{theorem}
 
-\begin{theorem}[Absolutely continuous curves and the continuity equation]
+\begin{theorem}[Absolutely continuous curves and the continuity equation]\label{wass:abs_continuity_and_continuity_eq}
     Let $\mu_t : (a,b) \mapsto \mathcal{P}_2(\Omega)$ be an absolutely continuous
     curve and let $|\mu'| \in L^1(a,b)$ be its metric derivative.
     Then there exists a Borel vector field $v : (x,t) \mapsto v_t(x)$ such that
@@ -86,18 +87,35 @@ one, which describes the \textit{metric derivative} of the curve
     and $ |\mu'|(t) \leq  ||v_t||_{L^1(\mu_t, \Omega)}$ for a.e. $t \in (a,b)$.
 \end{theorem}
 
-This theorem shows that the trajectories of absolute continuous curves are described
-by the continuity equation. In fact, the Wasserstein distance is also characterized
+Theorem~\eqref{wass:abs_continuity_and_continuity_eq} shows that the trajectories of absolute continuous curves are described
+by the solutions in the sense of distributions to the continuity equation. In fact, the Wasserstein distance is also characterized
 by solutions of the continuity equation through the Benamou-Brenier formula.
 
 \begin{theorem}[Benamou-Brenier Formula]
     For all  $\mu_0, \mu_1 \in \mathcal{P}_2*(\Omega)$, we have
     \begin{equation}
-        d_2(\mu_0, \mu_1) = \min \left\{ \int_0^1 ||v_t||^2_{L^2(\mu_t, \Omega)} \, dt : \partial_t \mu_t + \div (v_t \mu_t) = 0 \text{ in } (0,1) \times \Omega \right\}
+        d_2(\mu_0, \mu_1) = \min \left\{ \int_0^1 ||v_t||^2_{L^2(\mu_t, \Omega)} \, dt : \partial_t \mu_t + \nabla \cdot (v_t \mu_t) = 0 \text{ in } (0,1) \times \Omega \right\}
     \end{equation} 
     where the minimization is among all curves $\mu_t : [0,1] \mapsto \mathcal{P}_2(\Omega)$
     continuous w.r.t. the weak topology.
 \end{theorem}
+
+Another interesting property of weak solutions of the continuity equation is their relation to solutions $x_t$ of ODEs such as
+\begin{equation}
+    \dot x = b(x,t).
+\end{equation}
+If we define the flow 
+\begin{equation}
+    \Phi(x,t,s) = x + \int_t^s b(x_\tau, \tau) d\tau, 
+\end{equation}
+then the measure $\mu_s = \Phi(\cdot, 0, s) \sharp \mu_0$ is the unique weak solution to the boundary value problem, as stated in~\cite{cardaliaguet2010notes}:
+\begin{equation}
+    \begin{cases}
+        \partial_t \mu(x,t) - \nabla \cdot ( b(x,t) \mu(x,t) ) = 0,\\
+        \mu(x,0) =  \mu_0(x). 
+    \end{cases}
+\end{equation}
+
 
 In the theory of mean-field games, it is convenient to define some
 form of differentiability for functions
@@ -106,28 +124,29 @@ form of differentiability for functions
  structure.
 There are at least three aproaches to define derivatives $D_m U$ of functions in
 Wassertein spaces: 
-Ambrosio (Add citation) defines a kind of manifold structure
+Ambrosio~\cite{ambrosio2005gradient} defines a kind of manifold structure
 on the Wasserstein space;
-Cardaliaget (Add citation) restricts the 
+Cardaliaget~\cite{cardaliaguet2019master} restricts the 
 function $U$ to elements of $\mathcal{P}_2(\Omega)$ which have a density in 
 $L^2(\Omega)$ to use its Hilbert structure; and 
-Lyons (add citation) introduces a "lifted" function $\tilde u$ over the space of $L^2$ random variables with values
+Lyons~\cite{cardaliaguet2010notes} introduces a "lifted" function $\tilde u$ over the space of $L^2$ random variables with values
 in $\Omega$ such that $\tilde u(X) = U(\mathcal{L}(X))$, and uses the Hilbert structure
 of the space of $L^2$ random variables.
 
-However, the important property of the derivative $D_m U$ the following:
-Consider an absolutely continuous measure flow in Wasserstein space $\mu_t$
-described by $\partial_t \mu_t + \div(v_t \mu_t) = 0$,
-where $v_t$ is a vector field.
-The map $ t \mapsto U(\mu_t)$ is a map from $\RR$ to $\RR$,
-and if $D_m U$ exists it follows that
+One property of the derivative $D_m U$ is that it satisfies a form of chain rule with respect to absolute continuous flows of measures. We adopt this property as definition, for it satisfies our needs.
+\begin{definition}
+We say that a function $U : \mathcal{P}_2(\Omega) \mapsto \RR$ is differentiable at $\mu$ if there exists an element $D_m(\mu, \cdot) \in L^2_\mu$ such that for every solution $\mu_t$ to $\partial_t \mu_t + \nabla \cdot(v_t \mu_t) = 0, \mu_0 = \mu$ it follows that
 \begin{equation}\label{wass:measure_derivative_chain_rule}
-    \frac{d}{dt} U(\mu_t) = \int_\Omega D_m U(\mu_t, y) \cdot v_t(y) d\, \mu_t(y)
+    \frac{d}{dt} U(\mu_t)_{t = 0} = \int_\Omega D_m U(\mu, y) \cdot v_0(y) d\, \mu(y)
 \end{equation}
+We say that $U$ is $C^1$ in a neighborhood of $\mu$ if there is a neighborhood of $\mu$ where it is differentiable.
+\end{definition}
 
 \begin{proposition}
-    Given a $C^1$ function $U : \mathcal{P}_2(\Omega) \mapsto \RR$,
-    if $D_m U$ exists, it is unique.
+    Let $U : \mathcal{P}_2(\Omega) \mapsto \RR$,
+    be $C^1$ in a neighborhood $N(\mu_0)$ of $\mu$.
+    Then, for every $\mu \in N(\mu_0)$, $D_m(\mu,\cdot)$ is uniquely defined
+    as an element of $L^2_\mu$.
 \end{proposition}
 \begin{proof}
     Suppose that there are two operators 
@@ -135,114 +154,13 @@ and if $D_m U$ exists it follows that
     satisfying the property~\eqref{wass:measure_derivative_chain_rule}.
     Fix a measure $\mu$, and for a vector field 
     $v_t \in \RR^d$, $t \in (-\epsilon, \epsilon)$
-    let $\mu_t$ be the solution to $\partial_t \mu_t + \div(v_t \mu_t) = 0$
+    let $\mu_t$ be the solution to $\partial_t \mu_t + \nabla \cdot(v_t \mu_t) = 0$
     with $\mu_0 = \mu$.
     Now, from~\eqref{wass:measure_derivative_chain_rule}, it follows that
     \begin{align*}
     \frac{d}{dt} U(\mu_t) |_{t = 0} = \int_\Omega A(\mu, y) \cdot v_0(y) d\, \mu(y) = \int_\Omega B(\mu, y) \cdot v_0(y) d\, \mu(y)\\
     \rightarrow \int_\Omega [A(\mu, y) - B(\mu, y)]  \cdot v_0(y) d\, \mu(y) = 0
     \end{align*}
-    Note to self: maybe not so simple - what if $\int_\Omega [A(\mu, y) - B(\mu, y)]  \cdot v_0(y) d\, \nu(y) \neq 0$?
-
+    As $v_0$ was arbitrary, $||A - B||_{L^2_\mu} = 0$, from which we conclude 
+    uniqueness.
 \end{proof}
-
-
-Derivation of MFG system from $N$-player game (following Cardaliaget)
-Consider a differential game with $N$ players in $\RR^d$ where each player
-controls his velocity. In this setting, the state of player $i$
- evolves according to
-\begin{equation}
-    x'_i(t) = \alpha_i(t).
-\end{equation}
-The cost functional for player $i$ is of the form
-\begin{equation}
-    J_i(x, t, (\alpha_j)_j) = \int_t^T L_i (x_1(s), \dots, x_N(s), \alpha_i(s)) ds + g_i(x_1(T), \dots, x_N(T)).
-\end{equation}
-
-We assume that
-\begin{equation}
-    L_i(x_1, \dots, x_N, \alpha) = \frac{1}{2}|\alpha|^2 + F\left( \frac{1}{N-1} \sum_{j \neq i} \delta_{x_j}  \right)
-\end{equation}
-where $F : \mathcal{P}_2 \mapsto \RR$ is continuous, and
-\begin{equation}
-    g_i(x_1, \dots, x_N) = g(x_i, \frac{1}{N-1} \sum_{j\neq i} \delta_{x_j})
-\end{equation}
-where $g: \RR^d \times \mathcal{P}_2$ is continuous.
-
-We assume that a smooth, symmetric Nash equilibrium in feedback form exists for
-this game - that is, there is a map
-$U^N : \RR^d \times [0,T] \times (\RR^d)^{(N-1)} \mapsto \RR$ such that
-\begin{equation}
-    U^N_i(x_i, t, (x_j)_{j\neq i}) = U^N(x_i, t, (x_j)_{j\neq i})
-\end{equation}
-satisfies the system of $HJ$ equations:
-\begin{equation}
-    -\frac{\partial U_i^N}{\partial t} + \frac{1}{2}|D_{x_i} U_i^N|^2 - F\left( \frac{1}{N-1}  \sum_{j\neq i} \delta_{x_j} \right) + \sum_{j \neq i} \langle D_{x_j} U^N_j, D_{x_j} U^N_i \rangle = 0
-\end{equation}
-as stated in~\cite{cardaliaguet2010notes}, the family of feedbacks $(\alpha_i(x,t) = - D_{x_i} U^N_i (x,t))$
-provides a Nash equilibrium for the game.
-
-Now, assume that $U^N$ satisfy the following estimates
-\begin{equation}
-    \sup_{x_1, t, (x_j)_j \leq 2} \left| D_{x_1, t} U^N (x_1, t, (x_j)) \right| \leq C,
-\end{equation}
-and
-\begin{equation}
-    \sup_{x_1, t, (x_j)_j \leq 2} \left| D_{x_j} U^N (x_1, t, (x_j)) \right| \leq  \frac{C}{N}, \text{ for } j\neq 2.
-\end{equation}
-Under these conditions, and up to a subsequence, there is a map 
-$U : \RR^d \times [0,T] \times \mathcal{P}_2 \mapsto \RR$ such that,
-for any $R > 0$,
-\begin{equation}
-    \sup_{|x| \leq R, t, (x_j)_{j\geq 2}} | U^N(x,t,m^{N-1}_{(x_j)}) - U(x,t,m^N_x) | \to 0
-\end{equation}
-where as before, we have set
-\begin{equation}
-    m^{N-1}_{(x_j)} = \frac{1}{N-1} \sum_{j \geq 2} \delta_{x_j}, \text{ and } m^N_x = \frac{1}{N} \sum_{j = 1}^N \delta_{x_j}.
-\end{equation}
-As stated in~\cite{cardaliaguet2010notes}, we have
-\begin{equation}
-    \frac{\partial U^N_i}{\partial t} \to \frac{\partial U(x,t,m)}{\partial t}, \quad |D_{x_i} U_i^N|^2 \to |D_x U (x,t,m)|^2.
-\end{equation}
-It can also be proved~\cite{cardaliaguet2010notes} that
-\begin{equation}
-    \sum_{j\neq i} \langle D_{x_j} U^N_j , D_{x_j} U^N_i \rangle \to \langle D_m U(\cdot,t,m), D_x U(\cdot, t, m) \rangle_{L^2_m}.
-\end{equation}
-So far we have heuristically explained that the limit of $U^N$ as $N \to \infty$
-is some $U\in \mathcal{C}^0(\RR^d \times [0,T] \times \mathcal{P}_2) $
- which satisfies 
- \begin{equation}\label{wass:simple_master_equation}
-    \begin{cases}
-        - \frac{\partial U}{ \partial t} + \frac{1}{2} |D_x U(x,t,m)|^2 - F + \langle D_m U, D_x U \rangle_{L^2_m} = 0\text{ in }\RR^d \times [0,T] \times \mathcal{P}_2,\\
-        U(x,T,m) = g(x,m)
-    \end{cases}
- \end{equation}
- Note that this differential equation includes a differential with respect to
- a probability measure.
-  Let's apply an idea similar to the method of characteristics to this equation:
-  let $m(t)$ be an absolute continuous measure flow over $\mathcal{P}_2$, and
-  let $u(x,t) = U(x,t,m(t))$. We have that
-\begin{equation}
-    \frac{\partial u}{\partial t} = \frac{\partial U}{\partial t} + \langle D_m U (\cdot, t, m(t)), v(t) \rangle_{L^2_{m(t)}},
-\end{equation}
-    where $v(t)$ is the vector field driving $m(t)$ through the continuity equation $\partial_t m + \div( m(x,t) v(x,t) ) = 0$
-    We can rewrite equation~\eqref{wass:simple_master_equation} as 
-\begin{equation}
-    \frac{\partial U}{ \partial t} + \langle D_m U, - D_x U \rangle_{L^2_m} = \frac{1}{2} |D_x U(x,t,m)|^2 - F.
-\end{equation}
-    Therefore, if we \textit{choose} as driver of $m(t)$ the vector field $v(x,t) = - D_x U(x,t,m(t))$,
-    we have
-\begin{equation}
-    \frac{\partial u}{\partial t} =  \frac{\partial U}{ \partial t}(x,t,m(t)) + \langle D_m U(\cdot, t, m(t) ), - D_x U(\cdot, t, m(t) ) \rangle_{L^2_m} = \frac{1}{2} |D_x u(x,t)|^2 - F
-\end{equation}
-    from which we arrive at the MFG system of PDEs:
-\begin{equation}
-    \begin{cases}
-        - \frac{\partial u}{\partial t} + \frac{1}{2} |D_x u(x,t)|^2  = F(m), \\
-        \partial_t m - \div( \partial_x u(x,t) m(x,t) ) = 0,\\
-        m(0) = m_0, \, u(x,T) = g(x, m(T))
-    \end{cases}
-\end{equation}
-    where the first equation holds in the viscosity sense, and the second
-    one holds in the sense of distributions.
-    The vector field $v(x,t) = -D_x U(x,t,m(t))$ is aptly called the \textit{decoupling field}.

@@ -69,7 +69,7 @@ the representative agent faces the following optimization problem:
     \end{cases}
 \end{equation}
 
-Assuming that ${\hat k_t}$ is given, we can apply Pontryagin's Maximum Principle~\ref{ADD STATEMENT TO APPENDIX AND CITATION}
+Assuming that ${\hat k_t}$ is given, we can apply Pontryagin's Maximum Principle~\cite{bressan2007introduction}
 to conclude that, if an optimal control $c^*_{(\cdot)}$ and a corresponding optimal trajectory $k^*_{(\cdot)}$ exist,
 then there is a costate variable $p_{(\cdot)}$ defined implicitly as the solution of the backwards ordinary differential equation
 \begin{equation}\label{economic_example:costate_ode}
@@ -105,7 +105,7 @@ and solving the forward-backward system of ordinary differential equations
     V(k,t) = \sup_{c_{(\cdot)},\, k_t = k} \int_t^T \log(c(s)) ds -\frac{1}{2}{(k_T)}^2.
 \end{equation}
 Intuitively, the value function evaluates for a given time $t$ and capital $k$ the optimal payoff from that point forward.
-As shown in section~\ref{ADD_APPENDIX_FOR_VISCOSITY_SOLUTIONS}, the value function is the viscosity solution for the Hamilton-Jacobi-Bellman equation
+As shown in section~\ref{theo_review:soc}, the value function is the viscosity solution for the Hamilton-Jacobi-Bellman equation
 \begin{equation}\label{economic_example:hjb_equation_reduced}
     \begin{split}
         &\partial_t V + H(\partial_k V, k,t) = 0,\quad V(k,T) = -\frac{1}{2}{(k)}^2,\\
@@ -117,7 +117,7 @@ This equation encodes the system of ODEs in~\ref{economic_example:ode_formulatio
 \begin{equation*}
     \dot k_t = \partial_p H,\quad \dot p_t = -\partial_k H.
 \end{equation*}
-Moreover, as shown in~\ref{ADD_APPENDIX_FOR_TRANSPORT_EQUATION_AND_FKP},
+Moreover, as shown in~\ref{theo_review:wass},
 when the agents' capital evolve according to $\dot k = \partial_p H$,
 the probability density function $\rho(\cdot, t)$ for the agents probability measure $\mu_t$ at time $t$
 is the weak solution for the Kolmogorov-Fokker-Planck equation with initial condition $\rho_0$ given by the pdf of $\mu_0$

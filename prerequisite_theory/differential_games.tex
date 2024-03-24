@@ -1,4 +1,7 @@
-\subsubsection{Key Concepts}
+The seminal work in modern day game theory is the book \textit{Theory of Games and Economic Behavior}~\cite{von1947theory}, in which John von Neumann and Oskar Morgenstern provided an axiomatic exposition of utility. In 1938,Antoine Augustin Cournout~\cite{cournout1838researches} provided an equilibrium solution to a duopoly economic game which is an instance of a Nash equilibrium. 
+However, it was not until 1950 that John Nash~\cite{nash1950equilibrium} introduced the general notion, and proved the existence of at least one mixed strategy equilibrium in $N$-player games.
+In 1965, Rufus Isaacs~\cite{isaacs1999differential}  formalized the theory of differential games, that is, games where the state space is continuous and the evolution of the players is determined by differential equations
+We now present some important concepts in game theory.
 \begin{enumerate}
     \item \textit{Game Theory} - area of mathematics concerned with the interaction of \textit{strategies} adopted by \textit{players} in order to maximize their \textit{payoff}. At the end of the day, a game is a system of optimization problems for which there is some interaction on the optimization target.
     \item \textit{Strategy} - an entity $x_i \in \mathcal{X}_i$ which represents one option, or control, that a player is allowed to choose, and which will be an input for the payoff function. Players want to choose their strategy in order to maximize their own payoff, while taking into account that the other players are doing the same thing.
@@ -26,11 +29,9 @@
         $$b^* \in R^B(a^*) \text{ and } J_A(a,b)\leq J_A(a^*, b^*),\ \forall(a,b), b\in R^B(a), a \in A.$$
     \end{itemize}
     
-    \item \textit{completely cooperative and zero-sum}
     \item \textit{Information structure}: 
 
     % Define a differential game as setting for the strategies
     The information available for the players determine the possible strategies to be taken. This means that different game situations might arise for different information structures. Two particular information structures of notice are the \textbf{open loop} case and the \textbf{feedback case}. 
     \textbf{Open loop strategies} are strategies that depend only on time $t \in [0,T]$, which arise in situations where the state of the system cannot be known. Thus, the set $X_i$ of strategies available for the $i$-th player wiil consist of all measurable functions $t \mapsto u_i(t)$ from $[0,T]$ into $U_i$. \textbf{Feedback} (or \textbf{Markovian}) strategies arise when each player $i$ can observe the state of the system, but does not know the strategy of other players. In this case, the strategy for player $i$ can depend on both the time and the state, that is, the set of available strategies for player $i$ is the set of measurable functions $(t,x) \mapsto u_i(t,x)$ from $[0,T] \times \mathbb{R}^n$ into $U_i$ 
-    \item \textit{Target and Game set}
 \end{enumerate}
