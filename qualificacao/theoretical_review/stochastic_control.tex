@@ -17,9 +17,9 @@ $\mathbb{F}$, valued in $A \subset \RR^m$.
 
 The functions $b: \mathbb{R}^n \times A \mapsto \mathbb{R}^n$ and 
 $\sigma: \mathbb{R}^n \times A \mapsto \RR^{n\times d}$ are uniformly
-Lipschitz over $A$: $\exists K \geq 0, \forall x,y, \in \RR^n, \forall a \in A$,
+Lipschitz over $A$: $\exists K \geq 0$ such that $\forall x,y, \in \RR^n, \forall a \in A$,
 \begin{equation}\label{soc:diffusion_uniformly_lipschitz}
-    | b(x,a) - b(y,a) | + | \sigma(x,a) - \sigma(y,a) | \geq K | x - y |.   
+    | b(x,a) - b(y,a) | + | \sigma(x,a) - \sigma(y,a) | \leq K | x - y |.   
 \end{equation}
 
 Fix a time $0 < T < \infty$, and let $\mathcal{A}$ be the set of control processes
@@ -33,16 +33,11 @@ and~\eqref{soc:diffusion_quadratic_bound} ensure the existence and uniqueness
 of a strong solution to the SDE~\eqref{soc:controlled_sde}
 for every control $\alpha \in \mathcal{A}$ and for every initial condition
 $(t,x) \in [0,T] \times \RR^n$, and we denote by $\{ X_s^{t,x}, t \leq s \leq T \}$
-this solution with a.s.\ continuous paths. Moreover, under these conditions,
-it follows that
-    \begin{gather}
-        \mathbb{E} \left[ \sup\limits_{t\leq s \leq T} \right] < \infty,\\
-        \lim_{h \to 0^+} \mathbb{E} \left[ \sup\limits_{s\in [t,t+h]} | X_s^{t,x} - x |^2 \right] = 0.
-    \end{gather}
+this solution with a.s.\ continuous paths. 
 
 We now turn to the definitions of the objective function and the value function.
 Let $ f: [0,T] \times \RR^n \times A \mapsto \RR $ and $ g: \RR^n \mapsto \RR $
-be two measurable functions. Assume that is either $g$ lower-bounded or 
+be two measurable functions. Assume that $g$ is either upper-bounded or 
 satisfies a quadratic growth condition 
 $| g(x) | \leq C(1 + |x|^2),\ \forall x \in \RR^n$, for some constant $C$
 independent of $x$.
@@ -70,7 +65,7 @@ that $\hat \alpha \in \mathcal{A}(t,x)$ is an optimal control if
 $v(t,x) = J(t,x,\hat \alpha)$.
 Moreover, a control process $\alpha$ in the form $\alpha_s = a(s,X_s^{t,x})$ for
 a measurable function $a: [0,T] \times \RR^n \mapsto A$ is
-called a Markovian control.
+called a Markovian (or feedback) control.
 
 We are now in position to state a fundamental property of the value function $v$,
 called the \textit{Dynamic Programming Principle}:
@@ -91,13 +86,14 @@ called the \textit{Dynamic Programming Principle}:
 \begin{proof}
     Given an admissible control $\mathcal{A}(t,x)$, by pathwise uniqueness of the flow of the SDE for $X$ we have
     \begin{equation}
-        X_s^{t,x} =  X_s^{\theta, X_\theta^{t,x}}, \, s \geq \theta
+        X_s^{t,x} =  X_s^{\theta, X_\theta^{t,x}}, \, s \geq \theta,
     \end{equation}
     for any stopping time $\theta \in [t,T]$. By the tower property of expectations, 
     we have
     \begin{align*}
         J(t,x,\alpha) &= \mathbb{E}\left[ \int_t^T f(s, X_s^{t,x}, \alpha_s) ds + G(X_T^{t,x})  \right] \\
         &= \mathbb{E}\left[ \mathbb{E} \left[ \int_t^T f(s, X_s^{t,x}, \alpha_s) ds + G(X_T^{t,x}) | \mathcal{F}_\theta \right] \right] \\
+        &= \mathbb{E}\left[  \int_t^\theta f(s,X_s^{t,x}, \alpha_s) ds +  \mathbb{E} \left[ \int_\theta^T f(s, X_s^{\theta, X_\theta^{t,x}}, \alpha_s) ds + G(X_T^{\theta, X_\theta^{t,x}}) | \mathcal{F}_\theta \right] \right]\\ 
         &= \mathbb{E}\left[  \int_t^\theta f(s,X_s^{t,x}, \alpha_s) ds +  \mathbb{E} \left[ \int_\theta^T f(s, X_s^{t,x}, \alpha_s) ds + G(X_T^{t,x}) | \mathcal{F}_\theta \right] \right]\\ 
         &= \mathbb{E}\left[  \int_t^\theta f(s,X_s^{t,x}, \alpha_s) ds +  J(\theta, X_\theta^{t,x}, \alpha) \right].
     \end{align*}
@@ -114,7 +110,7 @@ called the \textit{Dynamic Programming Principle}:
     Now, for the other side of the inequality: fix some arbitrary control
     $\alpha \in \mathcal{A}(t,x)$ and $\theta \in \mathcal{T}_{t,T}$.
     By definition of the value functions, for any $\epsilon > 0$ and 
-    $\omega in \Omega$, there exists an $\epsilon$-optimal control
+    $\omega \in \Omega$, there exists an $\epsilon$-optimal control
     $\alpha^{\epsilon, \omega} \in \mathcal{A}( \theta(\omega), X^{t,x}_{\theta(\omega)} (\omega)  )$
     such that
 \begin{equation}\label{soc:dpp_proof_epsilon_optimal_control}
@@ -135,7 +131,7 @@ Again, by the tower property and by inequality~\eqref{soc:dpp_proof_epsilon_opti
     v(t,x) &\geq J(t,x, \hat \alpha) = \mathbb{E}\left[ \int_t^\theta f(s,X^{t,x}_s, \alpha_s) ds + J(\theta, X^{t,x}_\theta, \alpha^\epsilon) \right] \\
             &\geq \mathbb{E}\left[ \int_t^\theta f(s,X^{t,x}_s, \alpha_s) ds + v(\theta, X^{t,x}_\theta) \right] - \epsilon.
 \end{align*}
-As $\alpha, \theta$ were arbitrary, we conclude that
+As $\alpha, \theta$ and $\epsilon$ were arbitrary, we conclude that
 \begin{equation}
     v(t,x) \geq \sup_{\alpha \in \mathcal{A}(t,x)} \sup_{\theta \in \mathcal{T}_{t,T}} \mathbb{E} \left[ \int_t^\theta f(s, X_s^{t,x}, \alpha_s) ds + v(\theta, X^{t,x}_\theta) \right].
 \end{equation}
@@ -219,12 +215,12 @@ We shall state the definition and uniqueness result here, and
  \begin{equation*}
     F(x,u, D u) = 0, x \in \Omega \subset \RR^n
  \end{equation*}
-the theory of viscosity solutions show that the solutions $u^\epsilon(\cdot)$
+the theory of viscosity solutions show that the solutions $u^\epsilon$
 to the equation
 \begin{equation*}
     F(x, u^\epsilon, D u^\epsilon) = \epsilon \Delta u^\epsilon
 \end{equation*}
-converge to a unique limit $u(\cdot)$ as $\epsilon \to 0+$.
+converge to a unique limit $u$ as $\epsilon \to 0^+$.
 This limit is the viscosity solution to the PDE.
 Moreover, the viscosity solution $u$ can be uniquely characterized by inequalities
 in the superdifferential set $D^+ u(x)$ and the subdifferential set $D^- u(x)$
@@ -243,7 +239,7 @@ as follows:
 \end{itemize}
 We can characterize the superdifferential (respectively the subdifferential) in
 terms of test functions $\phi \in C^1(\Omega)$:
-\begin{lemma}
+\begin{definition}
     Let $u \in C(\Omega)$ and $x_0 \in \Omega$. Then $p_0  \in D^+ u(x_0)$ if and 
     only if there exists $\phi \in C^1(\Omega)$ such that:
 \begin{enumerate}
@@ -251,7 +247,7 @@ terms of test functions $\phi \in C^1(\Omega)$:
     \item $(u - \phi)(x_0) = 0$;
     \item $D \phi(x_0) = p_0$;
 \end{enumerate}
-\end{lemma}
+\end{definition}
 For $p_0 \in D^- u(x_0)$, instead of a local maximum we have a local minimum.
 This allows us to give an equivalent definition of viscosity solutions in terms 
 of test functions. In fact, for second-order PDEs
