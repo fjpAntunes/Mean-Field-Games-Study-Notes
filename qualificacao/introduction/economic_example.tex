@@ -1,49 +1,69 @@
 %%%%%%WIP%%%%%
 
-We'll consider an example from economics in order to illustrate the mean field games methodology.
-The model was chosen as an example for two reasons.
+We will consider an example from economics in order to illustrate the mean field games methodology.
+The example will be analyzed in a informal manner, aiming to introduce the general idea
+of MFGs.
+This model was chosen as an example for two reasons.
 First, the mean field interactions arise naturally from the underlying economic theory, which makes the example a fitting introduction.
-Second, the model is similar in nature to the educational model that we shall propose in section~\ref{model_proposal}.
-
-The example will be formulated in the deterministic setting, where the Nash equilibrium can be formulated using Pontryagin's Maximum Principle 
+Second, the model is similar in nature to the educational model that we shall propose in Section~\ref{model_proposal}.
+The example will be formulated in the deterministic setting, where the Nash equilibrium can be described using Pontryagin's Maximum Principle 
 as the solution to a system of forward-backwards ODEs.
 
 Consider an idealized economy composed of $N$ agents, with an optimization interval from time $t = 0$ to $t = T$.
-Each agent has an amount of capital $k_0^i$ for $i \in \{1,\ldots,N\}$ at time $0$, and they're able to control their consumption $c_t^i \in \RR$ over time.
-The capital dynamics over time $\dot k_t^i$ is governed by two factors:
-a fixed depreciation rate $\delta$ and an endogenous interest rate $r_t$. It is given by the ODE
+Each agent has an amount of capital $k_0^i$ for $i \in \{1,\ldots,N\}$ at time $0$,
+and they're able to control their consumption $c_t^i \in \RR$ over time.
+The capital dynamics over time $d k_t^i$ is governed by
+two factors besides the consumption:
+a fixed depreciation rate $\delta$ and an endogenous interest rate $r_t$.
+It is given by the ODE
 \begin{equation}
-    \dot k_t^i = \left[r_t - \delta \right] k_t^i - c_t^i. 
+    \dot k_t^i =  \left( \left[r_t - \delta \right] k_t^i - c_t^i \right)\, dt.
 \end{equation}
 
-Let's assume that the aggregate production $Y_t$ in the economy is given by a function $F$ of the aggregate capital of the economy $\hat k_t$, that is
+Let us assume that the aggregate production $Y_t$ in the economy is given by a function $F$ of the aggregate capital of the economy $\hat k_t$, that is
 \begin{equation}
-    Y_t = F(\hat k_t),\quad \text{where } \hat k_t = \frac{1}{N} \sum_{i = 1}^N k_t^i.
+    Y_t = F(\bar k_t),\quad \text{where } \bar k_t = \frac{1}{N} \sum_{i = 1}^N k_t^i.
 \end{equation}
 In economic equilibrium, the interest rate $r_t$ will be determined by the marginal effect of capital $\partial_K Y$ in the aggregate production,
-which itself is a function of the aggregate capital in the economy $K_t$. This will be the source of mean field interactions for our model.
+which itself is a function of the aggregate capital in the economy $\bar k_t$.
+This will be the source of the mean field interactions of our model.
 
 The preference for consumption of the agents is given by an utility function $u(c_t^i)$, 
-and their preference for capital at the end of their lifetime is given by a terminal cost $\psi(k_T^i)$.
-Therefore, agents want to choose their consumption $c(\cdot)$ to optimize the following functional $J(k, c(\cdot))$:
+and their preference for capital at the end of their lifetime is given by a terminal utility $\psi(k_T^i)$.
+Therefore, agents want to choose their measurable consumption function $c : [0,T] \mapsto \mathbb{R}$ to optimize the following functional $J(k, c)$:
 \begin{equation}
-    J(k, c(\cdot)) = \int_0^T u(c(s)) ds + \psi(k_T),
+    J(k, c) = \int_0^T u(c_s) ds + \psi(k_T),
 \end{equation}
 where $k$ is the starting capital, and $k_T$ is the capital at time $T$ when following control $c(\cdot)$.
 Therefore, the optimization problem faced by agent $i$ is
 \begin{equation}\label{economic_example:N_player_game}
     \begin{cases}
-        \max_{c^i_{(\cdot)}} \int_0^T u(c^i_s) ds + \psi(k^i_T),\\
+        \max_{c^i } \int_0^T u(c^i_s) ds + \psi(k^i_T),\\
         \text{subject to}\\
-        \dot k_t^i = \left[ \partial_K F(\hat k_t) - \delta \right] k_t^i - c_t^i.
+        d k_t^i = \left[\left( \partial_K F(\bar k_t) - \delta \right) k_t^i - c_t^i\right]\, dt.
     \end{cases}
 \end{equation}
 
 In the mean field game framework, instead of directly solving the $N$-player model~\eqref{economic_example:N_player_game},
 we solve a different but related problem. 
-We modify the setting of the game from $N$ players distributed at time $t$ according to a discrete probability measure $\mu^N_t$ to infinite players
-distributed according to an atomless probability distribution  $\mu_t$.
-This new setting is the mean field game, and under appropriate conditions its Nash equilibrium is an approximate Nash equilibrium for the $N$ player game.
+We modify the setting of the game from $N$ players distributed at time $t$ according 
+to a discrete probability measure flow $\mu^N_t = \frac{1}{N} \sum_{i = 1}^N \delta_{k^i_t}$
+to infinite players distributed according to a (possibly atomless) probability measure flow $\mu_t$.
+This new setting is the mean field game approximation of the original game.
+
+Recall that a Nash equilibrium is a combination of the players' states in which 
+no player can improve its outcome by changing its actions.
+If we consider a time evolution for the players' population given by $\mu_t$,
+each player can formulate its best response
+(that is, its optimal consumption $c^*$) when the population evolves according to
+$\mu_t$.
+However, the best response of each player \textit{induces}
+a new population evolution described by another probability measure flow $\nu_t$.
+If there exists a probability measure flow $\mu_t^*$ such that the best response
+of each player induces itself, this means that under $\mu_t^*$,
+\textit{no player can improve its outcome by changing its actions.}
+Therefore, if a probability measure flow $\mu_t^*$ exists, we interpret it as
+the Nash equilibrium of the MFG, coinciding with the classical definition.
 
 We're now in position to analyze the model. Analysis of mean field games models have the following pattern:
 \begin{enumerate}
@@ -51,58 +71,57 @@ We're now in position to analyze the model. Analysis of mean field games models 
     \item As every player is equal, their optimal trajectories induce a flow $O(\mu_t)$,
     \item A Nash equilibrium for the MFG is a probability flow $\mu_t^*$ such that $\mu_t^* = O(\mu_t^*)$.
 \end{enumerate}
-By definition, a Nash equilibrium is a state of the game where no player can improve his outcome by unilaterally changing his strategy.
-The measure flow $\mu_t^*$ induces its own time evolution when every player behaves optimally.
-This means they can't improve their outcomes any more,
-which means that the mean field definition of Nash equilibrium is compatible with the classical definition.
+%By definition, a Nash equilibrium is a state of the game where no player can improve his outcome by unilaterally changing his strategy.
+%The measure flow $\mu_t^*$ induces its own time evolution when every player behaves optimally.
+%This means they can't improve their outcomes any more,
+%which means that the mean field definition of Nash equilibrium is compatible with the classical definition.
  
-Let's set $u(c) = \log(c)$ and $\psi(k) = - \frac{1}{2} k^2$.
-Moreover, let's denote $\hat k_t = \int k_t d \mu_t$ and set $F(K) = \frac{C}{2} K^2$, that is, there are increasing returns over aggregated capital.
-In this setting, the interest rate is given by $r_t = C {\hat k_t} $.
-Assuming that an initial capital $k \sim \mu_0$ is given,
+Let us set $u(c) = \log(c)$ and $\psi(k) = - \frac{1}{2} k^2$.
+Moreover, denote $\bar k_t = \int k d \mu_t(k)$ and set $F(K) = \frac{C}{2} K^2$, that is, there are increasing returns over aggregated capital.
+In this setting, the interest rate is given by $r_t = C {\bar k_t} $.
+Assuming that an initial capital distribution $\mu_0$ is given,
 the representative agent faces the following optimization problem:
 \begin{equation}\label{economic_example:representative_agent}
     \begin{cases}
-        \max_{c_{(\cdot)}} \int_0^T \log(c_s) ds -\frac{1}{2}{(k_T)}^2,\\
+        \max_{c} \int_0^T \log(c_s) ds -\frac{1}{2}{(k_T)}^2,\\
         \text{subject to}\\
-        \dot k_t = \left[ C {\hat k_t} - \delta \right] k_t - c_t, \quad k_0 = k,
+        d {\bar k}_t = \left(\left[ C {\bar k_t} - \delta \right] k_t - c_t \right) dt, \quad k_0 \sim \mu_0,
     \end{cases}
 \end{equation}
 
-Assuming that ${\hat k_t}$ is given, we can apply Pontryagin's Maximum Principle~\cite{bressan2007introduction}
-to conclude that, if an optimal control $c^*_{(\cdot)}$ and a corresponding optimal trajectory $k^*_{(\cdot)}$ exist,
-then there is a costate variable $p_{(\cdot)}$ defined implicitly as the solution of the backwards ordinary differential equation
+Assuming that ${\bar k_t}$ is given, we can apply Pontryagin's Maximum Principle~\cite{bressan2007introduction}
+to conclude that, if an optimal control $c^*$ and a corresponding optimal trajectory $k^*$ exist,
+then there is a costate variable $p$ defined implicitly as the solution of the backwards ordinary differential equation
 \begin{equation}\label{economic_example:costate_ode}
-    \dot p_t = -  \left[C{\hat k_t} - \delta \right] p_t, \quad p_T =  - k^*_T,
+    d p_t = -  \left[C{{\bar k}_t} - \delta \right] p_t\, dt, \quad p_T =  - k^*_T,
 \end{equation}
 that satisfy the maximality condition
 \begin{equation}\label{economic_example:maximality_condition}
-    p_t\left( \left[C {\hat k_t} - \delta \right]k^*_t - c^*_t \right) + \log(c^*_t) = 
-    \max_c \left\{ p_t\left( \left[C {\hat k_t} - \delta \right]k^*_t - c \right) + \log(c) \right\}.
+    p_t\left( \left[C {\bar k_t} - \delta \right]k^*_t - c^*_t \right) + \log(c^*_t) = 
+    \max_{c \in \mathbb{R}^+} \left\{ p_t\left( \left[C {\bar k_t} - \delta \right]k^*_t - c \right) + \log(c) \right\}.
 \end{equation}
 
 We can find candidates for optimal controls and trajectories by calculating
 \begin{equation*}
-    c^* = \arg\max_c  \left\{ p_t\left( \left[C {\hat k_t} - \delta \right]k^*_t - c \right) + \log(c) \right\} = \frac{1}{p_t},
+    c^* = \arg\max_{c \in \mathbb{R}^+}  \left\{ p_t\left( \left[C {\hat k_t} - \delta \right]k^*_t - c \right) + \log(c) \right\} = \frac{1}{p_t},
 \end{equation*}
 and solving the forward-backward system of ordinary differential equations
 \begin{equation}\label{economic_example:ode_formulation}
     \begin{cases}
-         \dot k_t = \left[ C {\hat k_t} - \delta \right] k_t - \frac{1}{p_t},\\
-         \dot p_t = -  \left[C{\hat k_t} - \delta \right] p_t, \\
-         k_0 = k,\, p_T =  - k_T.         
+         d k_t = \left(\left[ C {\hat k_t} - \delta \right] k_t - \frac{1}{p_t} \right)\, dt,\\
+         d p_t = - \left( \left[C{\hat k_t} - \delta \right] p_t \right) \, dt, \\
+         k_0 \sim \mu_0,\, p_T =  - k_T.         
     \end{cases}
 \end{equation}
-\begin{remark}
-    Note that $k_t$ is actually a random variable dependent on its initial value $k\sim \mu_0$.
+    Note that $k_t$ is actually a random variable dependent on its initial distribution $\mu_0$.
     The system of ODEs implicitly describes the probability measure flow $\mu_t = \mathcal{L}(k_t)$,
-    and the dynamics of this forward-backward system depend on $\mathcal{L}(k_t)$ through $\hat k_t$.
+    and the dynamics of this forward-backward system depend on $\mathcal{L}(k_t)$ through $\bar k_t$.
     In the stochastic case, the dependence on the law is the distinguishing feature of McKean-Vlasov SDEs.
-\end{remark}
+
     Pontryagin's Maximum Principle give us \textit{necessary} conditions for optimal controls and trajectories, but not \textit{sufficient} conditions.
     In order to guarantee optimality, one method is to analyze the value function $V$ defined as
 \begin{equation}\label{economic_example:value_function_definition}
-    V(k,t) = \sup_{c_{(\cdot)},\, k_t = k} \int_t^T \log(c(s)) ds -\frac{1}{2}{(k_T)}^2.
+    V(k,t) = \sup_{c,\, k_t = k} \int_t^T \log(c(s)) ds -\frac{1}{2}{(k_T)}^2.
 \end{equation}
 Intuitively, the value function evaluates for a given time $t$ and capital $k$ the optimal payoff from that point forward.
 As shown in section~\ref{theo_review:soc}, the value function is the viscosity solution for the Hamilton-Jacobi-Bellman equation
@@ -110,15 +129,15 @@ As shown in section~\ref{theo_review:soc}, the value function is the viscosity s
     \begin{split}
         &\partial_t V + H(\partial_k V, k,t) = 0,\quad V(k,T) = -\frac{1}{2}{(k)}^2,\\
         &\text{where }
-        H(p,k,t) = \sup_{c} p\left[ \left(C {\hat k_t - \delta}\right)k - c \right] + \log(c).
+        H(p,k,t) = \sup_{c \in \mathbb{R}^+} \left\{ p\left[ \left(C {\hat k_t - \delta}\right)k - c \right] + \log(c) \right\}.
     \end{split}
 \end{equation}
 This equation encodes the system of ODEs in~\ref{economic_example:ode_formulation} through the Hamiltonian function by the relations
 \begin{equation*}
-    \dot k_t = \partial_p H,\quad \dot p_t = -\partial_k H.
+    d k_t = \partial_p H\, dt ,\quad d p_t = -\partial_k H \, dt.
 \end{equation*}
 Moreover, as shown in~\ref{theo_review:wass},
-when the agents' capital evolve according to $\dot k = \partial_p H$,
+when the agents' capital evolve according to $d k = \partial_p H\, dt$,
 the probability density function $\rho(\cdot, t)$ for the agents probability measure $\mu_t$ at time $t$
 is the weak solution for the Kolmogorov-Fokker-Planck equation with initial condition $\rho_0$ given by the pdf of $\mu_0$
 \begin{equation}\label{economic_example:fkp_equation_reduced}
@@ -126,16 +145,16 @@ is the weak solution for the Kolmogorov-Fokker-Planck equation with initial cond
     &\partial_t \rho - \partial_k \left( \partial_p H \rho \right) = 0, \quad\rho(k,0) = \rho_0.
 \end{split}
 \end{equation}
-In the Nash Equilibrium, the capital per capita at time $t$ is a function of $\rho$ given by $\hat k_t(\rho) = \int_{\RR} k \rho(k,t) dk$.
+In the Nash Equilibrium, the capital per capita at time $t$ is a function of $\rho$ given by $\bar k_t(\rho) = \int_{\RR} k \rho(k,t) dk$.
 Substituting 
 \begin{equation*}
-    H(p,k,t) = \left(C {\hat k_t(\rho) - \delta}\right)k p  - 1  - \log(p),
+    H(p,k,t) = \left(C {\bar k_t(\rho) - \delta}\right)k p  - 1  - \log(p),
 \end{equation*}
 on~\ref{economic_example:hjb_equation_reduced} and~\ref{economic_example:fkp_equation_reduced}, we have the full PDE system
 \begin{equation}
     \begin{cases}
-        \partial_t V +  \left(C {\hat k_t(\rho) - \delta}\right)k\partial_k V - 1  - \log(\partial_k V) = 0,  \quad V(k,T) = -\frac{1}{2}{(k)}^2,\\
-        \partial_t \rho - \partial_k \left( \left[ \left(C {\hat k_t}(\rho) - \delta\right) k - {(\partial_k V)}^{-1} \right]\rho \right) = 0, \quad \rho(k,0) = \rho_0.
+        \partial_t V +  \left(C {\bar k_t(\rho) - \delta}\right)k\partial_k V - 1  - \log(\partial_k V) = 0,  \quad V(k,T) = -\frac{1}{2}{(k)}^2,\\
+        \partial_t \rho - \partial_k \left( \left[ \left(C {\bar k_t}(\rho) - \delta\right) k - {(\partial_k V)}^{-1} \right]\rho \right) = 0, \quad \rho(k,0) = \rho_0.
     \end{cases}
 \end{equation}
 \color{black}
