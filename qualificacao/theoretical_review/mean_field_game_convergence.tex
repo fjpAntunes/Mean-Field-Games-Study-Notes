@@ -1,18 +1,16 @@
-
-
 We follow~\cite{cardaliaguet2010notes} to give an example of mean field convergence in the number of players.
 Consider a differential game with $N$ players in $\RR^d$ where each player
 controls his velocity. In this setting, the state of player $i$
  evolves according to
 \begin{equation}
-    x'_i(t) = \alpha_i(t).
+    dx_i(t) = \alpha_i(t)\, dt.
 \end{equation}
 The cost functional for player $i$ is of the form
 \begin{equation}
-    J_i(x, t, (\alpha_j)_j) = \int_t^T L_i (x_1(s), \dots, x_N(s), \alpha_i(s)) ds + g_i(x_1(T), \dots, x_N(T)).
+    J_i(x, t, {(\alpha_j)}_j) = \int_t^T L_i (x_1(s), \dots, x_N(s), \alpha_i(s)) ds + g_i(x_1(T), \dots, x_N(T)).
 \end{equation}
 
-We assume that
+Let $\delta_x$ be the Dirac measure at point $x$. Then, We assume that
 \begin{equation}
     L_i(x_1, \dots, x_N, \alpha) = \frac{1}{2}|\alpha|^2 + F\left( \frac{1}{N-1} \sum_{j \neq i} \delta_{x_j}  \right)
 \end{equation}
@@ -22,46 +20,90 @@ where $F : \mathcal{P}_2 \mapsto \RR$ is continuous, and
 \end{equation}
 where $g: \RR^d \times \mathcal{P}_2$ is continuous.
 
-We assume that a smooth, symmetric Nash equilibrium in feedback form exists for
-this game - that is, there is a map
-$U^N : \RR^d \times [0,T] \times (\RR^d)^{(N-1)} \mapsto \RR$ such that
+We also assume that a smooth, symmetric Nash equilibrium in feedback form exists for
+this game - that is, there is a value function
+$U^N : \RR^d \times [0,T] \times {(\RR^d)i}^{(N-1)} \mapsto \RR$ such that
+the value function for player $i$ $U^N_i$ satisfies
 \begin{equation}
-    U^N_i(x_i, t, (x_j)_{j\neq i}) = U^N(x_i, t, (x_j)_{j\neq i})
+    U^N_i(x_i, t, {(x_j)}_{j\neq i}) = U^N(x_i, t, {(x_j)}_{j\neq i})
 \end{equation}
-satisfies the system of $HJ$ equations:
+and the system of $HJ$ equations
 \begin{equation}
     -\partial_t U_i^N + \frac{1}{2}|\partial_{x_i} U_i^N|^2 - F\left( \frac{1}{N-1}  \sum_{j\neq i} \delta_{x_j} \right) + \sum_{j \neq i} \langle \partial_{x_j} U^N_j, \partial_{x_j} U^N_i \rangle = 0
 \end{equation}
-as stated in~\cite{cardaliaguet2010notes}, the family of feedbacks $(\alpha_i(x,t) = - \partial_{x_i} U^N_i (x,t))$
+is satisfied. 
+\begin{proposition}
+The family of feedbacks $({\bar\alpha}_i(x,t) = - \partial_{x_i} U^N_i (x,t))$
 provides a Nash equilibrium for the game.
+\end{proposition}
+\begin{proof}
+Fix an initial condition $(\bar x, \bar t)$, and assume that player $i$ deviates
+using a time measurable control $\alpha_i : [t,T] \mapsto \RR^d$ instead of $\bar \alpha_i$.
+We have that
+\begin{equation*}
+    \frac{d}{dt} U^N_i (x(t), t) = \frac{\partial U^N_i}{\partial t}
+    + \langle \partial_{x_i}U^N_i, \alpha_i \rangle
+    + \sum_{j\neq i} \langle D_{x_j} U^N_i, \bar \alpha_j \rangle,
+\end{equation*}
+where on the right side the second term represents the time variation in the value
+function of player $i$ due to his control, and the third term represents the time
+variation of the value function of player $i$ due to the control of the other players.
+We can write
+\begin{align*}
+    &\frac{d}{dt} \left[ U^N_i (x(t), t)
+    - \int_t^T L_i\left(x(s), s, \alpha(s)\right)\, ds \right]\\
+    &= \frac{\partial U^N_i}{\partial t}
+    + \langle \partial_{x_i}U^N_i, \alpha_i \rangle
+    + \sum_{j\neq i} \langle D_{x_j} U^N_i, \bar \alpha_j \rangle
+    + \frac{1}{2} |\alpha_i|^2 + F \\
+    & \geq \frac{\partial U^N_i}{\partial t}
+    - \frac{1}{2} |D_{x_i} U_i^N|
+    - \sum_{j\neq i} \langle D_{x_j} U^N_i, D_{x_j} U^N_j \rangle
+    + F.
+\end{align*}
+where we used that the players $j\neq i$ are using the control
+$\bar \alpha_j = - D_{x_j} U^N_j$, and the inequality comes from
+$|\alpha_i|^2 + |D_{x_i} U^N_i|^2 \geq 2\langle -D_{x_i} U^N_i, \alpha_i \rangle$.
+If $\alpha_i = -D_{x_i} U^N_i = \bar \alpha_i$, equality holds.
+
+Integrating the inequality over $[\bar t, T]$, we have that
+\begin{equation*}
+    g_i(x(T)) - \left[ U^N_i (\bar x, \bar t) - \int^T_{\bar t} L_i (x(s), s, \alpha(s)) \, ds \right] \geq 0,
+\end{equation*}
+from which follows that
+\begin{equation*}
+    J_i(x, t, \alpha_i, {({\bar\alpha}_j)}_{j\neq i} ) \geq U^N_i (x,t) = J_i(x, t, ({\bar \alpha_j})).
+\end{equation*}
+proving that $\bar \alpha_j$ is a Nash equilibrium for the game.
+\end{proof}
 
 Now, assume that $U^N$ satisfy the following estimates
 \begin{equation}
-    \sup_{x_1, t, (x_j)_j \leq 2} \left| \partial_{x_1, t} U^N (x_1, t, (x_j)) \right| \leq C,
+    \sup_{x_1, t, {(x_j)}_{j \geq 2}} \left| \partial_{x_1} U^N (x_1, t, {(x_j)}_{j \geq 2}) \right| \leq C,
 \end{equation}
 and
 \begin{equation}
-    \sup_{x_1, t, (x_j)_j \leq 2} \left| \partial_{x_j} U^N (x_1, t, (x_j)) \right| \leq  \frac{C}{N}, \text{ for } j\neq 2.
+    \sup_{x_1, t, {(x_j)}_{j \geq 2}} \left| \partial_{x_j} U^N (x_1, t, {(x_j)}_{j \geq 2}) \right| \leq  \frac{C}{N}.
 \end{equation}
 Under these conditions, and up to a subsequence, there is a map 
 $U : \RR^d \times [0,T] \times \mathcal{P}_2 \mapsto \RR$ such that,
 for any $R > 0$,
 \begin{equation}
-    \sup_{|x| \leq R, t, (x_j)_{j\geq 2}} | U^N(x,t,m^{N-1}_{(x_j)}) - U(x,t,m^N_x) | \to 0
+    \sup_{|x| \leq R, t, {(x_j)}_{j\geq 2}} | U^N(x,t,m^{N-1}_{(x_j)}) - U(x,t,m^N_x) | \to 0\text{ as } N \to \infty,
 \end{equation}
-where as before, we have set
+where
 \begin{equation}
     m^{N-1}_{(x_j)} = \frac{1}{N-1} \sum_{j \geq 2} \delta_{x_j}, \text{ and } m^N_x = \frac{1}{N} \sum_{j = 1}^N \delta_{x_j}.
 \end{equation}
-As stated in~\cite{cardaliaguet2010notes}, we have
+We also have convergence of the derivatives
 \begin{equation}
-    \frac{\partial U^N_i}{\partial t} \to \frac{\partial U(x,t,m)}{\partial t}, \quad |\partial_{x_i} U_i^N|^2 \to |\partial_x U (x,t,m)|^2.
+    \frac{\partial U^N}{\partial t} \to \frac{\partial U(x,t,m)}{\partial t}, \quad |\partial_{x_i} U^N|^2 \to |\partial_x U (x,t,m)|^2.
 \end{equation}
-It can also be proved~\cite{cardaliaguet2010notes} that
+Finally, the sum of the inner products converges to the derivative with respect to the limit measure $m$
 \begin{equation}
-    \sum_{j\neq i} \langle \partial_{x_j} U^N_j , \partial_{x_j} U^N_i \rangle \to \langle D_m U(\cdot,t,m), \partial_x U(\cdot, t, m) \rangle_{L^2_m}.
+    \sum_{j\neq i} \langle \partial_{x_j} U^N_i , \partial_{x_j} U^N_j \rangle \to \langle D_m U(x,t,m), \partial_x U(x, t, m) \rangle_{L^2_m}.
 \end{equation}
-So far we have heuristically explained that the limit of $U^N$ as $N \to \infty$
+from these convergence results, we have that the limit of $U^N$ as $N \to \infty$
 is some $U\in \mathcal{C}^0(\RR^d \times [0,T] \times \mathcal{P}_2) $
  which satisfies 
  \begin{equation}\label{wass:simple_master_equation}
@@ -72,22 +114,26 @@ is some $U\in \mathcal{C}^0(\RR^d \times [0,T] \times \mathcal{P}_2) $
  \end{equation}
  Note that this differential equation includes a differential with respect to
  a probability measure.
-  Let's apply an idea similar to the method of characteristics to this equation:
+  Let us apply an idea similar to the method of characteristics to this equation:
   let $m(t)$ be an absolute continuous measure flow over $\mathcal{P}_2$, and
   let $u(x,t) = U(x,t,m(t))$. We have that
 \begin{equation}
     \frac{\partial u}{\partial t} = \frac{\partial U}{\partial t} + \langle D_m U (\cdot, t, m(t)), v(t) \rangle_{L^2_{m(t)}},
 \end{equation}
-    where $v(t)$ is the vector field driving $m(t)$ through the continuity equation $\partial_t m + \nabla \cdot( m(x,t) v(x,t) ) = 0$
+    where $v(t)$ is the vector field driving $m(t)$ through the continuity equation $\partial_t m + \nabla \cdot( m(x,t) v(x,t) ) = 0$.
     We can rewrite equation~\eqref{wass:simple_master_equation} as 
 \begin{equation}
     \frac{\partial U}{ \partial t} + \langle D_m U, - \partial_x U \rangle_{L^2_m} = \frac{1}{2} |\partial_x U(x,t,m)|^2 - F.
 \end{equation}
-    Therefore, if we \textit{choose} as driver of $m(t)$ the vector field $v(x,t) = - \partial_x U(x,t,m(t))$,
+    Therefore, if we \textit{choose} as driver of $m(t)$ the vector field 
+\begin{equation*}
+    v(x,t) = - \partial_x U(x,t,m(t)) = - \partial_x u(x,t),
+\end{equation*}
     we have
-\begin{equation}
-    \frac{\partial u}{\partial t} =  \frac{\partial U}{ \partial t}(x,t,m(t)) + \langle D_m U(\cdot, t, m(t) ), - \partial_x U(\cdot, t, m(t) ) \rangle_{L^2_m} = \frac{1}{2} |\partial_x u(x,t)|^2 - F
-\end{equation}
+\begin{align*}
+    \frac{\partial u}{\partial t} &=  \frac{\partial U}{ \partial t}(x,t,m(t)) + \langle D_m U(\cdot, t, m(t) ), - \partial_x U(\cdot, t, m(t) ) \rangle_{L^2_m}\\
+    &= \frac{1}{2} |\partial_x u(x,t)|^2 - F
+\end{align*}
     from which we arrive at the MFG system of PDEs:
 \begin{equation}
     \begin{cases}
