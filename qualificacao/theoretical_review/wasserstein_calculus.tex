@@ -10,7 +10,7 @@ be the set of probability measures $m$ such that $\int_\Omega |x|^2 dm(x) < + \i
 We can define a metric over $\mathcal{P}_2(\Omega)$ called the 
 \textit{Wasserstein distance} by
 \begin{equation}\label{prob_measures:wasserstein_distance}
-    d_2(\mu, \nu) = \inf_{\gamma \in \Pi(\mu,\nu)} \left[ \int_\Omega |x - y|^2 d\gamma(x,y) \right]^{\frac{1}{2}}
+    d_2(\mu, \nu) = \inf_{\gamma \in \Pi(\mu,\nu)} {\left[ \int_\Omega |x - y|^2 d\gamma(x,y) \right]}^{\frac{1}{2}}
 \end{equation}
 where $\Pi(\mu,\nu)$ is the \textit{coupling} between $\mu$  and $\nu$,
 that is, the set of Borel probability measures on $\Omega \times \Omega$
@@ -19,11 +19,11 @@ for any Borel set $A \subset \Omega$.
 
 The Wassertestein distance is a special case of Monge-Kantorovich distances
 \begin{equation*}
-    d_p(\mu, \nu) = \inf_{\gamma \in \Pi(\mu, \nu)} \left[ \int_{\Omega^2} d^p(x,y) d\gamma(x,y)  \right]^{\frac{1}{p}}.
+    d_p(\mu, \nu) = \inf_{\gamma \in \Pi(\mu, \nu)} {\left[ \int_{\Omega^2} d^p(x,y) d\gamma(x,y)  \right]}^{\frac{1}{p}}.
 \end{equation*}
 One important property of Monge-Kantorovich distances is the existence of at least
 one optimal measure, that is, one $\hat  \gamma \in \Pi(\mu,\nu)$ such that
-$d_p(m,m') = \left[ \int_{\Omega^2} d^p(x,y) d {\hat \gamma}(x,y) \right]^{\frac{1}{p}}$.
+$d_p(m,m') = {\left[ \int_{\Omega^2} d^p(x,y) d {\hat \gamma}(x,y) \right]}^{\frac{1}{p}}$.
 The measure $\hat \gamma$ is called optimal transport plan.
 
 In the case of the Wasserstein distance, an stronger property is satisfied when 
@@ -102,7 +102,7 @@ by solutions of the continuity equation through the Benamou-Brenier formula.
         d_2(\mu_0, \mu_1) = \min \left\{ \int_0^1 ||v_t||^2_{L^2(\mu_t, \Omega)} \, dt : \partial_t \mu_t + \nabla \cdot (v_t \mu_t) = 0 \text{ in } (0,1) \times \Omega \right\}
     \end{equation} 
     where the minimization is among all curves $\mu_t : [0,1] \mapsto \mathcal{P}_2(\Omega)$
-    continuous w.r.t. the weak topology.
+    continuous w.r.t.~the weak topology.
 \end{theorem}
 
 Benamou-Brenier Formula implies that,
@@ -142,7 +142,7 @@ on the Wasserstein space;
 Cardaliaget~\cite{cardaliaguet2019master} restricts the 
 function $U$ to elements of $\mathcal{P}_2(\Omega)$ which have a density in 
 $L^2(\Omega)$ to use its Hilbert structure; and 
-Lyons~\cite{cardaliaguet2010notes} introduces a "lifted" function $\tilde u$ over the space of $L^2$ random variables with values
+Lyons~\cite{cardaliaguet2010notes} introduces a ``lifted'' function $\tilde u$ over the space of $L^2$ random variables with values
 in $\Omega$ such that $\tilde u(X) = U(\mathcal{L}(X))$, and uses the Hilbert structure
 of the space of $L^2$ random variables.
 
@@ -154,7 +154,7 @@ such that for every vector field $v_t$, if we let $\mu_t$ be the solution
 to $\partial_t \mu_t + \nabla \cdot(v_t \mu_t) = 0, \mu_0 = \mu$
 it follows that
 \begin{equation}\label{wass:measure_derivative_chain_rule}
-    \frac{d}{dt} U(\mu_t)_{t = 0} = \int_\Omega D_m U(\mu, y) \cdot v_0(y) d\, \mu(y)
+    \frac{d}{dt} U{(\mu_t)}_{t = 0} = \int_\Omega D_m U(\mu, y) \cdot v_0(y) d\, \mu(y)
 \end{equation}
 We say that $U$ is $C^1$ in a neighborhood of $\mu$ if there is a neighborhood of $\mu$ where it is differentiable.
 \end{definition}
