@@ -38,11 +38,11 @@ an \textit{optimal transport map}~\cite{cardaliaguet2010notes}.
     Conversely, if the convex map $\Phi : \Omega \mapsto \RR$ satisfies $\nu = D \Phi \sharp \mu$,
     then the measure $(\text{id}, D\Phi)\sharp \mu$ is optimal for $d_ 2(\mu,\nu)$.
 \end{theorem}
-where the symbol $\sharp$ denotes the push-forward of the measure with respect to the map,
+Here the symbol $\sharp$ denotes the push-forward of the measure with respect to the map,
 that is, for $\psi : \Omega \mapsto \Omega$, $\psi \sharp \mu(A) = \mu(\psi^{-1}(A))$
 
 Definition~\eqref{wass:absolutely_continuous_curves} 
-and theorems~(\ref{wass:metric_derivative},~\ref{wass:abs_continuity_and_continuity_eq}) are found in~\cite{ambrosio2005gradient}. 
+and Theorems~(\ref{wass:metric_derivative},~\ref{wass:abs_continuity_and_continuity_eq}) are found in~\cite{ambrosio2005gradient}. 
 
 \begin{definition}[Absolutely Continuous Curves in Wasserstein space]\label{wass:absolutely_continuous_curves}
     Let $v : (a,b) \mapsto \mathcal{P}_2(\Omega)$ be a curve.
@@ -69,6 +69,11 @@ one, which describes the \textit{metric derivative} of the curve
     for each function $m$ satisfying~\eqref{wass:absolute_continuity}.
 \end{theorem}
 
+The next Theorem relates solutions to the continuity equation
+\[\partial_t \mu_t + \nabla \cdot (v_t \mu_t) = 0,\]
+where $\nabla \cdot (f) = \sum_{i = 1}^n \partial_{x_i} f$,
+and absolute continuous curves over Wasserstein space. 
+
 \begin{theorem}[Absolutely continuous curves and the continuity equation]\label{wass:abs_continuity_and_continuity_eq}
     Let $\mu_t : (a,b) \mapsto \mathcal{P}_2(\Omega)$ be an absolutely continuous
     curve and let $|\mu'| \in L^1(a,b)$ be its metric derivative.
@@ -80,25 +85,33 @@ one, which describes the \textit{metric derivative} of the curve
     \begin{equation}
         \partial_t \mu_t + \nabla \cdot (v_t \mu_t) = 0.
     \end{equation}
-    Conversely, if a narrowly continuous curve 
+    Conversely, if a a curve which is continuous w.r.t.~the narrow topology
     $\mu_t : (a,b) \mapsto \mathcal{P}_2(\Omega)$
     satisfies the continuity equation for some Borel velocity field $v_t$ with
-    $||v_t||_{L^1(\mu_t, \Omega)} \in L^1(a,b)$ then $mu_t$ is absolutely continuous
+    $||v_t||_{L^1(\mu_t, \Omega)} \in L^1(a,b)$ then $\mu_t$ is absolutely continuous
     and $ |\mu'|(t) \leq  ||v_t||_{L^1(\mu_t, \Omega)}$ for a.e. $t \in (a,b)$.
 \end{theorem}
 
-Theorem~\eqref{wass:abs_continuity_and_continuity_eq} shows that the trajectories of absolute continuous curves are described
+Theorem~\ref{wass:abs_continuity_and_continuity_eq} shows that the trajectories of absolute continuous curves are described
 by the solutions in the sense of distributions to the continuity equation. In fact, the Wasserstein distance is also characterized
 by solutions of the continuity equation through the Benamou-Brenier formula.
 
 \begin{theorem}[Benamou-Brenier Formula]
-    For all  $\mu_0, \mu_1 \in \mathcal{P}_2*(\Omega)$, we have
+    For all  $\mu_0, \mu_1 \in \mathcal{P}_2(\Omega)$, we have
     \begin{equation}
         d_2(\mu_0, \mu_1) = \min \left\{ \int_0^1 ||v_t||^2_{L^2(\mu_t, \Omega)} \, dt : \partial_t \mu_t + \nabla \cdot (v_t \mu_t) = 0 \text{ in } (0,1) \times \Omega \right\}
     \end{equation} 
     where the minimization is among all curves $\mu_t : [0,1] \mapsto \mathcal{P}_2(\Omega)$
     continuous w.r.t. the weak topology.
 \end{theorem}
+
+Benamou-Brenier Formula implies that,
+for each pair of measures $\mu, \nu \in \mathcal{P}_2(\Omega)$,
+there exists an absolute continuous curve $\mu^*_t$ starting at $\mu$ and ending at $\nu$ 
+(which we call the \textit{geodesic curve})
+such that $\mu^*_t$ is driven by a vector field $v_t$, and the quadratic action
+$\int_0^1 ||v_t||^2_{L^2(\mu_t, \Omega)} \, dt$ of $v_t$
+is both minimal and realizes the Wasserstein distance.
 
 Another interesting property of weak solutions of the continuity equation is their relation to solutions $x_t$ of ODEs such as
 \begin{equation}
@@ -135,7 +148,11 @@ of the space of $L^2$ random variables.
 
 One property of the derivative $D_m U$ is that it satisfies a form of chain rule with respect to absolute continuous flows of measures. We adopt this property as definition, for it satisfies our needs.
 \begin{definition}
-We say that a function $U : \mathcal{P}_2(\Omega) \mapsto \RR$ is differentiable at $\mu$ if there exists an element $D_m(\mu, \cdot) \in L^2_\mu$ such that for every solution $\mu_t$ to $\partial_t \mu_t + \nabla \cdot(v_t \mu_t) = 0, \mu_0 = \mu$ it follows that
+We say that a function $U : \mathcal{P}_2(\Omega) \mapsto \RR$ is differentiable 
+at $\mu$ if there exists an element $D_m(\mu, \cdot) \in L^2_\mu$
+such that for every vector field $v_t$, if we let $\mu_t$ be the solution 
+to $\partial_t \mu_t + \nabla \cdot(v_t \mu_t) = 0, \mu_0 = \mu$
+it follows that
 \begin{equation}\label{wass:measure_derivative_chain_rule}
     \frac{d}{dt} U(\mu_t)_{t = 0} = \int_\Omega D_m U(\mu, y) \cdot v_0(y) d\, \mu(y)
 \end{equation}
@@ -153,14 +170,14 @@ We say that $U$ is $C^1$ in a neighborhood of $\mu$ if there is a neighborhood o
     $A, B: \mathcal{P}_2(\Omega) \times \Omega \mapsto \RR^d$
     satisfying the property~\eqref{wass:measure_derivative_chain_rule}.
     Fix a measure $\mu$, and for a vector field 
-    $v_t \in \RR^d$, $t \in (-\epsilon, \epsilon)$
+    $v_t \in \RR^d$,
     let $\mu_t$ be the solution to $\partial_t \mu_t + \nabla \cdot(v_t \mu_t) = 0$
-    with $\mu_0 = \mu$.
+    with $\mu_0 = \mu$ defined in a neighborhood of $0$.
     Now, from~\eqref{wass:measure_derivative_chain_rule}, it follows that
     \begin{align*}
     \frac{d}{dt} U(\mu_t) |_{t = 0} = \int_\Omega A(\mu, y) \cdot v_0(y) d\, \mu(y) = \int_\Omega B(\mu, y) \cdot v_0(y) d\, \mu(y)\\
-    \rightarrow \int_\Omega [A(\mu, y) - B(\mu, y)]  \cdot v_0(y) d\, \mu(y) = 0
+    \Rightarrow \int_\Omega [A(\mu, y) - B(\mu, y)]  \cdot v_0(y) d\, \mu(y) = 0
     \end{align*}
-    As $v_0$ was arbitrary, $||A - B||_{L^2_\mu} = 0$, from which we conclude 
+    As $v_0$ was arbitrary, $||A(\mu, \cdot) - B(\mu, \cdot)||_{L^2_\mu} = 0$, from which we conclude 
     uniqueness.
 \end{proof}
